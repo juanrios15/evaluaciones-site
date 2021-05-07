@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+    
+<h1>Resultados del examen</h1>
+
+<h2>Nombre Evaluacion:</h2>
+{{intento.evaluacion.nombre}}
+
+<h2>Usuario:</h2>
+{{intento.usuario.username}}
+
+<h2>Puntuacion:</h2>
+{{intento.puntuacion}}
+
+
+<h2>Aprobado?</h2>
+{{intento.aprobado}}
+
+<h2>Duración: </h2>
+{{intento.duracion}}
+
+<h2>Puntos obtenidos:
+    {{intento.puntos}}
+</h2>
+{% endblock content %}
+    

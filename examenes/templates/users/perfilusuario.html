@@ -1,0 +1,347 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+
+
+
+{% include 'users/base_perfil.html' %}
+
+<div class="container">
+
+    <ul class="nav nav-tabs sticky-top bg-white" id="myTab" role="tablist" style="top:55px;">
+    <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Perfil</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Intentos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Evaluaciones <span class="text-primary"> ({{evaluaciones_propias.count}})</span> </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="container">
+
+                <br>
+                <div class="row px-3">
+                    
+                    <div class="col-md-4 p-2 border rounded">
+                        <div class="fs-3">Intentos</div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div>
+                                    Total Evaluaciones
+                                </div>
+                                <div>
+                                    Total Intentos
+                                </div>
+                                <div>
+                                    Evaluaciones aprobadas
+                                </div>
+                                <div>
+                                    % aprobadas
+                                </div>
+                                <div class="fw-bold text-success">
+                                    Intentos perfectos
+                                </div>
+                                <div class="fw-bold text-success">
+                                    % perfectos
+                                </div>
+                                <div>
+                                    Promedio calificaciones
+                                </div>
+                            </div>
+                            <div class="col-md-5 text-center">
+                                <div>
+                                    {{total_intentos.evaluaciones}}
+                                </div>
+                                <div>
+                                    {{total_intentos.total}}
+                                </div>
+                                <div>
+                                    {{total_intentos.aprobados}}
+                                </div>
+             
+
+                                <div class="progress my-1">
+                                    <div class="progress-bar" role="progressbar" style="width: {{porcentaje_aprobados|floatformat:'0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{porcentaje_aprobados|floatformat:1}}%
+                                    </div>
+                                </div>
+                                    
+                                <div>
+                                    <div class="fw-bold text-success">
+                                        {{total_intentos.perfectas}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="progress my-1">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{porcentaje_perfectas|floatformat:'0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{porcentaje_perfectas|floatformat:1}}%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="fw-bold"> {{total_intentos.promedio|floatformat:2}}</span> / 100
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-4 p-2 offset-md-1 border rounded">
+                        <div class="fs-3">Evaluaciones Propias</div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div>
+                                    Evaluaciones elaboradas
+                                </div>
+                                <div>
+                                    Total Valoraciones
+                                </div>
+                                <div>
+                                    Total Seguidores
+                                </div>
+                                <div>
+                                    Promedio valoraciones
+                                </div>
+                                <div>
+                                    Promedio dificultad
+                                </div>
+                                <div>
+                                    Total de intentos
+                                </div>
+ 
+                            </div>
+                            <div class="col-md-5 text-center">
+                                <div>
+                                    {{usuario.evaluaciones.count}}
+                                </div>
+                                <div>
+                                    {{Valoraciones_eva_propias.cant}}
+                                </div>
+                                <div>
+                                    {{seguidores_eva_propias}}
+                                </div>                                       
+                                    <span class="fw-bold text-warning">{{Valoraciones_eva_propias.prom|floatformat:2}} </span>/ 5.00
+                                <div>
+                                    <span class="fw-bold text-danger">{{dificultad_evaluaciones|floatformat:2 }} </span>/10.00
+                                </div>
+                                <div>
+                                    {{total_intentos_eva_propias}}
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-center offset-1">
+                    <div class="row p-2  justify-content-center  border rounded">
+                        <div class="row fs-3 pb-1"> 
+                            Social
+                        </div>
+                        <hr>
+                        <div class="row mb-2">
+                            <a class="btn border text-dark" href="{% url 'users_app:seguidoresusuario' usuario.id %}">
+                                
+                                <span class="fw-bold"> {{seguidores.total}} </span>
+                                
+                                {% if seguidores.total == 1 %}
+                                Seguidor
+                                {% else %}
+                                Seguidores
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="row mb-2">
+                            <a class="btn border text-dark" href="{% url 'users_app:seguidosusuario' usuario.id %}">
+                                
+                                <span class="fw-bold"> {{seguidos.total}} </span>
+                                
+                                {% if seguidos.total == 1 %}
+                                Seguido
+                                {% else %}
+                                Seguidos
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="row">
+                            <a class="btn border text-dark" href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">
+                                <span class="fw-bold"> {{eva_seguidas.total}} </span> 
+                                
+                                {% if eva_seguidas.total == 1 %}
+                                Evaluación
+                                {% else %}
+                                Evaluaciones
+                                {% endif %}
+                                    
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+        
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="container col-md-10">
+                <br>
+                <div class="row fs-4">
+                    Mostrando x-xx de x 
+                </div>
+                <div class="row fs-4"> 
+                    Listado de Evaluaciones:
+                </div>
+            
+                <hr>
+                {% for evaluacion in evaluaciones %}
+
+                <div class="row align-items-center border boder-light rounded mb-3 py-2">
+                    <div class="col-md-2">
+                    
+                        {% if evaluacion.imagen %}
+                        <img src="{{evaluacion.imagen.url}}" alt=""  class="w-100 d-block m-1 rounded">
+                        
+                        {% else %}
+                        <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div>
+                                <div class="fs-5 text-secondary">{{evaluacion.nombre}}</div>
+                            </div>
+                            <div>
+                                
+                                Categoría: <span class="fw-light text-secondary">{{evaluacion.categoria}}</span>
+                            </div>
+                            <div>
+                                Preguntas: <span class="fw-bold"> {{evaluacion.cant_preguntas}}</span>
+                            </div>
+                            <div>
+                                Puntaje minimo: <span class="fw-bold">{{evaluacion.puntaje_minimo}}</span> /100
+                            </div>
+                            <div>
+                                
+                                Intentos permitidos: <span class="fw-bold">{{evaluacion.intentos_permitidos}}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 fw-light">
+                        <div>
+                            
+                            {% if evaluacion.max_p == 100.0 %}
+                            Maxima puntuación: <span class="fw-bold text-success">{{evaluacion.max_p|floatformat:1}}</span> /100
+                            {% else %}
+                            Maxima puntuación: <span class="fw-bold">{{evaluacion.max_p|floatformat:1}}</span> /100
+
+                            {% endif %}
+                                
+                        </div>
+                        <div>
+                            Intentos realizados: <span class="fw-bold">{{evaluacion.tot_intentos}}</span>
+                        </div>
+                        <div>
+                            Intentos restantes: <span class="fw-bold">{{evaluacion.restantes}}</span>
+                        </div>
+                        <div>
+                            Aprobado?
+                            {% if evaluacion.max_p >= evaluacion.puntaje_minimo %}
+                            <span class="fw-bold text-success">
+                                Si
+                            </span>
+                            {% else %}
+                            <span class=" fw-bold text-danger">
+                                No 
+                            </span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <a href="#" class="text-decoration-none fw-normal">Ver intentos</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row px-2">
+                            
+                            {% if evaluacion.max_p == 100 %}
+                            <button class="btn btn-outline-success px-3 disabled">Presentar evaluación</button>
+                            {% else %}
+                            {% if evaluacion.max_p >= evaluacion.puntaje_minimo %}
+                            <button class="btn btn-outline-success px-3">Presentar evaluación</button>
+                            {% else %}
+                            <button class="btn btn-outline-danger px-3">Presentar evaluación</button>
+
+                            {% endif %}
+
+                            {% endif %}
+                                
+                                
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+            
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="container col-md-10">
+                <br>
+                <div class="row fs-4"> 
+                    Evaluaciones
+                </div>
+                <hr>
+
+                
+                {% for epropia in evaluaciones_propias %}
+                
+                {% if request.user == usuario %}
+                {% include 'users/cajas/caja_user_eva.html' %}
+                {% else %}
+                {% include 'users/cajas/caja_visit_eva.html' %}
+                {% endif %}
+                    
+                {% endfor %}
+                    
+
+
+            </div>
+
+
+
+        </div>
+      </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}

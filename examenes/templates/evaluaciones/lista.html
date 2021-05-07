@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<br>
+<br>
+<div class="container col-md-9">
+    <div class="row">
+        <h2>Lista de Evaluaciones</h2>
+    </div>
+    <div class="row">
+        <div class="container">
+    
+            {% for e in evaluaciones  %}
+            <div class="row bg-info mb-2 p-2">
+                <h3>{{e.nombre}}</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        Cantidad de preguntas: {{e.cant_preguntas}}
+                    </div>
+                    <div class="col-md-4">
+                        Puntaje minimo para pasar: {{e.puntaje_minimo}}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        Intentos permitidos: {{e.intentos_permitidos}}
+                    </div>
+                    <div class="col-md-4">
+                        Tiempo limite: {{e.tiempo_limite}} minutos
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 d-flex">
+                        <a href="{% url 'exams_app:detalleeva' e.slug %}"  class="btn btn-dark mx-2"> Ver detalle </a>
+                        <form action="{% url 'intentos_app:iniciarintento' e.id %}" method="post"> {% csrf_token %}
+                            <button type="submit" class="btn btn-danger"> Presentar examen </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+            
+            {% endfor %}
+        </div>
+
+    </div>
+    
+
+</div>
+
+
+
+    
+{% endblock content %}
+    

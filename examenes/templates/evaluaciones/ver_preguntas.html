@@ -1,0 +1,90 @@
+{% extends "evaluaciones/base_preguntas.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+{% if request.user == evaluacion.user %}
+
+<div class="container">
+    <div class="row">
+        <div class="fs-2 mb-3">Listado de preguntas</div>
+    </div>
+    <div class="row">
+
+        {% for pregunta in evaluacion.preguntas.all  %}
+        <div class="col-md-6 mb-2 ">
+            <div class="row border rounded mx-1 p-2">
+                <div class="col-md-10">
+                    <div class="fs-6 mb-2">Pregunta</div>
+    
+                    <div class="fs-6">{{pregunta.descripcion|linebreaks}} </div>
+                    <hr>
+                    <div class="fs-6 mb-2">Opciones</div>
+                    {% for opcion in pregunta.opciones.all  %}
+                        <div class="container">
+                            <div class="row">
+    
+                                <div class="col-md-1">
+                                    {{forloop.counter}}.
+                                </div>
+                                <div class="col-md-11">
+                                    {{opcion}}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-2 d-flex align-items-end p-0">
+                    <div class="row">
+
+                        <div class="col-md-12 mb-2 text-center">
+                            <a class="btn btn-outline-primary" href="{% url 'exams_app:editarpregunta' pregunta.id %}">Editar</a>
+                            
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <form action="{% url 'exams_app:borrarpregunta' pregunta.id %}" method="post"> {% csrf_token %}
+
+                                <button class="btn btn-outline-danger">Borrar</button>
+                            </form>
+    
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+    <br>
+
+</div>
+
+    
+
+
+
+{% else %}
+<h1>Que haces aqui????</h1>
+{% endif %}
+
+
+{% endblock content %}

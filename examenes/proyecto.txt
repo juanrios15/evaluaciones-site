@@ -1,0 +1,68 @@
+LISTO --- Login con correo electronico, debe validar tanto correo electronico como username 
+LISTO --- Login con facebook
+LISTO ---  Logout
+LISTO --- Modelo de puntos de usuario
+LISTO --- Ver la foto actual en un enlace...
+LISTO --- Previsualizar la nueva foto..
+LISTO --- Dentro de editar se encuentra el boton de eliminar usuario...
+LISTO --- Eliminar la foto actual... el usuario quedaría nuevamente con la foto por defecto
+LISTO --- Borrar usuario
+LISTO --- Al eliminar usuario no se deberia borrar sus intentos, sino que simplemente ahora no aparezca un usuario para estos..
+LISTO -- Las evaluaciones que el usuario realizó si se deben borrar al igual que todos sus seguidos, valoraciones y calificaciones de dificultad
+LISTO --- Modificar la forma en como se crea el username para hacerlo mas imposible de que se repita
+LISTO --- Modificar el username con todas sus validaciones, poner frecuencia limite para modificar el username
+
+
+URGENTE::::
+BANDERITAS DE CADA PAIS CREANDO EL NUEVO FIELD EN USUARIO Y AL CREAR UN USUARIO O ACTUALIZARLO, EL JQUERY ENVIA EL CODIGO
+SEGUIR / DEJAR DE SEGUIR UN USUARIO
+
+USERS
+6. Crear una contraseña para los usuarios que solo han ingresado con google o facebook
+6. Este boton de crear contraseña debe estar brillando o resaltando para que se animen todos los usuarios a hacerlo
+8. Modificar contraseña para los que ya tienen contraseña
+10. Agregar un field al model users, que sea de descripción/biografia del usuario
+11. Agregar un field al model users, codigo pais, con el que se va a poder visualizar su bandera
+
+Poner la bandera en el detalle de usuario principal
+Al registrarse un usuario a traves de redes sociales debe enviarle un correo electronico informandole de su nombre de usuario...
+Menu lateral a la izq o der, para usuarios conectados, trae enlaces directos a favoritos, intentos, tus evaluaciones, perfil y seguidores
+En el registro avisar 
+
+
+Visualizar el perfil de otro usuario no deberia dejar ver casi nada, unicamente su informacion basica y evaluaciones y los seguidores/seguidos
+Que el usuario registrado haga login directamente
+
+En el area social se debe poder ver la cantidad de seguidores, seguidos y evaluaciones en la barra
+Un usuario no puede presentar sus propias evaluaciones
+
+Los intentos no los puede ver nadie sino el usuario mismo.
+
+
+
+
+EVALUACIONES 
+"Tus evaluaciones" en perfil tiene que ser un nuevo view-pagina pero parecer que no lo hace
+
+URGENTE::::
+ARREGLAR EL LISTADO DE EVALUACIONES, NO SE VE CATEGORIA NI SUBCATEGORIA
+FALTA INFORMACION EN EL LISTADO, COMO POR EJEMPLO LA DIFICULTAD QUE UNO LE PUSO AL EXAMEN
+EDITAR EVALUACION
+
+1. Mostrar cantidad de evaluaciones presentadas en la lista
+2. Ya has sacado la maxima nota posible... cuando se intenta hacer un examen con 100 puntos y con intentos disponibles
+3. Crear el slug para las evaluaciones y cambiar toda la logica para que funcione todo a traves de este...
+4. Si la persona ha sacado 100% ya no puede volver a presentar la evaluación
+
+Mostrar la dificultad de cada evaluacion en la pagina de tus evaluaciones
+Borrar pregunta, borrar opcion. Cada opcion debe tener una x y cada pregunta lo mismo, ver si es posible de usar el de bootstrap
+
+El boton lateral tiene que tener un enlace directo al area social del usuario loggeado
+Las visitas aun no estan funcionando
+
+Agregar una imagen a cada pregunta
+
+Agregar una foto para cada subcategoria que sea el default en caso de que la persona no ponga foto
+En el DOCS tiene que venir un resumen de las dificultades por categoria y subcategoria
+
+

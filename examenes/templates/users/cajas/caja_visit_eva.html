@@ -1,0 +1,110 @@
+{% load static %}
+<a class="fs-4 text-secondary text-decoration-none" href="{% url 'exams_app:detalleeva' epropia.slug %}">{{epropia.nombre}}</a>
+
+<div class="row align-items-center border boder-light rounded mb-3 py-2">
+    <div class="col-md-2">
+
+        {% if epropia.imagen %}
+        <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="{{epropia.imagen.url}}" alt="" class="w-100 d-block m-1 rounded"> </a>
+
+        {% else %}
+        <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded"></a>
+        {% endif %}
+    </div>
+    <div class="col-md-5">
+        <div class="row ">
+            <div>
+                <div>
+                    Categoría: <span class="fw-light text-secondary">{{epropia.subcategoria.categoria}}</span>
+                </div>
+                <div>
+                    Subcategoría: <span class="fw-light text-secondary">{{epropia.subcategoria}}</span>
+                </div>
+                <div class="mb-2">
+                    Creado: <span class="fw-light text-secondary">{{epropia.created_at}}</span>
+                </div>
+            </div>
+            <div class="row mx-2 fw-light">
+                <div class="col-md-7">
+                    <div>Preguntas</div>
+                    <div>Puntaje minimo</div>
+                    <div>Intentos permitidos</div>
+                    <div>Tiempo limite</div>
+                    <div>Dificultad Autor</div>
+                    
+                </div>
+                <div class="col-md-5">
+                    <div>{{epropia.cant_preguntas}}</div>
+                    <div>{{epropia.puntaje_minimo}} / 100</div>
+                    <div>{{epropia.intentos_permitidos}}</div>
+                    <div>{{epropia.tiempo_limite}} mins.</div>
+                    <div>{{epropia.dificultad|floatformat:"2"}} / 10,00</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row fw-light mb-2">
+            <div class="col-md-7">
+                <div>Visitas</div>
+                <div>Valoraciones</div>
+                <div>Promedio Valoraciones</div>
+                <div>Seguidores</div>
+                <div>Dificultad ponderada</div>
+
+            </div>
+            <div class="col-md-5">
+                <div class="fw-bold">0</div>
+                <div>{{epropia.tot_valoraciones}} <i class="fas fa-star-half-alt"></i></div>
+
+                {% if epropia.prom_valoraciones == None %}
+                <div>0,00/5,00</div>
+                {% else %}
+                <div>{{epropia.prom_valoraciones|floatformat:2}} / 5,00</div>
+                {% endif %}
+                <div>
+                    {{epropia.tot_seguidores}} <i class="fas fa-users"></i>
+                </div>
+                <div class="text-danger fw-normal">
+                    {{epropia.dificultad_ponderada|floatformat:2}} / 10,00
+                </div>
+
+            </div>
+
+        </div>
+        <hr class="my-2 me-2">
+        <div class="row fw-light">
+
+            <div class="col-md-7">
+                <div>Total de intentos</div>
+                <div>Aprobados</div>
+                <div>% Aprobados</div>
+                <div>Promedio intentos</div>
+            </div>
+            <div class="col-md-5">
+                <div>
+                    {{epropia.tot_intentos}}
+                </div>
+                <div>
+                    {{epropia.total_aprobados}}
+                </div>
+                <div>
+
+                    {{epropia.aprobados|floatformat:2}} %
+                </div>
+                <div>
+
+                    {% if epropia.prom_intentos %}
+                    {{epropia.prom_intentos|floatformat:2}} / 100,00
+                    {% else %}
+                    0,00 / 100,00
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

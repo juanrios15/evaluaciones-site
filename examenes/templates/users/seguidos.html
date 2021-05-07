@@ -1,0 +1,71 @@
+{% extends "users/base_users.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+{% include 'users/base_perfil.html' %}
+<div class="container">
+    <ul class="nav nav-tabs sticky-top bg-white justify-content-center" id="myTab" role="tablist" style="top:55px;">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link text-dark" type="button" role="tab"  aria-selected="false" href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active text-dark" type="button" role="tab" aria-selected="true" href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link text-dark" type="button" role="tab" aria-selected="false" href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Evaluaciones</a>
+        </li>
+    </ul>
+
+</div>
+
+<div class="container col-md-9">
+    <br>
+    <div class="row mb-2">
+        <div class="fs-2">
+            Seguidos: {{usuario.seguidores.count}}
+        </div>
+    </div>
+    <hr>
+    <div class="row ">
+        
+        {% for seguido in usuario.seguidores.all %}
+        <div class="col-md-2">
+                {% if seguido.seguido.foto %}
+                <img src="{{seguido.seguido.foto.url}}" alt=""  class="w-100 d-block m-1 rounded">
+                
+                {% else %}
+                <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded">
+                {% endif %}
+            <div class="row justify-content-center">
+                {{seguido.seguido.username}}
+            </div>
+
+
+        </div>
+    
+        {% endfor %}
+
+    </div>
+        
+</div>
+
+
+
+{% endblock content %}

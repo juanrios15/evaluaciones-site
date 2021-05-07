@@ -1,0 +1,191 @@
+{% extends "users/base_users.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<br>
+<br>
+<br>
+
+
+
+{% if user.username %}
+<div class="container">
+    <div class="fs-1 text-success">
+        {{user.username}} ya has iniciado sesión!
+    </div>
+</div>
+
+{% else %}
+<div class="container col-md-9">
+    <div class="row">
+
+    
+    <div class="col-md-4">
+        <div class="row text-center">
+            <div class="fs-3 fw-light mb-2">Ingrese directamente con</div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <button class="bg-white py-2 rounded" onclick="loginsocial(1)"> Ingrese con Gmail</button>
+            </div>
+    
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <button class="bg-primary py-2 text-white rounded" onclick="loginsocial(2)"> Ingrese con Facebook</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container col-md-8 text-center bg-light px-3 rounded">
+        <br>
+        <div class="row mb-2">
+            <h5>O registrese con el siguiente formulario:</h5>
+        </div>
+        <div class="row mb-2">
+            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        {{form.username}}
+                        {% if form.username.errors %}
+                            {% for error in form.username.errors %}
+                            <div class="text-danger"> {{ error }} </div>    
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {{form.email}}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                            <div class="text-danger"> {{ error }} </div>    
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        {{form.full_name}}
+                        {% if form.full_name.errors %}
+                            {% for error in form.full_name.errors %}
+                            <div class="text-danger"> {{ error }} </div>    
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3 align-self-center">Genero</div>
+                            <div class="col-md-9">{{form.genero}}</div>
+                            {% if form.genero.errors %}
+                            {% for error in form.genero.errors %}
+                            <div class="text-danger"> {{ error }} </div>    
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="row align-items-center mt-1">
+                            <div class="col-md-3 align-self-center">País</div>
+                            <div class="col-md-9">
+                                <input type="text" id="pais" class="form-control" name="pais">
+                                <input type="hidden" name="codigo_pais" id="pais_code" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">Fecha nacimiento</div>
+                                <div class="col-md-9 d-flex">
+                                    {{form.fecha_nacimiento}}
+                                    
+                                </div>
+                                {% if form.fecha_nacimiento.errors %}
+                                    {% for error in form.fecha_nacimiento.errors %}
+                                    <div class="text-danger"> {{ error }} </div>    
+                                    {% endfor %}
+                                {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">Foto de perfil</div>
+                            <div class="col-md-9">
+                                {{form.foto}}
+                                {% if form.foto.errors %}
+                                    {% for error in form.foto.errors %}
+                                    <div class="text-danger"> {{ error }} </div>    
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                        </div>
+     
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row mb-2">
+                                <div class="col-md-3 align-self-center">Contraseña</div>
+                                <div class="col-md-9">
+                                    {{form.password1}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 ">Repetir Contraseña</div>
+                                <div class="col-md-9">
+                                    
+                                    {{form.password2}}
+                                    
+                                </div>
+                                {% if form.password2.errors %}
+                                    {% for error in form.password2.errors %}
+                                    <div class="text-danger"> {{ error }} </div>    
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-row-reverse">
+                    <div class="col-md-6">
+                        <div class="row px-2">
+                            
+                            <button type="submit" class="btn btn-dark">Registrarse</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+<br>
+</div>
+
+{% endif %}
+
+
+{% endblock content %}

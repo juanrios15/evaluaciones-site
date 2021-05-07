@@ -1,0 +1,115 @@
+{% extends "evaluaciones/base_editareva.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+{% if request.user == evaluacion.user %}
+
+<div hidden id="suboculto" >{{evaluacion.subcategoria}}</div>
+<div hidden id="catoculto" >{{evaluacion.subcategoria.categoria}}</div>
+<div hidden id="preguntasoculto" >{{evaluacion.preguntas.count}}</div>
+<div class="container col-md-10">
+    <h2>Actualizar evaluación</h2>
+    <form method="post" id="formupdate" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="row">
+            <label> Nombre </label>
+            {{form.nombre}}
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div> Puntaje Minimo</div>
+                {{form.puntaje_minimo}}
+            </div>
+            <div class="col-md-3">
+                <div> Cantidad preguntas</div>
+                {{form.cant_preguntas}}
+            </div>
+            <div class="col-md-3">
+                <div> Intentos permitidos</div>
+                {{form.intentos_permitidos}}
+
+            </div>
+            <div class="col-md-3">
+                <div> Tiempo Limite (minutos)</div>
+                {{form.tiempo_limite}}
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-3">
+                <div> Dificultad</div>
+                {{form.dificultad}}
+            </div>
+            <div class="col-md-3">
+                <select class="form-select my-3" aria-label="Default select example" id="listacategoria" required>
+                    <option value="" selected>Seleccione una categoria</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select my-3" aria-label="Default select example" id="listasubcategoria"
+                    name="subcategoria" required>
+                    <option selected>Subcategoría</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div> Imagen</div>
+                {{form.imagen}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                Publico? {{form.publico}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 px-2">
+                <div class="row mx-2">
+                    <div> Descripción</div>
+
+                    {{form.descripcion}}
+                </div>
+            </div>
+            <div class="col-md-6 px-2">
+                <div class="row mx-2">
+                    <div> Requisitos minimos</div>
+                    {{form.requisitos_minimos}}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <button type="submit" class="btn btn-dark">Actualizar evaluación</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+{% else %}
+<h1>Que haces aqui????</h1>
+{% endif %}
+    
+
+
+
+
+
+{% endblock content %}

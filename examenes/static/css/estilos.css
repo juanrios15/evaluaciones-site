@@ -1,0 +1,48 @@
+
+/* select date widget */
+
+
+select[id$="_day"].form-select.me-1 {
+    width: 25%;
+    font-size: 0.9rem;
+}
+select[id$="_month"].form-select.me-1 {
+    width: 45%;
+    font-size: 0.9rem;
+}
+select[id$="_year"].form-select.me-1 {
+    width: 30%;
+    font-size: 0.9rem;
+}
+
+
+#editaruser {
+
+    background-image: linear-gradient(
+      to right,
+      transparent 39%,
+      rgb(240, 240, 240) 50%,
+      transparent 66%
+    );
+    background-size:300% 100%;
+    animation: shine 3s infinite;
+  }
+
+  #addpregunta {
+
+    background-image: linear-gradient(
+      to right,
+      transparent 48%,
+      rgb(58, 57, 57) 50%,
+      transparent 52%
+    );
+    background-size: 340% 100%;
+    animation: shine 2s infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: right;    
+    }
+}
+

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load  static %}
+
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>Bienvenidos a esta pagina wek</h2>
+
+Nombre de usuario: {{user.username}}
+Email: {{user.email}}
+
+
+{% if user.foto %}
+Foto: {{user.foto.url}}
+
+{{user.foto}}
+<img src="{{user.foto.url}}" alt="">
+    
+{% endif %}
+    
+{% endblock content %}
+    

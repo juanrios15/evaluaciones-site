@@ -1,0 +1,87 @@
+{% extends "users/base_users.html" %}
+
+{% load  static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+<br>
+<br>
+<br>
+
+
+
+{% if user.username %}
+    <div class="container">
+        <div class="fs-1 text-success">
+            {{user.username}} ya has iniciado sesión!
+        </div>
+    </div>
+    
+{% else %}
+<div class="container col-md-3">
+<div class="container">
+    <div class="row">
+        <button class="bg-white py-2 rounded" onclick="loginsocial(1)"> Ingrese con Gmail</button>
+    </div>
+
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <button class="bg-primary py-2 text-white rounded" onclick="loginsocial(2)"> Ingrese con Facebook</button>
+    </div>
+</div>
+<br>
+<div class="container text-center">
+
+    <div class="row">
+        <h5>O ingrese con su usuario o email:</h5>
+    </div>
+    <div class="row">
+        <form method="post"> {% csrf_token %}
+            <div class="mb-2 mx-2">
+                <div class="row">
+                        <input type="text" placeholder="Usuario o email" class="form-control" name="username" id="id_username" maxlength="150" required>
+                </div>
+            </div>
+            <div class="mb-0 mx-2">
+                <div class="row">
+                    <input type="password" placeholder="Contraseña" class="form-control" name="password" id="id_password"required>
+    
+                </div>
+            </div>
+            <br>
+            <div class="mx-2">
+                <div class="row">
+                    <button type="submit" class="btn btn-dark">Ingresar</button>
+                </div>
+            </div>
+        
+        </form>
+
+    </div>
+
+    
+</div>
+
+</div>
+
+{% endif %}
+    
+
+{% endblock content %}

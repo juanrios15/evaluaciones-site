@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+{% if intento.abierto %}
+
+<p>Hora actual {{ahora}}</p> 
+
+<p>
+
+    Hora limite {{intento.hora_fin}}
+</p>
+
+{% if ahora < intento.hora_fin %}
+    
+    <h1>asda asdjakhdasjhfj</h1>
+<form method="post"> {% csrf_token %}
+
+    {{form.errors}}
+    {% for p in preguntas %}
+    <p>
+
+        {{p.descripcion}}
+            <ul>
+
+                {% for op in p.opciones.aleatorios %}
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{p.id}}" id="id_form-{{forloop.counter0}}-opcion" value="{{op.id}}" required>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        {{op}}
+                    </label>
+                  </div>
+                    
+                
+                {% endfor %}
+            </ul>
+
+            
+            
+        </p>
+        {% endfor %}
+        
+        <button type="submit"> Enviar</button>
+</form>
+{% else %}
+    <h1>Lo sentimos, este examen ya ha expirado</h1>
+    <button class="btn btn-primary">Volver</button>
+{% endif %}
+    
+{% else %}
+    <h1>Este intento se encuentra cerrado</h1>
+    <button class="btn btn-primary">Volver</button>
+{% endif %}
+
+
+
+
+    
+{% endblock content %}
+    
+
+    

@@ -1,0 +1,303 @@
+{% extends "evaluaciones/base_eva.html" %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<div class="container">
+    <br>
+    <h1>
+        Datos basicos de la evaluación:
+    </h1>
+    <form id="form1" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="row">
+            <label> Nombre </label>
+            {{form.nombre}}
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div> Puntaje Minimo</div>
+                {{form.puntaje_minimo}}
+            </div>
+            <div class="col-md-3">
+                <div> Cantidad preguntas</div>
+                {{form.cant_preguntas}}
+            </div>
+            <div class="col-md-3">
+                <div> Intentos permitidos</div>
+                {{form.intentos_permitidos}}
+
+            </div>
+            <div class="col-md-3">
+                <div> Tiempo Limite (minutos)</div>
+                {{form.tiempo_limite}}
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-3">
+                <div> Dificultad</div>
+                {{form.dificultad}}
+            </div>
+            <div class="col-md-3">
+                <select class="form-select my-3" aria-label="Default select example" id="listacategoria" required>
+                    <option value="" selected>Seleccione una categoria</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select my-3" aria-label="Default select example" id="listasubcategoria"
+                    name="subcategoria" required>
+                    <option selected>Subcategoría</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div> Imagen</div>
+                {{form.imagen}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                Publico? {{form.publico}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 px-2">
+                <div class="row mx-2">
+                    <div> Descripción</div>
+
+                    {{form.descripcion}}
+                </div>
+            </div>
+            <div class="col-md-6 px-2">
+                <div class="row mx-2">
+                    <div> Requisitos minimos</div>
+                    {{form.requisitos_minimos}}
+                </div>
+            </div>
+        </div>
+
+        <h1>Agregar preguntas</h1>
+        <br>
+        <div class="container col-md-10">
+            <div class="row" id="questions">
+                <div class="mb-3 col-md-6">
+                    <div id="pregunta1" >
+                        
+                        <label for="pregunta-1" class="form-label">Pregunta</label>
+                        <textarea class="form-control" id="pregunta-1" name="pregunta-1" rows="3" required></textarea>
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="mb-2">Correcta?</div>
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta1" type="checkbox" value="1"
+                                        id="pregunta-1-correcta" name="pregunta-1-opcion-1-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opcion</label>
+                                <input type="text" class="form-control" id="pregunta-1-opcion-1"
+                                    name="pregunta-1-opcion-1" placeholder="" required>
+
+                            </div>
+                            
+
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="form-check mt-3 form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta1" type="checkbox" value="1"
+                                        id="pregunta-1-correcta" name="pregunta-1-opcion-2-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-1-opcion-2"
+                                    name="pregunta-1-opcion-2" placeholder="" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="button" class="btn btn-success mt-2" id="addoption1">Agregar otra opción</button>
+
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div id="pregunta2">
+                        <label for="pregunta-2" class="form-label">Pregunta</label>
+                        <textarea class="form-control" id="pregunta-2" name="pregunta-2" rows="3" required></textarea>
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="mb-2">Correcta?</div>
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta2" type="checkbox" value="1"
+                                        id="pregunta-2-correcta" name="pregunta-2-opcion-1-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-2-opcion-1"
+                                    name="pregunta-2-opcion-1" placeholder="" required>
+
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="form-check mt-3 form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta2" type="checkbox" value="1"
+                                        id="pregunta-2-correcta" name="pregunta-2-opcion-2-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-2-opcion-2"
+                                    name="pregunta-2-opcion-2" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success mt-2" id="addoption2">Agregar otra opción</button>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div id="pregunta3">
+
+                        <label for="pregunta-3" class="form-label">Pregunta</label>
+                        <textarea class="form-control" id="pregunta-3" name="pregunta-3" rows="3" required></textarea>
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="mb-2">Correcta?</div>
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta3" type="checkbox" value="1"
+                                        id="pregunta-3-correcta" name="pregunta-3-opcion-1-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-3-opcion-1"
+                                    name="pregunta-3-opcion-1" placeholder="" required>
+
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="form-check mt-3 form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta3" type="checkbox" value="1"
+                                        id="pregunta-3-correcta" name="pregunta-3-opcion-2-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-3-opcion-2"
+                                    name="pregunta-3-opcion-2" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success mt-2" id="addoption3">Agregar otra opción</button>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div id="pregunta4">
+                        <label for="pregunta-4" class="form-label">Pregunta</label>
+                        <textarea class="form-control" id="pregunta-4" name="pregunta-4" rows="3" required></textarea>
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="mb-2">Correcta?</div>
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta4" type="checkbox" value="1"
+                                        id="pregunta-4-correcta" name="pregunta-4-opcion-1-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-4-opcion-1"
+                                    name="pregunta-4-opcion-1" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="form-check mt-3 form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta4" type="checkbox" value="1"
+                                        id="pregunta-4-correcta" name="pregunta-4-opcion-2-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-4-opcion-2"
+                                    name="pregunta-4-opcion-2" placeholder="" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="button" class="btn btn-success mt-2" id="addoption4">Agregar otra opción</button>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div id="pregunta5">
+                        <label for="pregunta-5" class="form-label">Pregunta</label>
+                        <textarea class="form-control" id="pregunta-5" name="pregunta-5" rows="3" required></textarea>
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">
+                                <div class="mb-2">Correcta?</div>
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta5" type="checkbox" value="1"
+                                        id="pregunta-5-correcta" name="pregunta-5-opcion-1-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-5-opcion-1"
+                                    name="pregunta-5-opcion-1" placeholder="" required>
+
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="form-check mt-3 form-switch d-flex justify-content-center">
+                                    <input class="form-check-input pregunta5" type="checkbox" value="1"
+                                        id="pregunta-5-correcta" name="pregunta-5-opcion-2-correcta">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="opcion-1" class="form-label">Opción</label>
+                                <input type="text" class="form-control" id="pregunta-5-opcion-2"
+                                    name="pregunta-5-opcion-2" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success mt-2" id="addoption5">Agregar otra opción</button>
+                </div>
+            </div>
+            <div class="position-fixed start-0" style="top: 80%!important;">
+                <a type="button" class="bg-dark shadow  text-decoration-none rounded-end p-2" style="color: #aaa;"  id="addpregunta">
+                    <i class="fas fa-plus"></i> Otra pregunta</a>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <button type="submit" class="btn btn-info" id="enviarevaluacion"> Enviar Evaluación</button>
+        </div>
+    </form>
+    <br>
+    <br>
+</div>
+
+
+
+{% endblock content %}

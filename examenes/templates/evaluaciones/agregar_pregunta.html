@@ -1,0 +1,76 @@
+{% extends "evaluaciones/base_preguntas.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+{% if request.user == evaluacion.user %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="mb-3 col-md-6">
+            <div id="pregunta5">
+                <label for="pregunta-5" class="form-label">Pregunta</label>
+                <textarea class="form-control" id="pregunta-5" name="pregunta-5" rows="3" required></textarea>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-2">
+                        <div class="mb-2">Correcta?</div>
+                        <div class="form-check form-switch d-flex justify-content-center">
+                            <input class="form-check-input pregunta5" type="checkbox" value="1"
+                                id="pregunta-5-correcta" name="pregunta-5-opcion-1-correcta">
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <label for="opcion-1" class="form-label">Opción</label>
+                        <input type="text" class="form-control" id="pregunta-5-opcion-1"
+                            name="pregunta-5-opcion-1" placeholder="" required>
+
+                    </div>
+
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="form-check mt-3 form-switch d-flex justify-content-center">
+                            <input class="form-check-input pregunta5" type="checkbox" value="1"
+                                id="pregunta-5-correcta" name="pregunta-5-opcion-2-correcta">
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <label for="opcion-1" class="form-label">Opción</label>
+                        <input type="text" class="form-control" id="pregunta-5-opcion-2"
+                            name="pregunta-5-opcion-2" placeholder="" required>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success mt-2" id="addoption5">Agregar otra opción</button>
+        </div>
+
+    </div>
+</div>
+
+
+{% else %}
+<h1>Que haces aqui????</h1>
+{% endif %}
+    
+
+{% endblock content %}
