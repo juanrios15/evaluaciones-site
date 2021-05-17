@@ -20,11 +20,11 @@ class User(AbstractUser):
     full_name = models.CharField('Nombres', max_length=100,default="")
     slug = models.SlugField()
     foto = models.ImageField(upload_to="media", height_field=None, width_field=None, max_length=None, blank=True)
+    biografia = models.TextField(max_length=250,default="", blank=True, null=True)
     genero = models.CharField(max_length=1,choices=GENDER_CHOICES, blank=True)
     fecha_nacimiento = models.DateField('Fecha de nacimiento', blank=True, null=True)
     pais = models.CharField(max_length=50,default="",blank=True)
     codigo_pais = models.CharField(max_length=2,default="",blank=True)
-    puntaje_total = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Creado el", blank=True)
     rango =models.CharField(max_length=50,default="Practicante",editable=False)
     

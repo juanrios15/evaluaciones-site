@@ -35,8 +35,8 @@ class SubCategoria(models.Model):
 # Create your models here.
 class Evaluacion(models.Model):
     nombre = models.CharField(verbose_name="nombre", max_length=150)
-    descripcion = models.TextField(default="")
-    requisitos_minimos = models.TextField(default="")
+    descripcion = models.TextField(default="",max_length=400)
+    requisitos_minimos = models.TextField(default="",max_length=400)
     user =  models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Usuario", on_delete=models.CASCADE, editable=False,related_name="evaluaciones")
     subcategoria = models.ForeignKey(SubCategoria, on_delete=models.CASCADE, verbose_name="SubCategorias")
     imagen = models.ImageField(upload_to="media", height_field=None, width_field=None, max_length=None,blank=True)
@@ -84,7 +84,7 @@ class Evaluacion(models.Model):
 
 
 class Pregunta(models.Model):
-    descripcion = models.TextField(verbose_name="Descripción")
+    descripcion = models.TextField(verbose_name="Descripción",max_length=250)
     evaluacion = models.ForeignKey(Evaluacion, verbose_name="Evaluación", on_delete=models.CASCADE, related_name="preguntas")
     
     class Meta:
@@ -111,7 +111,7 @@ class Opcion(models.Model):
 
 class CalificarDificultad(models.Model):
     evaluacion = models.ForeignKey(Evaluacion, verbose_name="Evaluación", on_delete=models.CASCADE, related_name="puntuardificultad")
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="dificultad")
     dificultad = models.FloatField(validators=[dificultadminmax])
     
     
@@ -126,7 +126,7 @@ class CalificarDificultad(models.Model):
 
 class ValorarEvaluacion(models.Model):
     evaluacion = models.ForeignKey(Evaluacion, verbose_name="Evaluación", on_delete=models.CASCADE, related_name="valorar")
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="valorar")
     valor = models.FloatField(validators=[dificultadminmax])
     
     class Meta:

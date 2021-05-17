@@ -1,18 +1,18 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView,DetailView, CreateView, UpdateView, View, FormView
+from django.views.generic import TemplateView,DetailView, CreateView, UpdateView, View, FormView, ListView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.urls import reverse_lazy
 from rest_framework.views import APIView
 
 #ORM
-from django.db.models import Avg, Case, Count, F, FloatField, Max, Q, Value, When
+from django.db.models import Avg, Case, Count, F, FloatField, Max, Q, Sum, Value, When, Window
 # User
 from django.contrib.messages.views import SuccessMessageMixin 
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from apps.users.serializers import LoginSocialSerializer
 from django.contrib.auth import authenticate, get_user_model, login, logout
-from django.contrib import messages
 User = get_user_model()
+from django.contrib import messages
 
 #third party
 from rest_framework.response import Response
@@ -20,15 +20,54 @@ from rest_framework.reverse import reverse
 from firebase_admin import auth
 
 #propio
-from apps.intentos.models import Intento
+from apps.intentos.models import Intento, PuntosObtenidos
 from apps.users.models import SeguirUsuario
-from apps.evaluaciones.models import Evaluacion, SeguirEvaluacion, ValorarEvaluacion
+from apps.evaluaciones.models import Categoria, Evaluacion, SeguirEvaluacion, ValorarEvaluacion
 from apps.users.forms import AuthenticationEmailForm, CreatePasswordForm, UpdateUserForm, UserRegistroForm
 from django.http import HttpResponseRedirect
+from django.db.models.functions import Coalesce, RowNumber
+from django.core.paginator import Paginator
+
+def establecer_orden(orden):
+    if orden == "Intentos restantes":
+        order="-restantes"
+    elif orden == "Puntuación más alta":
+        order="-max_p"
+    elif orden == "Puntuación más baja":
+        order="max_p"
+    elif orden == "Dificiles":
+        order="-dificultad_ponderada"
+    elif orden == "Faciles":
+        order="-dificultad_ponderada"
+    else:
+        order = "-ultimo_intento"
+    return order
+
+
+def establecer_orden_eva(orden):
+    if orden ==  "Valoraciones":
+        order="-tot_valoraciones"
+    elif orden == "Dificiles":
+        order="-dificultad_ponderada"
+    elif orden == "Faciles":
+        order="-dificultad_ponderada"
+    elif orden == "Más seguidos":
+        order="-tot_seguidores"
+    else:
+        order = "-created_at"
+    return order
 
 
 class Inicio(TemplateView):
     template_name = "home/inicio.html"
+    
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        
+        context["categorias"] = Categoria.objects.all()
+        
+        return context
 
 class RegistroView(CreateView):
     form_class = UserRegistroForm
@@ -55,6 +94,15 @@ class LoginView(SuccessMessageMixin,LoginView):
     template_name = 'users/login.html'
     success_message = "Bienvenido!!!"
     authentication_form = AuthenticationEmailForm
+    
+class LogoutView(LoginRequiredMixin,LogoutView):
+    login_url = reverse_lazy('users_app:login')
+    next_page = reverse_lazy('users_app:inicio')
+    
+    def get_next_page(self):
+        next_page = super(LogoutView, self).get_next_page()
+        messages.success(self.request, 'Hasta Pronto')
+        return next_page
 
 class SocialLoginView(APIView):
     
@@ -84,20 +132,13 @@ class SocialLoginView(APIView):
         messages.success(request,"Login exitoso")
         return Response({ 'user': name, } )
     
-class LogoutView(LoginRequiredMixin,LogoutView):
-    login_url = reverse_lazy('users_app:login')
-    next_page = reverse_lazy('users_app:inicio')
-    
-    def get_next_page(self):
-        next_page = super(LogoutView, self).get_next_page()
-        messages.success(self.request, 'Hasta Pronto')
-        return next_page
 
 
 class UserDetailView(DetailView):
     model = User
     template_name = "users/perfilusuario.html"
     context_object_name = 'usuario'
+
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -111,84 +152,45 @@ class UserDetailView(DetailView):
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
 
-        evaluaciones = Evaluacion.objects.filter(intentos__usuario__slug=self.kwargs["slug"]
-                ).annotate(max_p=Max('intentos__puntuacion',filter=Q(intentos__usuario__slug=self.kwargs["slug"])),
-                    tot_intentos=Count('intentos__id',filter=Q(intentos__usuario__slug=self.kwargs["slug"])),
-                    restantes=F('intentos_permitidos')- Count('intentos__id',filter=Q(intentos__usuario__slug=self.kwargs["slug"])))
         try:
             porcentaje_aprobados = total_intentos["aprobados"]/total_intentos["evaluaciones"]*100
         except:
             porcentaje_aprobados = None
-            
         try:
             porcentaje_perfectas = total_intentos["perfectas"]/total_intentos["evaluaciones"]*100
         except:
             porcentaje_perfectas = None
         
-        context["evaluaciones"] = evaluaciones
+        context["total_intentos_usuario"] = total_intentos["total"]
         context["total_intentos"] = total_intentos
         context["porcentaje_aprobados"] = porcentaje_aprobados
         context["porcentaje_perfectas"] = porcentaje_perfectas
         
         
         #evaluaciones propias
-        Valoraciones_eva_propias = ValorarEvaluacion.objects.filter(evaluacion__user__slug=self.kwargs["slug"]).aggregate(cant=Count('id'),prom=Avg('valor'))
-        seguidores_eva_propias = SeguirEvaluacion.objects.filter(evaluacion__user__slug=self.kwargs["slug"]).aggregate(cant=Count('id'))
-        dificultad_evaluaciones = Evaluacion.objects.filter(user__slug=self.kwargs["slug"]).aggregate(prom=Avg('dificultad_ponderada'))
-        total_intentos_eva_propias = Intento.objects.filter(evaluacion__user__slug=self.kwargs["slug"]).aggregate(cant=Count('id'))
+        Valoraciones_eva_propias = ValorarEvaluacion.objects.filter(evaluacion__user__id=context["usuario"].id).aggregate(cant=Count('id'),prom=Avg('valor'))
+        seguidores_eva_propias = SeguirEvaluacion.objects.filter(evaluacion__user__id=context["usuario"].id).aggregate(cant=Count('id'))
+        dificultad_evaluaciones = Evaluacion.objects.filter(user__id=context["usuario"].id).aggregate(prom=Avg('dificultad_ponderada'),count=Count('id'))
+        total_intentos_eva_propias = Intento.objects.filter(evaluacion__user__id=context["usuario"].id).aggregate(cant=Count('id'))
+        
         context["Valoraciones_eva_propias"] = Valoraciones_eva_propias
         context["seguidores_eva_propias"] = seguidores_eva_propias["cant"]
         context["dificultad_evaluaciones"] = dificultad_evaluaciones["prom"]
+        context["total_evaluaciones"] = dificultad_evaluaciones["count"]
         context["total_intentos_eva_propias"] = total_intentos_eva_propias["cant"]
-        
-        #listar evaluaciones propias
-
-        usuario = User.objects.get(slug=self.kwargs["slug"])
-        
-        if self.request.user == usuario:
-
-            eva_propias = Evaluacion.objects.filter(
-                user__slug=self.kwargs["slug"]
-                ).annotate(tot_valoraciones=Count('valorar', distinct=True),
-                        prom_valoraciones=Avg('valorar__valor'),
-                        tot_seguidores=Count('seguir', distinct=True),
-                        tot_intentos=Count('intentos', distinct=True),
-                        prom_intentos=Avg('intentos__puntuacion'),
-                        total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True)),
-                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__aprobado',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField())
-                                                                                                     
-                        # Count('intentos__aprobado'),filter=Q(intentos__aprobado=True))/Count('intentos')*100
-                        )
-        else:
-            eva_propias = Evaluacion.objects.filter(
-                user__slug=self.kwargs["slug"],publico=True
-                ).annotate(tot_valoraciones=Count('valorar', distinct=True),
-                        prom_valoraciones=Avg('valorar__valor'),
-                        tot_seguidores=Count('seguir', distinct=True),
-                        tot_intentos=Count('intentos', distinct=True),
-                        prom_intentos=Avg('intentos__puntuacion'),
-                        total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True)),
-                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__aprobado',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField())
-                                                                                                     
-                        # Count('intentos__aprobado'),filter=Q(intentos__aprobado=True))/Count('intentos')*100
-                        )
-            
-            
-        context["evaluaciones_propias"] = eva_propias
         
         #Seguidores
         
-        seguidores = SeguirUsuario.objects.filter(seguido__slug=self.kwargs["slug"]).aggregate(total=Count('id'))
-        #Seguidos
-        seguidos = SeguirUsuario.objects.filter(seguidor__slug=self.kwargs["slug"]).aggregate(total=Count('id'))
-         #Evaluaciones
-        eva_seguidas = SeguirEvaluacion.objects.filter(usuario__slug=self.kwargs["slug"]).aggregate(total=Count('id'))
-        context["seguidores"] = seguidores
-        context["seguidos"] = seguidos
-        context["eva_seguidas"] = eva_seguidas
+        context["seguidores"] =SeguirUsuario.objects.filter(seguido__id=context["usuario"].id).count()
+        context["seguidos"] =SeguirUsuario.objects.filter(seguidor__id=context["usuario"].id).count()
+        context["favoritos"] =SeguirEvaluacion.objects.filter(usuario__id=context["usuario"].id).count()
         
+        total_puntos = PuntosObtenidos.objects.filter(
+                            usuario__id=context["usuario"].id
+                        ).aggregate(total=Sum('puntos'))
+        if total_puntos["total"] == None:
+            total_puntos["total"] = 0
+        context["total_puntos"] = total_puntos["total"]
         
         return context
 
@@ -202,7 +204,6 @@ class UserUpdateView(LoginRequiredMixin,UpdateView):
     def get_success_url(self):
         
         messages.success(self.request,"Cambios realizados con exito")
-        print(self.request.user)
         
         return reverse(
                 'users_app:detalleusuario',kwargs={'slug': self.request.user.slug}
@@ -254,7 +255,6 @@ class CrearPassword(LoginRequiredMixin, FormView):
 
     form_class= CreatePasswordForm
     template_name = "users/crearpassword.html"
-    success_url = reverse_lazy('users_app:inicio')
     login_url = reverse_lazy('users_app:login')
     
     def get_form_kwargs(self):
@@ -303,16 +303,25 @@ class SeguidoresPerfilView(LoginRequiredMixin,DetailView):
     model = User
     login_url = reverse_lazy('users_app:login')
     template_name = 'users/seguidores.html'
-    context_object_name = 'usuario'
+    context_object_name = 'usuario'       
     
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        total_puntos = PuntosObtenidos.objects.filter(
+                            usuario__id=context["usuario"].id
+                        ).aggregate(total=Sum('puntos'))
+        if total_puntos["total"] == None:
+            total_puntos["total"] = 0
+        context["total_puntos"] = total_puntos["total"]
+        context["seguidores_list"] =SeguirUsuario.objects.filter(seguido__id=context["usuario"].id).select_related("seguido","seguidor")
         
-        context = super().get_context_data(**kwargs)    
-        context["boton_activo"] = True       
+        context["seguidores"] =context["seguidores_list"].count()
         
+        context["seguidos"] =SeguirUsuario.objects.filter(seguidor__id=context["usuario"].id).count()
+        context["favoritos"] =SeguirEvaluacion.objects.filter(usuario__id=context["usuario"].id).count()
+        context["total_evaluaciones"] = Evaluacion.objects.filter(user__id=context["usuario"].id).count()
+        context["total_intentos_usuario"] = Intento.objects.filter(usuario__id=context["usuario"].id).count()
         return context
-        
-    
     
 class SeguidosPerfilView(LoginRequiredMixin,DetailView):
     
@@ -322,11 +331,21 @@ class SeguidosPerfilView(LoginRequiredMixin,DetailView):
     context_object_name = 'usuario'
     
     def get_context_data(self, **kwargs):
-        
-        context = super().get_context_data(**kwargs)    
-        context["boton_activo"] = True       
-        
+        context = super().get_context_data(**kwargs)
+        total_puntos = PuntosObtenidos.objects.filter(
+                            usuario__id=context["usuario"].id
+                        ).aggregate(total=Sum('puntos'))
+        if total_puntos["total"] == None:
+            total_puntos["total"] = 0
+        context["total_puntos"] = total_puntos["total"]
+        context["seguidos_list"] =SeguirUsuario.objects.filter(seguidor__id=context["usuario"].id).select_related("seguido","seguidor")
+        context["seguidos"] =context["seguidos_list"].count()
+        context["favoritos"] =SeguirEvaluacion.objects.filter(usuario__id=context["usuario"].id).count()
+        context["seguidores"] =SeguirUsuario.objects.filter(seguido__id=context["usuario"].id).count()
+        context["total_evaluaciones"] = Evaluacion.objects.filter(user__id=context["usuario"].id).count()
+        context["total_intentos_usuario"] = Intento.objects.filter(usuario__id=context["usuario"].id).count()
         return context
+    
     
 class EvaluacionesFavoritasPerfilView(LoginRequiredMixin,DetailView):
     
@@ -336,8 +355,271 @@ class EvaluacionesFavoritasPerfilView(LoginRequiredMixin,DetailView):
     context_object_name = 'usuario'
     
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        total_puntos = PuntosObtenidos.objects.filter(
+                            usuario__id=context["usuario"].id
+                        ).aggregate(total=Sum('puntos'))
+        if total_puntos["total"] == None:
+            total_puntos["total"] = 0
+        context["total_puntos"] = total_puntos["total"]
+        context["total_puntos"] = total_puntos["total"]
+        context["seguidores"] =SeguirUsuario.objects.filter(seguido__id=context["usuario"].id).count()
+        context["seguidos"] =SeguirUsuario.objects.filter(seguidor__id=context["usuario"].id).count()
+        context["favoritos_list"] =SeguirEvaluacion.objects.filter(usuario__id=context["usuario"].id).select_related("evaluacion","usuario","evaluacion__subcategoria","evaluacion__subcategoria__categoria")
+        context["favoritos"] =context["favoritos_list"].count()
+        context["total_evaluaciones"] = Evaluacion.objects.filter(user__id=context["usuario"].id).count()
+        context["total_intentos_usuario"] = Intento.objects.filter(usuario__id=context["usuario"].id).count()
+        return context
+
+class VerIntentos(LoginRequiredMixin,DetailView):
+    model = Evaluacion
+    template_name = "users/ver_intentos.html"
+    login_url = reverse_lazy('users_app:login')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         
-        context = super().get_context_data(**kwargs)    
-        context["boton_activo"] = True       
+        intentos = Intento.objects.filter(
+            usuario__id=self.request.user.id,evaluacion__id=self.kwargs["pk"]
+            ).annotate(correctas=Count('preguntas',filter=Q(preguntas__correcto=True))).order_by('-hora_inicio')
+        
+        context["usuario"] = self.request.user
+        context["intentos"] = intentos
+        
+ 
+        return context
+
+
+class RankingsListView(ListView):
+    model = User
+    template_name = "rankings/rangos.html"
+    context_object_name = "ranking_user"
+    
+    
+    def get_queryset(self):
+        
+        queryset = super(RankingsListView, self).get_queryset()
+        try:
+            categoria = self.request.GET["categoria"]
+            queryset = User.objects.filter(intentos__evaluacion__subcategoria__categoria__nombre=categoria
+                ).annotate(
+            total_evas=Count('intentos__evaluacion',distinct=True),
+            aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
+            perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
+            puntos_total=Coalesce(
+                Sum("puntos__puntos",
+                    distinct=True,
+                    filter=Q(puntos__evaluacion__subcategoria__categoria__nombre=categoria)),
+                Value(0))
+            ).order_by("-puntos_total")
+
+            contador = 1
+            for x in queryset:
+
+                if self.request.user.username == x.username:
+
+                    self.request.session["rango"] = contador
+                    break
+                else:
+                    self.request.session["rango"] = "-"
+                
+                contador += 1
+
+        except:
+            queryset = User.objects.annotate(
+            total_evas=Count('intentos__evaluacion',distinct=True),
+            aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
+            perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
+            puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
+            ).order_by("-puntos_total",'username')
+            contador = 1
+            for x in queryset:
+                if self.request.user.username == x.username:
+                    self.request.session["rango"] = contador
+                
+                contador += 1
+        
+        return queryset[:5]
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        try:
+            print("aca")
+            categoria = self.request.GET["categoria"]
+            qs = User.objects.filter(
+                id=self.request.user.id,intentos__evaluacion__subcategoria__categoria__nombre=categoria
+                ).annotate(
+                    total_evas=Count('intentos__evaluacion',distinct=True),
+                    aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
+                    perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
+                    puntos_total=Coalesce(
+                            Sum("puntos__puntos",
+                                distinct=True,
+                                filter=Q(puntos__evaluacion__subcategoria__categoria__nombre=categoria)),
+                            Value(0))
+                ).first()
+            print(qs)
+        except:
+            
+            qs = User.objects.filter(
+                id=self.request.user.id
+                ).annotate(
+                    total_evas=Count('intentos__evaluacion',distinct=True),
+                    aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
+                    perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
+                    puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
+                ).first()
+        
+        
+        context["usuario_actual"] = qs
+        try:
+            context["rango"] = self.request.session["rango"]
+        except:
+            context["rango"] = ""
+        
+        context["categorias"] = Categoria.objects.all()
+        
         
         return context
+
+
+class IntentosUsuario(DetailView):
+    model = User
+    template_name = "users/intentos_usuario.html"
+    context_object_name = 'usuario'
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        busqueda = self.request.GET.get("kword",'')
+        categoria = self.request.GET.get("categoria",'')
+        orden = self.request.GET.get("orden",'')
+        
+        orden = establecer_orden(orden)
+        
+        evaluaciones = Evaluacion.objects.filter(intentos__usuario__id=self.kwargs["pk"],
+                                                 subcategoria__categoria__nombre__contains=categoria,
+                                                 nombre__icontains = busqueda
+            ).annotate(max_p=Max('intentos__puntuacion',filter=Q(intentos__usuario__id=self.kwargs["pk"])),
+                tot_intentos=Count('intentos__id',filter=Q(intentos__usuario__id=self.kwargs["pk"])),
+                restantes=F('intentos_permitidos')- Count('intentos__id',filter=Q(intentos__usuario__id=self.kwargs["pk"])),
+                ultimo_intento = Max('intentos__hora_inicio')
+                ).select_related('subcategoria','subcategoria__categoria').order_by(orden)
+        
+        context["total_intentos_usuario"] = Intento.objects.filter(usuario__id=context["usuario"].id).count()
+        p = Paginator(evaluaciones,5) 
+        page_number = self.request.GET.get('page')
+        page_obj = p.get_page(page_number)
+
+        context["page_obj"] = page_obj
+        total_puntos = PuntosObtenidos.objects.filter(
+                            usuario__id=context["usuario"].id
+                        ).aggregate(total=Sum('puntos'))
+        if total_puntos["total"] == None:
+            total_puntos["total"] = 0
+        context["total_puntos"] = total_puntos["total"]
+        
+        context["seguidores"] =SeguirUsuario.objects.filter(seguido__id=context["usuario"].id).count()
+        context["seguidos"] =SeguirUsuario.objects.filter(seguidor__id=context["usuario"].id).count()
+        context["favoritos"] =SeguirEvaluacion.objects.filter(usuario__id=context["usuario"].id).count()
+        context["total_evaluaciones"] = Evaluacion.objects.filter(user__id=context["usuario"].id).count()
+        categorias = Categoria.objects.all().values('nombre')
+        context["categorias"] = categorias
+        context["kword"] = busqueda
+        context["orden"] = orden
+        context["cat_sel"] = categoria
+        path = self.request.get_full_path().replace(self.request.path,"")
+        try:
+            index = path.index("&pa")
+            path = path[:index]
+        except:
+            pass
+        context["path_query"] = path
+                
+        return context
+    
+class EvaluacionesUsuario(DetailView):
+    model = User
+    template_name = "users/evaluaciones_usuario.html"
+    context_object_name = 'usuario'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        kword = self.request.GET.get("kword","")
+        ord_sel= self.request.GET.get("orden","")
+        cat_sel= self.request.GET.get("categoria","")
+
+        orden = establecer_orden_eva(ord_sel)
+        if self.request.user == context["usuario"].id:
+
+            eva_propias = Evaluacion.objects.filter(
+                user__id=context["usuario"].id,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
+                ).annotate(tot_valoraciones=Count('valorar', distinct=True),
+                        prom_valoraciones=Avg('valorar__valor'),
+                        tot_seguidores=Count('seguir', distinct=True),
+                        tot_intentos=Count('intentos', distinct=True),
+                        prom_intentos=Avg('intentos__puntuacion'),
+                        total_preguntas=Count('preguntas', distinct=True),
+                        total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True), distinct=True),
+                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__aprobado',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField())
+                                                                                                     
+                        ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
+        else:
+            eva_propias = Evaluacion.objects.filter(
+                user__id=context["usuario"].id,publico=True,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
+                ).annotate(tot_valoraciones=Count('valorar', distinct=True),
+                        prom_valoraciones=Avg('valorar__valor'),
+                        tot_seguidores=Count('seguir', distinct=True),
+                        tot_intentos=Count('intentos', distinct=True),
+                        prom_intentos=Avg('intentos__puntuacion'),
+                        total_preguntas=Count('preguntas', distinct=True),
+                        total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True), distinct=True),
+                        aprobados= Case(When(
+                            tot_intentos=0,
+                            then=0),
+                            default=Count('intentos__aprobado',
+                            filter=Q(intentos__aprobado=True))*100/Count('intentos'),
+                            output_field=FloatField())
+
+                        ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
+        
+        p = Paginator(eva_propias,5) 
+        page_number = self.request.GET.get('page')
+        page_obj = p.get_page(page_number)
+
+        context["page_obj"] = page_obj
+        
+        total_puntos = PuntosObtenidos.objects.filter(
+                            usuario__id=context["usuario"].id
+                        ).aggregate(total=Sum('puntos'))
+        if total_puntos["total"] == None:
+            total_puntos["total"] = 0
+        context["total_puntos"] = total_puntos["total"]  
+        
+        categorias = Categoria.objects.all().values('nombre')
+        context["categorias"] = categorias
+        
+        context["kword"] = kword
+        context["orden"] = ord_sel
+        context["cat_sel"] = cat_sel
+        path = self.request.get_full_path().replace(self.request.path,"")
+        try:
+            index = path.index("&pa")
+            path = path[:index]
+        except:
+            pass
+        context["path_query"] = path
+        
+        context["seguidores"] =SeguirUsuario.objects.filter(seguido__id=context["usuario"].id).count()
+        context["seguidos"] =SeguirUsuario.objects.filter(seguidor__id=context["usuario"].id).count()
+        context["favoritos"] =SeguirEvaluacion.objects.filter(usuario__id=context["usuario"].id).count()
+        context["total_evaluaciones"] = Evaluacion.objects.filter(user__id=context["usuario"].id).count()
+        context["total_intentos_usuario"] = Intento.objects.filter(usuario__id=context["usuario"].id).count()
+               
+        
+        return context
+        
+        

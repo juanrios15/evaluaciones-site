@@ -1,6 +1,6 @@
 {% extends "users/base_users.html" %}
 
-{% load  static %}
+{% load static %}
 
 
 {% block content %}
@@ -13,7 +13,7 @@
         <div class="row d-flex justify-content-between">
             {{message}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    
+
         </div>
     </div>
 </div>
@@ -24,156 +24,198 @@
 {% if request.user == user %}
 <br>
 <br>
-<div hidden id="codoculto" >{{request.user.codigo_pais}}</div>
-<div class="container col-md-6">
+<div hidden id="codoculto">{{request.user.codigo_pais}}</div>
+<div class="container col-md-10">
     <div class="row">
+
         <div class="col-md-9">
-        
-            <h1> {{user.username}} | Editar usuario
-            </h1>
-        </div>
-        <div class="col-md-3">
-            <div class="row pe-2">
-                <button type="button" class="btn text-danger fs-6" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Borrar mi cuenta
-                  </button>
-            </div>
-  
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Estas seguro que deseas eliminar tu cuenta?</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Una vez elimines tu cuenta no podras recuperar los cambios...
-                     
-                    </div>
-                    <div class="modal-footer">
+            <div class="row ">
+                <div class="col-md-9">
 
-                      <form action="{% url 'users_app:eliminarcuenta' %}" method="post"> {% csrf_token %}
-                        <button type="submit" class="btn btn-danger"> Borrar cuenta </button>
-                    </form>
-                    </div>
-                  </div>
+                    <h1> {{user.username}} | Editar usuario
+                    </h1>
+                    <div class="text-secondary fs-5 fw-light">{{user.email}}</div>
                 </div>
-              </div>
-            
-        </div>
-    </div>
-    <br>
-
-    <div class="row">
-        <div class="row">
-            {% if user.foto %}
-            <form action="{% url 'users_app:borrarfoto' %}" method="post"> {% csrf_token %}
-                <button class="btn text-primary fs-6 text-decoration-none" type="submit"> Borrar foto</button>
-            </form>
-            {% endif %}
-        </div>
-        <form method="post" enctype="multipart/form-data"> {% csrf_token %}
-            <div class="row">
-                <div class="col-md-4">
-                    {% if user.foto %}
-        
-                    <img src="{{user.foto.url }}" alt=""  class="w-100 d-block m-1 rounded border border-secondary" id="mostrarimg" style="min-height: 200px;">
-                    
-                    {% else %}
-                    <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded" id="mostrarimg" style="min-height: 200px;">
-                    {% endif %}
-                    <div class="col-md-12">
-                        {{form.foto}}
-                        {% if form.foto.errors %}
-                            {% for error in form.foto.errors %}
-                            <div class="text-danger"> {{ error }} </div>    
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-md-8 d-flex align-items-center">
-                    <div class="row ">
-                    <div class="col-md-12">
-                        <div class="row my-1">
-    
-                            <div class="col-md-3 align-self-center">Username</div>
-                                <div class="col-md-9"> {{form.username}}</div>
-                           
-                            {% if form.username.errors %}
-                                {% for error in form.username.errors %}
-                                <div class="text-danger"> {{ error }} </div>    
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row my-1">
-                            <div class="col-md-3 align-self-center">Nombres </div>
-                                <div class="col-md-9">{{form.full_name}}</div>
+                <div class="col-md-3 text-end">
+                    <div class="row pe-2 text-end mb-0">
+                        <button type="button" class="btn btn-outline-light  text-danger  text-end fs-6"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Borrar mi cuenta
+                        </button>
+                        
+                        {% if user.password %}
+                        <a type="button" class="btn text-danger btn-outline-light text-end fs-6"
+                            href="{% url 'users_app:cambiarpassword' %}">
+                            Cambiar contraseña
+                        </a>
                             
-                            {% if form.full_name.errors %}
-                                {% for error in form.full_name.errors %}
-                                <div class="text-danger"> {{ error }} </div>    
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row my-1">
-                            <div class="col-md-3 align-self-center">Genero</div>
-                            <div class="col-md-9">{{form.genero}}</div>
-                            {% if form.genero.errors %}
-                            {% for error in form.genero.errors %}
-                            <div class="text-danger"> {{ error }} </div>    
-                            {% endfor %}
                         {% endif %}
-                        </div>
+                            
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-12 my-1">
-                            <div class="row align-items-center mt-1">
-                                <div class="col-md-3 align-self-center">País</div>
-                                <div class="col-md-9">
-                                    <input type="text" id="paisupdate" class="form-control" name="pais">
-                                    <input type="hidden" name="codigo_pais" id="paisupdate_code" />
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Estas seguro que deseas eliminar tu
+                                        cuenta?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Una vez elimines tu cuenta no podras recuperar los cambios...
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <form action="{% url 'users_app:eliminarcuenta' %}" method="post"> {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger"> Borrar cuenta </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="row my-1">
-                                <div class="col-md-3">Fecha nacimiento</div>
-                                    <div class="col-md-9 d-flex">
-                                        {{form.fecha_nacimiento}}
-                                        
-                                    </div>
-                                    {% if form.fecha_nacimiento.errors %}
-                                        {% for error in form.fecha_nacimiento.errors %}
-                                        <div class="text-danger"> {{ error }} </div>    
-                                        {% endfor %}
-                                    {% endif %}
-            
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    {% if user.foto %}
+                    <form action="{% url 'users_app:borrarfoto' %}" method="post"> {% csrf_token %}
+                        <button class="btn text-primary fs-6 text-decoration-none  lh-1" type="submit"> Borrar
+                            foto</button>
+                    </form>
+                    {% endif %}
+                </div>
+                <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                    <div class="row px-1 pb-1 border-end">
+                        <div class="col-md-4 border-end">
+                            {% if user.foto %}
+
+                            <img src="{{user.foto.url }}" alt=""
+                                class="w-100 d-block m-1 rounded border border-secondary" id="mostrarimg"
+                                style="min-height: 200px;">
+
+                            {% else %}
+                            <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded"
+                                id="mostrarimg" style="min-height: 200px;">
+                            {% endif %}
+                            <div class="col-md-12">
+                                {{form.foto}}
+                                {% if form.foto.errors %}
+                                {% for error in form.foto.errors %}
+                                <div class="text-danger"> {{ error }} </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
+                        <div class="col-md-8 d-flex align-items-center">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row my-1">
+
+                                        <div class="col-md-3 align-self-center">Username</div>
+                                        <div class="col-md-9"> {{form.username}}</div>
+
+                                        {% if form.username.errors %}
+                                        {% for error in form.username.errors %}
+                                        <div class="text-danger"> {{ error }} </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row my-1">
+                                        <div class="col-md-3 align-self-center">Nombres </div>
+                                        <div class="col-md-9">{{form.full_name}}</div>
+
+                                        {% if form.full_name.errors %}
+                                        {% for error in form.full_name.errors %}
+                                        <div class="text-danger"> {{ error }} </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row my-1">
+                                        <div class="col-md-3 align-self-center">Genero</div>
+                                        <div class="col-md-9">{{form.genero}}</div>
+                                        {% if form.genero.errors %}
+                                        {% for error in form.genero.errors %}
+                                        <div class="text-danger"> {{ error }} </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12 my-1">
+                                    <div class="row align-items-center mt-1">
+                                        <div class="col-md-3 align-self-center">País</div>
+                                        <div class="col-md-9 ">
+                                            <input type="text" id="paisupdate" class="form-control" name="pais">
+                                            <input type="hidden" name="codigo_pais" id="paisupdate_code" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row my-1">
+                                        <div class="col-md-3">Fecha nacimiento</div>
+                                        <div class="col-md-9 d-flex">
+                                            {{form.fecha_nacimiento}}
+
+                                        </div>
+                                        {% if form.fecha_nacimiento.errors %}
+                                        {% for error in form.fecha_nacimiento.errors %}
+                                        <div class="text-danger"> {{ error }} </div>
+                                        {% endfor %}
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+              
+
+
+                            </div>
+                        </div>
+                        <div class="row mx-0 mb-3 my-2">
+                            <label for="biografia" class="form-label">Breve biografía</label>
+                            <textarea name="biografia" id="biografia" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="row flex-row-reverse mx-0">
+                            <button type="submit" class="btn btn-dark">Actualizar</button>
+
+                        </div>
                     </div>
-    
-    
-                </div>
+                </form>
             </div>
-            <div class="row flex-row-reverse">
-                <div class="col-md-12">
-                    <div class="row px-2">
-                        
-                        <button type="submit" class="btn btn-dark">Actualizar</button>
-                    </div>
-                </div>
-            </div>
-            </form>
+
+
+
+
         </div>
-    
+        <div class="col-md-3">
+
+            <br>
+            <div class="container fs-3 fw-light">
+                Espacio Publicitario
+
+            </div>
+
+
+
+        </div>
+
+
+
     </div>
-        
-    <br>
+
+
+</div>
+
+<br>
 
 
 
@@ -184,7 +226,7 @@
 
 <h1>Que haces aqui? No tienes los permisos para esto</h1>
 {% endif %}
-    
+
 
 
 {% endblock content %}

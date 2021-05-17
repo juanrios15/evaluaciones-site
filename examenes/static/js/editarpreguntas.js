@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
     var ultima = parseInt($("#opcionesoculto").text())
+
+    if (isNaN(ultima)) {
+        ultima = 2
+    }
     console.log(ultima);
 
     jQuery(document).on('click',"#agregaropcion", function(data) {

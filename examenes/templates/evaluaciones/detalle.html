@@ -22,16 +22,16 @@
 
 <div class="container">
     <div class="row align-items-center">
-        <div class="col-md-8">
-            <div class="fs-1 fw-bold">{{evaluacion.nombre}}</div>
-            <div class="fs-6 text-secondary">Creado: {{evaluacion.created_at}}</div>
+        <div class="col-md-9">
+            <div class="fw-light lh-sm" style="font-size: 45px;"> {{evaluacion.nombre}}</div>
+            <div class="fs-6 text-secondary fst-italic">{{evaluacion.created_at}}</div>
         </div>
-        <div class="col-md-4 d-flex justify-content-end">
+        <div class="col-md-3 d-flex justify-content-end px-0">
             
             {% if evaluacion.id  in evaluaciones_seguidas %}
             <form action="{% url 'exams_app:seguireva' evaluacion.id %}" method="post"> {% csrf_token %}
 
-                <button type="submit" class="btn btn-primary mx-2">
+                <button type="submit" class="btn btn-primary mx-2 shadow">
                     Siguiendo <i class="fas fa-minus"></i> 
                 </button>
 
@@ -40,7 +40,7 @@
             {% else %}
             <form action="{% url 'exams_app:seguireva' evaluacion.id %}" method="post"> {% csrf_token %}
 
-                <button type="submit" class="btn border border-primary mx-2">
+                <button type="submit" class="btn border border-primary mx-2 shadow">
                     Seguir  <i class="fas fa-plus text-primary"></i>
                 </button>
 
@@ -49,7 +49,7 @@
             {% endif %} 
 
             {% if presentada %}
-            <button class="btn btn-white fs-6 border border-secondary px-2 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">Valorar <span class="text-warning"><i class="fas fa-star-half-alt"></i></span></button>
+            <button class="btn btn-white fs-6 border border-secondary px-2 me-2 shadow" data-bs-toggle="modal" data-bs-target="#exampleModal2">Valorar <span class="text-warning"><i class="fas fa-star-half-alt"></i></span></button>
             <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -80,7 +80,7 @@
               </div>                
 
               {% else %}
-              <button class="btn btn-white fs-6 border border-secondary px-2 disabled me-2">Valorar <span class="text-warning"><i class="fas fa-star-half-alt"></i></span></button>
+              <button class="btn btn-white fs-6 border border-secondary px-2 disabled me-2 shadow">Valorar <span class="text-warning"><i class="fas fa-star-half-alt"></i></span></button>
               
               
               {% endif %}
@@ -90,10 +90,10 @@
               
               {% if calificado %}
               <span class="d-inline-block"  tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" title="Ya calificaste esta evaluación">
-                  <button class="btn btn-danger fs-6 text-white px-1 disabled" >Dificultad <i class="fas fa-graduation-cap"></i>  </button>
+                  <button class="btn btn-danger fs-6 text-white px-1 disabled shadow" >Dificultad <i class="fas fa-graduation-cap"></i>  </button>
                 </span>
                 {% else %}
-                <button class="btn btn-danger fs-6 text-white px-1" data-bs-toggle="modal" data-bs-target="#exampleModal">Dificultad <i class="fas fa-graduation-cap"></i>  </button>
+                <button class="btn btn-danger fs-6 text-white px-1 shadow" data-bs-toggle="modal" data-bs-target="#exampleModal">Dificultad <i class="fas fa-graduation-cap"></i>  </button>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -146,83 +146,17 @@
                 {% endif %}
                 {% else %}
                 <span class="d-inline-block"  tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" title="Primero debes aprobar la evaluación">
-                    <button class="btn btn-danger fs-6 text-white px-1 disabled" >Dificultad <i class="fas fa-graduation-cap"></i>  </button>
+                    <button class="btn btn-danger fs-6 text-white px-1 disabled shadow" >Dificultad <i class="fas fa-graduation-cap"></i>  </button>
                 </span>
                 {% endif %}
 
                 
         </div>
     </div>
-    <div class="row border mt-2 p-2">
-        <div class="col-md-7 p-2">
-            <div class="row">
-
-                <div class="col-md-5">
-                    <div class="row mb-2 align-items-center">
-                        <div class="col-md-3">
-                            
-                            {% if evaluacion.user.foto %}
-                            <img class="w-100 d-block rounded"  src="{{evaluacion.user.foto.url }}" alt="">
-                            {% else %}
-                            <img class="w-100 d-block rounded" src="{% static 'img/no-image.png' %}" alt="">
-                            {% endif %}
-                                
-                        </div>
-                        <div class="col-md-9 text-secondary" style="font-size: 0.85rem;">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="row">
-                                        Usuario 
-                                    </div>
-                                    <div class="row">
-                                        Seguidores 
-                                    </div>
-                                    <div class="row">
-                                        Evaluaciones
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-md-7 px-2">
-                                    <div class="row">{{evaluacion.user.username}}</div>
-                                    
-                                    <div class="row"> 0 </div>
-                                    <div class="row">{{autor.evaluaciones}}</div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    
-                    <div class="row p-0 m-0">
-                        <div class="col-md-3">
-                            <div class="fw-bold fs-6">
-                                Categoría
-                            </div> 
-                        </div>
-                        <div class="col-md-9">
-                            <div class="fs-6">
-                                <a href="#" class="text-decoration-none">{{evaluacion.subcategoria.categoria}}</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row p-0 m-0 mb-2">
-                        <div class="col-md-3">
-                            <div class="fw-bold fs-6">
-                                Subcategoría
-                            </div> 
-                        </div>
-                        <div class="col-md-9">
-                            <div class="fs-6">
-                                <a href="#" class="text-decoration-none">{{evaluacion.subcategoria}}</a> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row p-0 py-1 m-0 rounded align-items-center text-center bg-dark text-white">
+    <div class="row mt-2 p-2">
+        <div class="col-md-7 py-2 px-3">
+            
+            <div class="row p-0 py-1 m-0 align-items-center text-center fw-light border-top border-start border-end shadow-sm">
                 <div class="col-md-2">
                         Puntaje minimo
                 </div>
@@ -230,7 +164,7 @@
                         Cantidad de preguntas
                 </div>
                 <div class="col-md-2">
-                        Intentos
+                        Intentos Permitidos
                 </div>
                 <div class="col-md-2">
                         Tiempo limite
@@ -242,7 +176,7 @@
                         Dificultad autor
                 </div>
             </div>
-            <div class="row p-0 m-0 text-center py-2">
+            <div class="row p-0 m-0 text-center py-2 mb-3 border shadow-sm">
                 <div class="col-md-2">
                         <span class="fw-bold">{{evaluacion.puntaje_minimo}}  </span>/100
     
@@ -254,76 +188,238 @@
                         <span class="fw-bold">{{evaluacion.intentos_permitidos}}</span>
                 </div>
                 <div class="col-md-2">
-                        <span class="fw-bold">{{evaluacion.tiempo_limite}}</span> minutos
+                        <span class="fw-bold">{{evaluacion.tiempo_limite}}</span> mins
                 </div>
-                <div class="col-md-2 bg-danger text-white rounded">
-                        <span class="fw-bold"> {{evaluacion.dificultad_ponderada}}</span>
+                <div class="col-md-2 text-white rounded">
+                        <span class="fw-bold bg-danger rounded p-1"> {{evaluacion.dificultad_ponderada}}</span>
                 </div>
                 <div class="col-md-2">
                         <span class="fw-bold"> {{evaluacion.dificultad}}</span> 
                 </div>
                 
             </div>
+            <div class="col-md-10 container ">
+                <div class="row  p-0 py-1 m-0 mt-2 align-items-center border text-center fw-light border-top border-start border-end shadow-sm">
+                    <div class="col-md-3">
+                        Intentos Realizados
+                    </div>
+                    <div class="col-md-3">
+                        Usuarios Aprobados
+                    </div>
+                    <div class="col-md-3">
+                        % aprobados
+                    </div>
+                    <div class="col-md-3">
+                        Promedio intentos
+                    </div>
+    
+                </div>
+                <div class="row  p-0 m-0 text-center py-2 mb-2 border shadow-sm">
+                    <div class="col-md-3">
+                        
+                        <div class="fs-6">{{evaluacion.intentos.count}}</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="fs-6">{{aprobados.aprobados}}</div>
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <div class="fs-6">
+                            <div class="progress mt-1">
+                                <div class="progress-bar" role="progressbar" style="width: {{porcentaje_aprobados|floatformat:'0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{porcentaje_aprobados|floatformat:2}}%
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <div style="font-size: 0.9rem;">{{aprobados.promedio|floatformat:2}} / 100,00</div>
+                    </div>
+     
+                </div>
 
-            <div class="row  p-0 py-1 m-0 mt-2 rounded align-items-center text-center bg-dark text-white">
-                <div class="col-md-2">
-                    Intentos
-                </div>
-                <div class="col-md-2">
-                    Aprobados
-                </div>
-                <div class="col-md-2">
-                    % aprobados
-                </div>
-                <div class="col-md-2">
-                    Promedio
-                </div>
-                <div class="col-md-2">
-                    Seguidores
-                </div>
-                <div class="col-md-2">
-                    Valoración
-                </div>
             </div>
-            <div class="row  p-0 m-0 text-center py-2">
-                <div class="col-md-2">
-                    
-                    <div class="fs-6">{{evaluacion.intentos.count}}</div>
+            
+            <div class="p-0 m-0 row align-items-center ">
+
+                <div class="col-md-3">
+                    <div class="row mb-2 align-items-center">
+                        <div class="col-md-5">
+                            
+                            {% if evaluacion.user.foto %}
+                            <a href="{% url 'users_app:detalleusuario' evaluacion.user.slug %}"> <img class="w-100 d-block rounded shadow"  src="{{evaluacion.user.foto.url }}" alt=""> </a>
+                            {% else %}
+                            <a href="{% url 'users_app:detalleusuario' evaluacion.user.slug %}"> <img class="w-100 d-block rounded shadow" src="{% static 'img/no-image.png' %}" alt=""> </a>
+                            {% endif %}
+                            
+                                
+                        </div>
+                        <div class="col-md-7 text-secondary" style="font-size: 0.85rem;">
+                            <div class="row">
+                                <div class="col-md-12 px-2">
+                                    <a href="{% url 'users_app:detalleusuario' evaluacion.user.slug %}" class="text-decoration-none"> 
+                                        <div class="row">{{evaluacion.user.username}}</div>
+                                    </a>
+                                    <div class="row">{{evaluacion.user.pais}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="fs-6">{{aprobados.aprobados}}</div>
-                    
-                </div>
-                <div class="col-md-2">
-                    <div class="fs-6">
-                        <div class="progress mt-1">
-                            <div class="progress-bar" role="progressbar" style="width: {{porcentaje_aprobados|floatformat:'0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{porcentaje_aprobados|floatformat:2}}%
+                <div class="col-md-6">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-4 align-self-center">
+                            <div class="fs-6">
+                                Categoría
+                            </div> 
+                        </div>
+                        <div class="col-md-8">
+                            <div class="fs-6 text-secondary">
+                                {{evaluacion.subcategoria.categoria}}
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="row p-0 m-0 mb-2">
+                        <div class="col-md-4 align-self-center">
+                            <div class="fs-6">
+                                Subcategoría
+                            </div> 
+                        </div>
+                        <div class="col-md-8">
+                            <div class="fs-6 text-secondary">
+                               {{evaluacion.subcategoria}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="fs-6">{{aprobados.promedio|floatformat:2}}/100</div>
-                </div>
-                <div class="col-md-2">
-                    <div class="fs-6">{{seguidores.cantidad}} <i class="fas fa-users"></i></div>
-                </div>
-                <div class="col-md-2">
-                    
-                    <div class="fs-6">{{promedio_valoracion}} <i class="fas fa-star-half-alt"></i></div>
+                <div class="col-md-3">
+                    <div class="row text-center border border-2 rounded justify-content-center shadow" style="font-size: 0.9rem;">
+                        <div class="row text-center px-0">
+                            <div class="col-md-6 ">
+                                Favoritos
+                            </div>
+                            <div class="col-md-6">
+                                Valoración
+                            </div>
+                        </div>
+                        <div class="row text-center px-0">
+                            <div class="col-md-6">
+                                {{evaluacion.favoritos}}  <i class="fas fa-users"></i>
+                            </div>
+                            <div class="col-md-6 ">
+                                {{evaluacion.valoracion|floatformat:2}} <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="row p-0 py-1 m-0 mt-2">
-                {{evaluacion.descripcion}}
+                <div class="fs-4 mb-1">
+                    Descripción
+                </div>
+                <hr>
+                <div class="fs-6">
+                    {{evaluacion.descripcion}}
+                </div>
+                
+            </div>
+            <div class="row p-0 py-1 m-0 mt-2">
+                <div class="fs-4 mb-1">
+                    Requisitos minimos
+                </div>
+                <hr>
+                <div class="fs-6">
+                    {{evaluacion.requisitos_minimos}}
+                </div>
+                
             </div>
         </div>
-        <div class="col-md-5 ">
-            <div class="row bg-secondary text-center rounded" style="height: 400px;"></div>
-            <div class="row mt-2 py-1">
-                <button class="btn btn-outline-primary py-3"> Presentar evaluación </button>
+        <div class="col-md-5">
+            <div class="row mx-2">
+                <div class="row ">
+                    <div class="col-md-12  text-center rounded mb-3">
+                        {% if evaluacion.imagen %}
+                        <img class="w-100 d-block rounded" src="{{evaluacion.imagen.url}}" alt="" style="max-height: 350px;">
+                        {% else %}
+        
+                        <img class="w-100 d-block rounded" src="/static/img/subcats/{{evaluacion.subcategoria.nombre}}.jpg" alt="" style="max-height: 350px;">
+                                
+                        {% endif %}
+    
+                    </div>
+                    {% if user.username %}
+                    {% if request.user == evaluacion.user %}
+                    
+                    {% else %}
+                    <div class="row mt-2 py-1 align-items-center">
+                            <div class="col-md-5">
+                                <div class="row border rounded text-center mx-1 px-0 shadow" style="font-size: 0.9rem;">
+        
+                                    <div class="col-md-12">
+                                        Intentos restantes
+                                    </div>
+
+                                    <div class="col-md-12 fw-bold">
+                                        {{intentos_restantes}}
+                                    </div>
+
+
+                                </div>
+    
+                            </div>
+                            {% if intentos_restantes > 0 and maxima_puntuacion < 100 %}
+                            <div class="col-md-7">
+                                <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-success shadow border py-2"> Presentar Evaluación </button>
+                
+                                    </div>
+                                </form>
+    
+                            </div>
+                            {% else %}
+                            <div class="col-md-7">
+                                <div class="row mt-2 py-1">
+                                        <button type="submit" class="btn btn-outline-dark shadow border py-2" disabled> Presentar Evaluación </button>
+                    
+                                </div>
+                                
+                            </div>
+                
+                            {% endif %}
+
+                    </div>
+
+                    {% endif %}
+                    {% else %}
+                    <div class="col-md-12">
+                        <div class="row mt-2 py-1">
+                            <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
+                                <div class="row">
+                                    <button type="submit" class="btn btn-outline-dark fs-5 fw-light py-3 shadow border"> Presentar Evaluación </button>
+            
+                                </div>
+                            </form>
+            
+                        </div>
+                        
+                    </div>
+                    {% endif %}
+                </div>
+
             </div>
+            <br>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="fs-3 mb-2">Espacio publicitario</div>
+                </div>
+
+            </div>
+            
+                
         </div>
 
     </div>

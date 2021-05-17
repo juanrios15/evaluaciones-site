@@ -14,6 +14,7 @@ $(document).ready(function(){
     }
     console.log($("#listasubcategoria").text());
 
+    
     axios.get('http://127.0.0.1:8000/api/categorias/list').then(
         
         function(response){
@@ -62,7 +63,23 @@ $(document).ready(function(){
 
         })
     
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
     
+                reader.onload = function (e) {
+                    $('#mostrarimg').attr('src', e.target.result);
+                    console.log("holaaa");
+                }
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        $("#inputimg").change(function(){
+            readURL(this);
+        });
+        
         $("#formupdate").validate()
         $.validator.messages.required = 'Campo  requerido';   
 

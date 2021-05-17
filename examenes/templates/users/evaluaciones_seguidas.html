@@ -20,50 +20,88 @@
 {% endif %}
 <br>
 {% include 'users/base_perfil.html' %}
-<div class="container">
-    <ul class="nav nav-tabs sticky-top bg-white justify-content-center" id="myTab" role="tablist" style="top:55px;">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link text-dark " type="button" role="tab"  aria-selected="false" href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link text-dark" type="button" role="tab" aria-selected="false" href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" type="button" role="tab" aria-selected="true" href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Evaluaciones</a>
-        </li>
-    </ul>
 
-</div>
-
-<div class="container col-md-9">
-    <br>
-    <div class="row mb-2">
-        <div class="fs-2">
-            Evaluaciones Favoritas: {{usuario.favoritos.count}}
-        </div>
-    </div>
-    <hr>
-    <div class="row ">
-        
-        {% for seguido in usuario.favoritos.all %}
-        <div class="col-md-3">
-                {% if seguido.evaluacion.imagen %}
-                <img src="{{seguido.evaluacion.imagen.url}}" alt=""  class="w-100 d-block m-1 rounded">
+<div class="container col-md-10">
+    <div class="row">
+        <div class="col-md-9 border-end">
+            <br>
+            <div class="row mb-2">
+                <div class="fs-2">
+                    Favoritos ({{favoritos}})
+                </div>
+            </div>
+            <hr>
+            <div class="row ">
                 
-                {% else %}
-                <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded">
-                {% endif %}
-            <div class="text-center">
-                {{seguido.evaluacion.nombre}}
+                {% for seguido in favoritos_list %}
+                <div class="col-md-3 ">
+                    <div class="row text-center px-1 ">
+                        <div class="row  text-center align-items-center mx-0 " style="height: 50px;">
+      
+                            <a href="{% url 'exams_app:detalleeva' seguido.evaluacion.slug %}" class="text-decoration-none "> {{seguido.evaluacion.nombre|truncatechars:55}} </a>
+                        </div>
+                        <div class="row mx-0 px-0">
+                            {% if seguido.evaluacion.imagen %}
+                            <a href="{% url 'exams_app:detalleeva' seguido.evaluacion.slug %}">
+                                <img src="{{seguido.evaluacion.imagen.url}}" alt=""  class="mw-100 d-block  rounded" style="height: 180px;">
+                            </a>
+                            
+                            {% else %}
+                            <a href="{% url 'exams_app:detalleeva' seguido.evaluacion.slug %}">
+                                <img src="/static/img/subcats/{{seguido.evaluacion.subcategoria.nombre}}.jpg" alt="" class="mw-100 d-block  rounded" style="height: 180px;">
+                            </a> 
+                            {% endif %}
+
+                        </div>
+                        <div class="row  mx-0 align-items-center text-center  border px-0 fw-light mt-1" style="font-size: 0.9rem;">
+                            <div class="col-md-4 ">
+                                Tiempo limite
+                            </div>
+                            <div class="col-md-4  px-0">
+                                Intentos Permitidos
+                            </div>
+                            <div class="col-md-4 px-0">
+                                Dificultad
+                            </div>
+                        </div>
+
+                        <div class="row mx-0 px-0 fw-light border   " style="font-size: 0.9rem;">
+                            <div class="col-md-4">
+                                {{seguido.evaluacion.tiempo_limite}}
+                            </div>
+                            <div class="col-md-4">
+                                {{seguido.evaluacion.intentos_permitidos}}
+                            </div>
+                            <div class="col-md-4 fw-bold">
+                                {{seguido.evaluacion.dificultad_ponderada|floatformat:2}}
+                            </div>
+                        </div>
+
+                    </div>
+        
+        
+                </div>
+            
+                {% endfor %}
+        
             </div>
 
 
+
+
         </div>
-    
-            {{seguidor.seguidor.foto.url}}
-        {% endfor %}
+
+        <div class="col-md-3">
+            <br>
+            <div class="container fs-3 fw-light">
+                Espacio Publicitario
+
+            </div> 
+
+        </div>
 
     </div>
+    
         
 </div>
 

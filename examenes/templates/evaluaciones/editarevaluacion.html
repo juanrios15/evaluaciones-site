@@ -1,4 +1,4 @@
-{% extends "evaluaciones/base_editareva.html" %}
+{% extends "evaluaciones/base_eva.html" %}
 
 {% load static %}
 
@@ -25,79 +25,149 @@
 <div hidden id="suboculto" >{{evaluacion.subcategoria}}</div>
 <div hidden id="catoculto" >{{evaluacion.subcategoria.categoria}}</div>
 <div hidden id="preguntasoculto" >{{evaluacion.preguntas.count}}</div>
-<div class="container col-md-10">
-    <h2>Actualizar evaluación</h2>
-    <form method="post" id="formupdate" enctype="multipart/form-data"> {% csrf_token %}
-        <div class="row">
-            <label> Nombre </label>
-            {{form.nombre}}
+<div class="container col-md-9">
+    <div class="row row border-start ps-3">
+
+        <div class="fs-1">
+            Actualizar evaluación
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div> Puntaje Minimo</div>
-                {{form.puntaje_minimo}}
-            </div>
-            <div class="col-md-3">
-                <div> Cantidad preguntas</div>
-                {{form.cant_preguntas}}
-            </div>
-            <div class="col-md-3">
-                <div> Intentos permitidos</div>
-                {{form.intentos_permitidos}}
+        <form method="post" id="formupdate" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <label for="id_nombre" class="form-label"> Nombre </label>
+                        <input type="text" name="nombre" maxlength="150" required id="id_nombre" class="form-control"
+                            value="{{form.nombre.value}}">
+                    </div>
+                    <div class="row mt-2 border p-2 rounded shadow-sm">
+                        <div class="row text-center align-items-center mx-0 mb-2 border-bottom pb-1">
+                            <div class="col">Puntaje minimo</div>
+                            <div class="col">Cantidad preguntas</div>
+                            <div class="col">Intentos permitidos</div>
+                            <div class="col">Tiempo limite (mins)</div>
+                            <div class="col">Dificultad</div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col text-center ">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <input type="number" name="puntaje_minimo" value="{{form.puntaje_minimo.value}}" min="60" max="90" required
+                                            id="id_puntaje_minimo" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 px-0">
+                                        / 100
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+                            <div class="col text-center">
+                                <div class="container col-md-12">
+                                    
+                                    <input type="number" name="cant_preguntas" value="{{form.cant_preguntas.value}}" max="50" required
+                                        id="id_cant_preguntas" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="container col-md-12">
+                                    
+                                    <input type="number" name="intentos_permitidos" value="{{form.intentos_permitidos.value}}" min="0" max="5" required
+                                        id="id_intentos_permitidos" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="container col-md-12">
+                                    
+                                    <input type="number" name="tiempo_limite" value="{{form.tiempo_limite.value}}" required id="id_tiempo_limite"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="container col-md-12">
+                                    
+                                    <input type="number" name="dificultad" value="{{form.dificultad.value|stringformat:'.f'}}" step="any" required
+                                        id="id_dificultad" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+    
+    
+    
+    
+                    </div>
+                    <div class="row">
+                
+                        <div class="col-md-5 px-0">
+                            <select class="form-select my-3" aria-label="Default select example" id="listacategoria" required>
+                                <option value="" selected>Seleccione una categoria</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <select class="form-select my-3" aria-label="Default select example" id="listasubcategoria"
+                                name="subcategoria" required>
+                                <option selected>Subcategoría</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 bg-light shadow-sm my-2 border rounded d-flex align-items-center fs-5">
+                            Publico? &nbsp; {{form.publico}}
+                        </div>
+                        
+                    </div>
+    
+    
+                </div>
+                <div class="col-md-3">
+    
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 text-center d-flex justify-content-center ">
+                            
+                            {% if evaluacion.imagen %}
+                            <img src="{{ request.evaluacion.imagen.url }}" alt=""
+                            class="mw-100 d-block m-1 rounded border border-secondary" id="mostrarimg"
+                            style="height: 200px;">
+                            {% else %}
+                            <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block m-1 rounded" id="mostrarimg"
+                            style="height: 200px;">
+
+                            {% endif %}
+                                
+    
+                        </div>
+                        <input type="file" name="imagen" accept="image/*" id="inputimg" class="form-control">
+                    </div>
+                </div>
 
             </div>
-            <div class="col-md-3">
-                <div> Tiempo Limite (minutos)</div>
-                {{form.tiempo_limite}}
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col-md-3">
-                <div> Dificultad</div>
-                {{form.dificultad}}
-            </div>
-            <div class="col-md-3">
-                <select class="form-select my-3" aria-label="Default select example" id="listacategoria" required>
-                    <option value="" selected>Seleccione una categoria</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <select class="form-select my-3" aria-label="Default select example" id="listasubcategoria"
-                    name="subcategoria" required>
-                    <option selected>Subcategoría</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <div> Imagen</div>
-                {{form.imagen}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                Publico? {{form.publico}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 px-2">
-                <div class="row mx-2">
-                    <div> Descripción</div>
-
-                    {{form.descripcion}}
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="row me-2">
+                        <label for="id_descripcion" class="form-label fs-4"> Descripción </label>
+        
+                        <textarea class="form-control shadow-sm" name="descripcion" cols="40" rows="6" maxlength="400"
+                            required="" id="id_descripcion">{{form.descripcion.value}}</textarea>
+        
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row ms-2">
+                        <label for="id_requisitos_minimos" class="form-label fs-4"> Requisitos minimos </label>
+                        <textarea class="form-control shadow-sm" name="requisitos_minimos" cols="40" rows="6"
+                            maxlength="400" required="" id="id_requisitos_minimos" >{{form.requisitos_minimos.value}}</textarea>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 px-2">
-                <div class="row mx-2">
-                    <div> Requisitos minimos</div>
-                    {{form.requisitos_minimos}}
-                </div>
+            <br>
+            <div class="row mt-2">
+                <button type="submit" class="btn btn-dark">Actualizar evaluación</button>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <button type="submit" class="btn btn-dark">Actualizar evaluación</button>
-        </div>
-    </form>
+            
+            
+        </form>
+        
+        
+        
+    </div>
+    
 </div>
 
 
@@ -111,5 +181,5 @@
 
 
 
-
+<script src="{% static 'js/editarevaluacion.js' %}"> </script>
 {% endblock content %}

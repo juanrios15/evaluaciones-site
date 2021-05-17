@@ -18,11 +18,12 @@ $(document).ready(function(){
                 .remove()
                 .end()
                 cat = $("#listacategoria").val()
+                
                 for (var i = 0; i < y.length; i++) {
                     if (cat === y[i].nombre ) {
                         $('#listasubcategoria').append('<option value="">' + "Seleccione una opción" +'</option>');
                         for (var j=0;j<y[i].subcategoria.length;j++) {
-                            $('#listasubcategoria').append('<option value="' + y[i].subcategoria[j]+ '">' + y[i].subcategoria[j] + '</option>');
+                            $('#listasubcategoria').append('<option value="' + y[i].subcategoria[j].nombre+ '">' + y[i].subcategoria[j].nombre + '</option>');
                         }
                     }
                 }
@@ -44,15 +45,15 @@ $(document).ready(function(){
                 `<div class="row justify-content-center">
                 <div class="col-md-2 d-flex align-items-center justify-content-center">
                     <div class="form-check mt-3 form-switch d-flex justify-content-center">
-                        <input class="form-check-input pregunta`+id+`" type="checkbox"  value="1" id="pregunta-`+id+`-correcta" name="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`-correcta">
+                        <input class="form-check-input pregunta`+id+`" type="checkbox"  value="1" id="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`-correcta" name="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`-correcta">
                       </div>
                 </div>
                 <div class="col-md-9">
                     <label for="opcion-`+(ultima_opcion+1)+`" class="form-label">Opción</label>
                     <input type="text" class="form-control" id="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`" name="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`" placeholder="" required>
                 </div>
-                <div class="col-md-1 d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn-close opc" aria-label="Close"></button>
+                <div class="col-md-1 d-flex justify-content-center align-items-end pb-2">
+                    <button type="button" class="btn-close opc border rounded shadow-sm p-1 " aria-label="Close"></button>
                 </div>
             </div>`
             )
@@ -70,8 +71,8 @@ $(document).ready(function(){
                             <div class="col-md-10">
                             <label for="pregunta-`+(ultima_pregunta+1)+`" class="form-label">Pregunta</label>
                             </div>
-                            <div class="col-md-2">
-                            <button type="button" class="btn-close caja" aria-label="Close"></button>
+                            <div class="col-md-2 text-end ">
+                            <button type="button" class="btn-close caja border rounded shadow-sm p-1" aria-label="Close"></button>
                             </div>
                         </div>
                         <textarea class="form-control" id="pregunta-`+(ultima_pregunta+1)+`" name="pregunta-`+(ultima_pregunta+1)+`" rows="3" required></textarea>
@@ -81,7 +82,7 @@ $(document).ready(function(){
                                 <div class="mb-2">Correcta?</div>
                                 <div class="form-check form-switch d-flex justify-content-center">
                                     <input class="form-check-input pregunta`+(ultima_pregunta+1)+`" type="checkbox" value="1"
-                                        id="pregunta-`+(ultima_pregunta+1)+`-correcta" name="pregunta-`+(ultima_pregunta+1)+`-opcion-1-correcta">
+                                        id="pregunta-`+(ultima_pregunta+1)+`-opcion-1-correcta" name="pregunta-`+(ultima_pregunta+1)+`-opcion-1-correcta">
                                 </div>
                             </div>
                             <div class="col-md-10">
@@ -96,7 +97,7 @@ $(document).ready(function(){
                             <div class="col-md-2 d-flex align-items-center justify-content-center">
                                 <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                     <input class="form-check-input pregunta`+(ultima_pregunta+1)+`" type="checkbox" value="1"
-                                        id="pregunta-`+(ultima_pregunta+1)+`-correcta" name="pregunta-`+(ultima_pregunta+1)+`-opcion-2-correcta">
+                                        id="pregunta-`+(ultima_pregunta+1)+`-opcion-2-correcta" name="pregunta-`+(ultima_pregunta+1)+`-opcion-2-correcta">
                                 </div>
                             </div>
                             <div class="col-md-10">
@@ -106,7 +107,7 @@ $(document).ready(function(){
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success mt-2" id="addoption`+(ultima_pregunta+1)+`">Agregar otra opción</button>
+                    <button type="button" class="btn rounded border shadow mt-2" id="addoption`+(ultima_pregunta+1)+`">Agregar opción</button>
                 </div>
                 `
             )
@@ -128,6 +129,23 @@ $(document).ready(function(){
         });
         
 
+        //Modificar la imagen automaticamente
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    $('#mostrarimg').attr('src', e.target.result);
+                    console.log("holaaa");
+                }
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        $("#inputimg").change(function(){
+            readURL(this);
+        });
 
 
 

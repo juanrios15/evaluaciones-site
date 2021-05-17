@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+{% extends 'intentos/base_intentos.html' %}
+{% load static %}
 
 {% block content %}
     
@@ -19,62 +20,136 @@
 {% endif %}
 
 
-
-{% if intento.abierto %}
-
-<p>Hora actual {{ahora}}</p> 
-
-<p>
-
-    Hora limite {{intento.hora_fin}}
-</p>
-
-{% if ahora < intento.hora_fin %}
     
-    <h1>asda asdjakhdasjhfj</h1>
-<form method="post"> {% csrf_token %}
 
-    {{form.errors}}
-    {% for p in preguntas %}
-    <p>
 
-        {{p.descripcion}}
-            <ul>
+{% if ahora < intento.hora_fin and preguntas != 0 %}
+<div hidden id="hora_inicio" > {{intento.hora_inicio|date:"Y m d H:i:s"}}</div>
+<div hidden id="hora_fin" > {{intento.hora_fin|date:"Y m d H:i:s"}}</div>
 
-                {% for op in p.opciones.aleatorios %}
-                
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="{{p.id}}" id="id_form-{{forloop.counter0}}-opcion" value="{{op.id}}" required>
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        {{op}}
-                    </label>
-                  </div>
-                    
-                
-                {% endfor %}
-            </ul>
+<div class="position-fixed start-0 border border-3 border-primary px-3 mx-1 rounded" style="top: 25%!important;">
+    <div class="text-secondary text-center" style="font-size: 0.75rem;"> Tiempo restante </div>
+    <div class=" fs-1 fw-light text-center"  id="timer"> 00:00</div>
+</div>
 
-            
-            
-        </p>
-        {% endfor %}
+<div class="container col-md-10">
+    <br>
+    <div class="row">
+        <div class="fs-4 fw-light">Conteste las siguientes preguntas</div>
+    </div>
+    <hr>
+    <form method="post"> {% csrf_token %}
+
+        {{form.errors}}
+
+      
+
+        <div class="row">
+
         
-        <button type="submit"> Enviar</button>
-</form>
+        {% for p in preguntas %}
+        <div class="col-md-6 p-2" >
+            <div class="row mx-2 border rounded p-2 shadow-sm">
+                <div class="row mb-1 mx-0">
+                   Pregunta {{forloop.counter}}
+                </div>
+                <div class="row mx-0 mb-2 pb-1 border-bottom" >
+                    {{p.descripcion}}
+                </div>
+                <div class="row mx-0" >
+                    <div class="row mb-2">Seleccione una respuesta:</div>
+                    <ul>
+            
+                        {% for op in p.opciones.aleatorios %}
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{p.id}}" id="id_form-{{forloop.counter0}}-opcion" value="{{op.id}}">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                {{op}}
+                            </label>
+                          </div>
+                            
+                        
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row justify-content-center">
+            <div class="paginador text-center d-flex justify-content-center"></div>
+
+    </div>
+        </div>
+            <div class="col-md-12 text-end">
+                
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2"> Enviar</button>
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">                            
+                          
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Terminar?</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mx-2 text-center">
+                          <div class="row p-1 justify-content-center">
+                            Estas seguro que deseas terminar?
+                          </div>
+      
+                          
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    
+                          <button type="submit" id="enviarform" class="btn btn-success"> Enviar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                
+
+                
+
+            </div>
+    </form>
+
+</div>
+
 {% else %}
     <h1>Lo sentimos, este examen ya ha expirado</h1>
     <button class="btn btn-primary">Volver</button>
 {% endif %}
+
+<script type="text/javascript" src="{% static 'js/jquery.simplePagination.js' %} "></script>
+<script>
     
-{% else %}
-    <h1>Este intento se encuentra cerrado</h1>
-    <button class="btn btn-primary">Volver</button>
-{% endif %}
-
-
-
-
+   
+    $(function() {
     
+    var partes = $(".col-md-6.p-2")
+    var numPages = partes.length;
+    var perPage = 4;
+    partes.slice(perPage).hide();
+    $(".paginador").pagination({
+        items:numPages,
+        itemsOnPage: perPage,
+        onPageClick: function(pageNum) {
+            // Which page parts do we show?
+            var start = perPage * (pageNum - 1);
+            var end = start + perPage;
+
+            // First hide all page parts
+            // Then show those just for our page
+            partes.hide()
+                     .slice(start, end).show();
+        }
+    });
+});
+        
+
+      // Run code
+</script>
+
 {% endblock content %}
     
 

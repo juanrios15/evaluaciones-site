@@ -1,0 +1,155 @@
+{% extends "users/base_users.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+{% include 'users/base_perfil.html' %}
+<div class="container col-md-11">
+
+    <div class="row">
+
+        <div class="col-md-9 border-end ">
+
+            <br>
+            <div class="row ">
+
+                <form method="get">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" name="kword" id="kword" placeholder="Buscar..."
+                                value="{{kword}}">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" aria-label="Default select example" name="categoria"
+                                id="categoria">
+                                <option value="">Seleccione categoría</option>
+                                {% for categoria in categorias %}
+                                {% if cat_sel == categoria.nombre %}
+
+                                <option value="{{categoria.nombre}}" selected> {{categoria.nombre}}</option>
+                                {% else %}
+                                <option value="{{categoria.nombre}}"> {{categoria.nombre}}</option>
+                                {% endif %}
+
+                                {% endfor %}
+                            </select>
+
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" aria-label="Default select example" name="orden" id="orden">
+
+                                {% if orden == "" %}
+                                <option value="" selected>Ordenar por...</option>
+                                {% else %}
+                                <option value="">Ordenar por...</option>
+                                {% endif %}
+
+                                {% if orden == "Valoraciones" %}
+                                <option selected> Valoraciones</option>
+                                {% else %}
+                                <option> Valoraciones</option>
+                                {% endif %}
+
+                                {% if orden == "Nuevos" %}
+                                <option selected> Nuevos</option>
+                                {% else %}
+                                <option> Nuevos</option>
+                                {% endif %}
+
+                                {% if orden == "Más seguidos" %}
+                                <option selected> Más seguidos</option>
+                                {% else %}
+                                <option> Más seguidos</option>
+                                {% endif %}
+
+
+                                {% if orden == "Dificiles" %}
+                                <option selected> Dificiles</option>
+                                {% else %}
+                                <option> Dificiles</option>
+                                {% endif %}
+
+                                {% if orden == "Faciles" %}
+                                <option selected> Faciles</option>
+                                {% else %}
+                                <option> Faciles</option>
+                                {% endif %}
+
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <button class="btn btn-outline-primary px-3" type="submit"> <i class="fas fa-search"></i>
+                                Buscar</button>
+                        </div>
+
+                    </div>
+                    <br>
+                </form>
+
+
+
+            </div>
+            <div class="row align-items-center mb-2">
+                <div class="col-md-9">
+                    <h2 class="text-secondary fw-light mb-2 fs-3">Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} de {{ page_obj.paginator.count }} evaluaciones</h2>
+                </div>
+            </div> 
+
+
+            {% for epropia in page_obj %}
+            <div class="row align-items-center border boder-light rounded mb-3 shadow-sm my-2 mx-0">
+            {% if request.user == usuario %}
+            {% include 'users/cajas/caja_user_eva.html' %}
+            {% else %}
+            {% include 'users/cajas/caja_visit_eva.html' %}
+            {% endif %}
+            </div>
+            {% endfor %}
+
+            {% include 'paginacion_eva.html' %}
+
+
+        </div>
+
+
+        <div class="col-md-3">
+            <br>
+            <div class="container fs-3 fw-light">
+                Espacio Publicitario
+
+            </div> 
+
+        </div>
+
+
+
+    </div>
+
+
+    
+
+
+</div>
+
+
+
+
+
+{% endblock content %}

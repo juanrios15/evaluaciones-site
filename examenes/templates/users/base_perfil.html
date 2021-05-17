@@ -1,46 +1,81 @@
 {% load static %}
 
-<div class="container col-md-9">
-<div class="row">
-    <div class="col-md-2">
-        
-        {% if usuario.foto %}
-        <img src="{{usuario.foto.url }}" alt=""  class="w-100 d-block m-1 rounded">
-        
-        {% else %}
-        <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded">
-        {% endif %}
-            
-    </div>
-    <div class="col-md-6 d-flex align-items-center">
-        <div class="row ">
-            <div class="col-md-12">
-                <div class="fs-3 text-secondary">{{usuario.username}}</div>
-                {{usuario.full_name}}
-                <br>
-                <div class="row">
+<div class="container col-md-9 mb-2">
+    <div class="row">
 
-                </div>
-                <div class="fs-6"> <span class="flag-icon flag-icon-{{usuario.codigo_pais}} rounded" ></span> {{usuario.pais}} </div> 
-                <div class="fs-3 fw-light"> Pts. <span class="text-primary">{{usuario.puntaje_total|floatformat:2}} </span></div>
-                <div class="fs-4 fw-dark"> Rango | <span class="fs-4 fw-light">{{usuario.rango}}</span> </div>
-                <div class="text-secondary"  style="font-size: 0.9rem;"> Usuario desde: {{usuario.created_at|date:"d F Y"}}</div>
-            </div>
-        </div>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-2 align-self-center border rounded py-1">
         
-    </div>
-    <div class="col-md-3 offset-md-1 my-0">
-        {% if request.user == usuario %}
-        {% else %}
-        <div class="container col-md-10 text-end px-0 ">
-            <div class="row border-bottom align-items-center">                
-                
-                <div class="col-md-12 mb-2 px-0">
-                    {% if usuario.id  in usuarios_seguidos %}
+                    {% if usuario.foto %}
+                    <img src="{{usuario.foto.url }}" alt="" class="w-100 d-block rounded" style="min-height: 70px;">
+        
+                    {% else %}
+                    <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block rounded">
+                    {% endif %}
+        
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-5 border-end">
+                            <div class="fs-3 text-secondary">{{usuario.username}}</div>
+                            {{usuario.full_name}}
+                            <br>
+                            <div class="fs-6"> <span class="flag-icon flag-icon-{{usuario.codigo_pais}} rounded"></span>
+                                {{usuario.pais}} </div>
+        
+                            <div class="text-secondary" style="font-size: 0.9rem;"> Usuario desde: {{usuario.created_at|date:"d F Y"}}</div>
+                        </div>
+                        <div class="col-md-7 align-self-center">
+                            <div class="fs-4 fw-dark"> Rango | <span class="fs-4 fw-light">{{usuario.rango}}</span> </div>
+                            <div class="fs-3 fw-light py-0"> Pts. <span class="text-primary" style="font-size: 2.5rem;">{{total_puntos|floatformat:2}} </span></div>
+                        </div>
+                    </div>
+
+
+            </div>
+
+        </div>
+
+        </div>
+        <div class="col-md-5 my-0 align-self-center text-end">
+            {% if request.user == usuario %}
+
+            <div class="btn-group-vertical py-2 text-end px-0 ">
+
+                    <a class="btn  shadow-sm fw-light mx-1 py-2" type="button"
+                        href="{% url 'exams_app:crearevaluacion' %}">
+                        <i class="fas fa-caret-right"></i> Crear evaluación
+                    </a>
+                    <a class="btn shadow-sm fw-light mx-1 py-2 " type="button"
+                        href="{% url 'users_app:updateusuario' usuario.slug %}">
+                        <i class="fas fa-caret-right"></i> Editar usuario
+                    </a>
+
+                    {% if user.password %}
+
+                    {% else %}
+
+                    <a class="btn shadow-sm fw-light mx-1 py-2" type="button"
+                        href="{% url 'users_app:crearpassword'%}" id="editaruser">
+                        <i class="fas fa-caret-right"></i> Crear contraseña
+                    </a>
+
+                    {% endif %}
+
+            </div>
+            {% else %}
+            <div class="container col-md-10 text-end px-0 ">
+                <div class="row align-items-center">
+
+                    <div class="col-md-12 mb-2 px-0">
+                        
+                        {% if usuario.id in usuarios_seguidos %}
+                        
                         <form action="{% url 'users_app:seguirusuario' usuario.id %}" method="post"> {% csrf_token %}
 
-                            <button type="submit" class="btn btn-primary mx-2">
-                                Siguiendo <i class="fas fa-minus"></i> 
+                            <button type="submit" class="btn btn-primary mx-2 shadow">
+                                Siguiendo <i class="fas fa-minus"></i>
                             </button>
 
                         </form>
@@ -48,67 +83,143 @@
                         {% else %}
                         <form action="{% url 'users_app:seguirusuario' usuario.id %}" method="post"> {% csrf_token %}
 
-                            <button type="submit" class="btn border border-primary mx-2">
-                                Seguir  <i class="fas fa-plus text-primary"></i>
+                            <button type="submit" class="btn border border-primary mx-2 shadow">
+                                Seguir <i class="fas fa-plus text-primary"></i>
                             </button>
 
                         </form>
-                        
-                    {% endif %} 
+
+                        {% endif %}
+
+                    </div>
 
                 </div>
-                
+
             </div>
-            
-        </div>
-        <br>
-        {% endif %}
-        
-        {% if request.user == usuario %}
+            <br>
+            {% endif %}
 
-            
-        <div class="container col-md-10 py-2 text-center px-0">
-            <div class="list-group">
-
-                
-                {% if boton_activo %}
-                <a class="list-group-item list-group-item-action bg-dark" style="color: #ccc;" type="button" href="{% url 'users_app:detalleusuario' usuario.slug %}">
-                    Ir a Perfil
-                </a> 
-                {% else %}
-                <a class="list-group-item list-group-item-action  bg-dark" style="color: #ccc;"  type="button" href="{% url 'users_app:seguidoresusuario' usuario.id %}">
-                    Ir a Social
-                </a> 
-                {% endif %}
-                    
-
-                <a class="list-group-item list-group-item-action" type="button" href="{% url 'exams_app:crearevaluacion' %}">
-                    Crear evaluación
-                </a> 
-                <a class="list-group-item list-group-item-action" type="button" href="{% url 'users_app:updateusuario' usuario.slug %}" >
-                    Editar usuario
-                </a> 
-                
-                {% if user.password %}
-                
-                <a class="list-group-item list-group-item-action" type="button" href="{% url 'users_app:cambiarpassword' %}">
-                    Cambiar contraseña
-                </a> 
-                
-                {% else %}
-
-                <a class="list-group-item list-group-item-action" type="button" href="{% url 'users_app:crearpassword'%}" id="editaruser">
-                    Crear contraseña
-                </a> 
-                
-                {% endif %}
-            </div>
 
         </div>
-        {% endif %}
-            
 
     </div>
+</div>
+<ul class="container col-md-10 nav nav-tabs sticky-top bg-white" id="myTab" role="tablist" style="top:55px;">
+    {% if path_actual == "detalleusuario" %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active text-dark" id="home-tab" type="button" role="tab" aria-selected="true"
+            href="{% url 'users_app:detalleusuario' usuario.slug %}">Perfil</a>
+    </li>
+    {% else %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark" id="home-tab" type="button" role="tab" aria-selected="false"
+            href="{% url 'users_app:detalleusuario' usuario.slug %}">Perfil</a>
+    </li>
+
+    {% endif %}
+    
+    {% if user == usuario %}
+    {% if path_actual == "intentosusuario" %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link  text-dark active" id="profile-tab" type="button" aria-selected="true"
+            href="{% url 'users_app:intentosperfilusuario' usuario.id %}">Intentos
+            <span class="badge rounded-pill bg-dark">
+                {{total_intentos_usuario}}
+            </span></a>
+    </li>
+    {% else %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link  text-dark" id="profile-tab" type="button" aria-selected="false"
+            href="{% url 'users_app:intentosperfilusuario' usuario.id %}">Intentos
+            <span class="badge rounded-pill bg-dark">
+                {{total_intentos_usuario}}
+            </span>
+        </a>
+    </li>
+
+    {% endif %}
+    {% endif %}
         
-</div>
-</div>
+    
+    {% if path_actual == "evaluacionessusuario" %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active text-dark" id="contact-tab" type="button" aria-selected="true"
+            href="{% url 'users_app:evaluacionesperfilusuario' usuario.id %}">Evaluaciones
+            <span class="badge rounded-pill bg-dark">
+                {{total_evaluaciones}}
+            </span> </a>
+    </li>
+
+    {% else %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link  text-dark" id="contact-tab" type="button" aria-selected="false"
+            href="{% url 'users_app:evaluacionesperfilusuario' usuario.id %}">Evaluaciones 
+            <span class="badge rounded-pill bg-dark">
+                {{total_evaluaciones}}
+            </span>
+  
+             </a>
+    </li>
+
+    {% endif %}
+    {% if path_actual == "seguidoresusuario" %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark active" type="button" role="tab" aria-selected="true"
+            href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores
+
+                <span class="badge rounded-pill bg-dark">
+
+                    {{seguidores}}
+                </span>
+            </span></a>
+    </li>
+    {% else %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark " type="button" role="tab" aria-selected="false"
+            href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores
+            <span class="badge rounded-pill bg-dark">
+                {{seguidores}}
+            </span></a>
+    </li>
+
+    {% endif %}
+    {% if path_actual == "seguidosusuario" %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark active" type="button" role="tab" aria-selected="true"
+            href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos
+            <span class="badge rounded-pill bg-dark">
+                {{seguidos}}
+            </span>
+        </a>
+    </li>
+    {% else %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark" type="button" role="tab" aria-selected="false"
+            href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos
+            <span class="badge rounded-pill bg-dark">
+                {{seguidos}}
+            </span>
+        </a>
+    </li>
+    {% endif %}
+    {% if path_actual == "favoritosusuario" %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active text-dark" type="button" role="tab" aria-selected="true"
+            href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Favoritos
+            <span class="badge rounded-pill bg-dark">
+                {{favoritos}}
+            </span>
+            
+        </a>
+    </li>
+    {% else %}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link  text-dark" type="button" role="tab" aria-selected="false"
+            href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Favoritos
+            <span class="badge rounded-pill bg-dark">
+                {{favoritos}}
+            </span>
+        </a>
+    </li>
+    {% endif %}
+</ul>

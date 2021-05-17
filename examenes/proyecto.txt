@@ -11,58 +11,91 @@ LISTO --- Al eliminar usuario no se deberia borrar sus intentos, sino que simple
 LISTO -- Las evaluaciones que el usuario realizó si se deben borrar al igual que todos sus seguidos, valoraciones y calificaciones de dificultad
 LISTO --- Modificar la forma en como se crea el username para hacerlo mas imposible de que se repita
 LISTO --- Modificar el username con todas sus validaciones, poner frecuencia limite para modificar el username
+LISTO --- Crear una contraseña para los usuarios que solo han ingresado con google o facebook
+LISTO ---  Este boton de crear contraseña debe estar brillando o resaltando para que se animen todos los usuarios a hacerlo
+LISTO --- Agregar un field al model users, codigo pais, con el que se va a poder visualizar su bandera
+LISTO --- Poner la bandera en el detalle de usuario principal
+LISTO --- Un usuario no puede presentar sus propias evaluaciones
+LISTO --- Ajustar correctamente los rangos, hacer una funcion que defina en que rango se encuentra y actualice cada vez que supera un examen
+LISTO --- Crear el slug para las evaluaciones y cambiar toda la logica para que funcione todo a traves de este...
+LISTO --- Mostrar la dificultad de cada evaluacion en la pagina de tus evaluaciones
+LISTO --- Borrar pregunta, borrar opcion. Cada opcion debe tener una x y cada pregunta lo mismo, ver si es posible de usar el de bootstrap
+
+Menu lateral a la izq o der, para usuarios conectados, trae enlaces directos a favoritos, intentos, tus evaluaciones, perfil y seguidores
 
 
-URGENTE::::
-BANDERITAS DE CADA PAIS CREANDO EL NUEVO FIELD EN USUARIO Y AL CREAR UN USUARIO O ACTUALIZARLO, EL JQUERY ENVIA EL CODIGO
-SEGUIR / DEJAR DE SEGUIR UN USUARIO
+URGENTE: INTENTOS RESTANTES Y PRESENTAR EXAMEN PARA USUARIOS LOGGEADOS
 
 USERS
-6. Crear una contraseña para los usuarios que solo han ingresado con google o facebook
-6. Este boton de crear contraseña debe estar brillando o resaltando para que se animen todos los usuarios a hacerlo
 8. Modificar contraseña para los que ya tienen contraseña
 10. Agregar un field al model users, que sea de descripción/biografia del usuario
-11. Agregar un field al model users, codigo pais, con el que se va a poder visualizar su bandera
-
-Poner la bandera en el detalle de usuario principal
 Al registrarse un usuario a traves de redes sociales debe enviarle un correo electronico informandole de su nombre de usuario...
-Menu lateral a la izq o der, para usuarios conectados, trae enlaces directos a favoritos, intentos, tus evaluaciones, perfil y seguidores
-En el registro avisar 
-
 
 Visualizar el perfil de otro usuario no deberia dejar ver casi nada, unicamente su informacion basica y evaluaciones y los seguidores/seguidos
-Que el usuario registrado haga login directamente
-
-En el area social se debe poder ver la cantidad de seguidores, seguidos y evaluaciones en la barra
-Un usuario no puede presentar sus propias evaluaciones
-
 Los intentos no los puede ver nadie sino el usuario mismo.
-
-
+Que el usuario registrado haga login directamente
+En el area social se debe poder ver la cantidad de seguidores, seguidos y evaluaciones en la barra
+No esta mostrando los errores de contraseña o usuario en el login
 
 
 EVALUACIONES 
 "Tus evaluaciones" en perfil tiene que ser un nuevo view-pagina pero parecer que no lo hace
-
 URGENTE::::
 ARREGLAR EL LISTADO DE EVALUACIONES, NO SE VE CATEGORIA NI SUBCATEGORIA
 FALTA INFORMACION EN EL LISTADO, COMO POR EJEMPLO LA DIFICULTAD QUE UNO LE PUSO AL EXAMEN
+Las visitas aun no estan funcionando
+En el detalle de la evaluacion se debe cambiar las tablas... seguidores y valoracion deben ir afuera... 
+En detalle de evaluacion, primero deben ir las estadisticas de la evaluacion y luego si el usuario
+
+Model SeguirEvaluación debe ser cambiado de nombre por Favoritos, en todas partes
+
 EDITAR EVALUACION
 
+En crear evaluacion:
+    No deberia salir ese mensaje de que no tiene suficientes preguntas
+    limitar que solo pueda escoger hasta 5 intentos
+    Igual con el tiempo limite, maximo hasta 120
 1. Mostrar cantidad de evaluaciones presentadas en la lista
 2. Ya has sacado la maxima nota posible... cuando se intenta hacer un examen con 100 puntos y con intentos disponibles
-3. Crear el slug para las evaluaciones y cambiar toda la logica para que funcione todo a traves de este...
-4. Si la persona ha sacado 100% ya no puede volver a presentar la evaluación
 
-Mostrar la dificultad de cada evaluacion en la pagina de tus evaluaciones
-Borrar pregunta, borrar opcion. Cada opcion debe tener una x y cada pregunta lo mismo, ver si es posible de usar el de bootstrap
 
-El boton lateral tiene que tener un enlace directo al area social del usuario loggeado
-Las visitas aun no estan funcionando
+INTENTOS
+Agregar fecha de realizacion en donde aparece el listado de intentos
+Al finalizar el intento se debe poder valorar la evaluacion y si la ha superado tambien podrá calificarla
+Al aprobar una evaluacion y subir de rango, debe aparecer un mensaje (animado posiblemente) felicitando por subir de rango
 
-Agregar una imagen a cada pregunta
 
+OTROS
+
+Filtrar por pais todos los rankings, buscar la forma de meterlo todo dentro de un get que se active con cualquier boton oprimido
 Agregar una foto para cada subcategoria que sea el default en caso de que la persona no ponga foto
 En el DOCS tiene que venir un resumen de las dificultades por categoria y subcategoria
+Debe decir evaluaciones gratis en casi todas las paginas para mejorar su visibilidad en google
+
+
+Realizar todas las validaciones posibles en los formularios de la pagina:
+    Registro usuario
+    Login usuario
+    Cambiar contraseña
+    Crear contraseña
+    Editar usuario
+    Crear evaluación
+    Editar evaluación
+    Agregar pregunta
+
+Se encotraron elementos con el mismo id (JS) en la creación de una evaluación
+Visualizar de una vez la foto que se sube a la evaluación
+
+Arreglar todos los titulos de todas las paginas
+
+En el ranking los filtros de categorias no quedan seleccionados al ser elegidos
+Pagina activa en nav bar deberia brillar
+
+El top 20 global tambien deberia ser una opcion en el menu de ranking
+
+
+
+
+
 
 

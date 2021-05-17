@@ -1,18 +1,18 @@
 {% load static %}
-<a class="fs-4 text-secondary text-decoration-none" href="{% url 'exams_app:detalleeva' epropia.slug %}">{{epropia.nombre}}</a>
+<a class="fs-4 text-decoration-none my-1" href="{% url 'exams_app:detalleeva' epropia.slug %}">{{epropia.nombre}}</a>
 
-<div class="row align-items-center border boder-light rounded mb-3 py-2">
-    <div class="col-md-2">
+<div class="row align-items-center border boder-light rounded mb-3 py-2 mx-0 ">
+    <div class="col-md-3">
 
         {% if epropia.imagen %}
         <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="{{epropia.imagen.url}}" alt="" class="w-100 d-block m-1 rounded"> </a>
 
         {% else %}
-        <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded"></a>
+        <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="/static/img/subcats/{{epropia.subcategoria.nombre}}.jpg" alt="" class="w-100 d-block m-1 rounded"></a>
         {% endif %}
     </div>
     <div class="col-md-5">
-        <div class="row ">
+        <div class="row px-1">
             <div>
                 <div>
                     Categoría: <span class="fw-light text-secondary">{{epropia.subcategoria.categoria}}</span>
@@ -24,13 +24,15 @@
                     Creado: <span class="fw-light text-secondary">{{epropia.created_at}}</span>
                 </div>
             </div>
-            <div class="row mx-2 fw-light">
+            <div class="row mx-2 fw-light border rounded shadow-sm">
                 <div class="col-md-7">
                     <div>Preguntas</div>
                     <div>Puntaje minimo</div>
                     <div>Intentos permitidos</div>
                     <div>Tiempo limite</div>
                     <div>Dificultad Autor</div>
+                    <div>Publico</div>
+
                     
                 </div>
                 <div class="col-md-5">
@@ -39,6 +41,16 @@
                     <div>{{epropia.intentos_permitidos}}</div>
                     <div>{{epropia.tiempo_limite}} mins.</div>
                     <div>{{epropia.dificultad|floatformat:"2"}} / 10,00</div>
+                    <div>
+                        
+                        {% if epropia.publico %}
+                        <span class="text-success fw-bold">Visible </span> 
+                        {% else %}
+                        <span class="text-danger fw-bold">Oculto </span> 
+                        {% endif %}
+
+                    </div>
+
 
                 </div>
 
@@ -48,7 +60,6 @@
     <div class="col-md-4">
         <div class="row fw-light mb-2">
             <div class="col-md-7">
-                <div>Visitas</div>
                 <div>Valoraciones</div>
                 <div>Promedio Valoraciones</div>
                 <div>Seguidores</div>
@@ -56,7 +67,6 @@
 
             </div>
             <div class="col-md-5">
-                <div class="fw-bold">0</div>
                 <div>{{epropia.tot_valoraciones}} <i class="fas fa-star-half-alt"></i></div>
 
                 {% if epropia.prom_valoraciones == None %}
@@ -67,8 +77,8 @@
                 <div>
                     {{epropia.tot_seguidores}} <i class="fas fa-users"></i>
                 </div>
-                <div class="text-danger fw-normal">
-                    {{epropia.dificultad_ponderada|floatformat:2}} / 10,00
+                <div class="text-danger fw-bold">
+                    {{epropia.dificultad_ponderada|floatformat:2}}
                 </div>
 
             </div>
@@ -106,5 +116,7 @@
             </div>
         </div>
     </div>
-
 </div>
+
+
+    

@@ -1,0 +1,302 @@
+{% extends "users/base_users.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+{% include 'users/base_perfil.html' %}
+
+
+{% if user == usuario %}
+<div class="container col-md-11">
+
+    <div class="row">
+        <div class="col-md-9">
+            <br>
+            <div class="row">
+                <form method="get">
+                        <div class="row">
+    
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" name="kword" id="kword" placeholder="Buscar..." value="{{kword}}">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" aria-label="Default select example" name="categoria" id="categoria">
+                                <option value="" >Seleccione categoría</option>
+                                {% for categoria  in categorias  %}
+                                {% if cat_sel == categoria.nombre %}
+
+                                <option value="{{categoria.nombre}}" selected> {{categoria.nombre}}</option>
+                                {% else %}
+                                <option value="{{categoria.nombre}}" > {{categoria.nombre}}</option>
+                                {% endif %}
+                                    
+                                {% endfor %}
+                            </select>
+                                
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" aria-label="Default select example" name="orden" id="orden">
+                                
+                                {% if orden == "" %}
+                                <option value="" selected>Ordenar por...</option>
+                                {% else %}
+                                <option value="" >Ordenar por...</option>
+                                {% endif %}
+                                
+                                {% if orden == "Intentos restantes" %}
+                                <option selected> Intentos restantes</option>
+                                {% else %}
+                                <option > Intentos restantes</option>
+                                {% endif %}
+                                
+                                {% if orden == "Puntuación más alta" %}
+                                <option selected> Puntuación más alta</option>
+                                {% else %}
+                                <option > Puntuación más alta</option>
+                                {% endif %}
+                                
+                                {% if orden == "Puntuación más baja" %}
+                                <option selected> Puntuación más baja</option>
+                                {% else %}
+                                <option > Puntuación más baja</option>
+                                {% endif %}
+                                    
+                                
+                                {% if orden == "Dificiles" %}
+                                <option selected> Dificiles</option>
+                                {% else %}    
+                                <option > Dificiles</option>
+                                {% endif %}
+                                
+                                {% if orden == "Faciles" %}
+                                <option selected> Faciles</option>
+                                {% else %}
+                                <option > Faciles</option>
+                                {% endif %}
+                                    
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <button class="btn btn-outline-primary px-3" type="submit"> <i class="fas fa-search"></i> Buscar</button>
+                        </div>
+                        
+                    </div>
+                    <br>
+                    </form>
+                <div class="row align-items-center mb-2">
+                    <div class="col-md-9">
+                        <h2 class="text-secondary fw-light mb-2 fs-3">Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} de {{ page_obj.paginator.count }} evaluaciones</h2>
+                    </div>
+                </div> 
+                <hr>
+                {% for evaluacion in page_obj %}
+    
+                <div class="row align-items-center border boder-light rounded mb-3 py-2 shadow-sm my-2">
+                    <div class="col-md-2">
+    
+                        {% if evaluacion.imagen %}
+                        <img src="{{evaluacion.imagen.url}}" alt="" class="w-100 d-block m-1 rounded">
+    
+                        {% else %}
+                        <img class="w-100 d-block rounded" src="/static/img/subcats/{{evaluacion.subcategoria.nombre}}.jpg" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-5 border-end ">
+                        <div class="row ">
+                            <div>
+                                <div class="fs-5 text-secondary">{{evaluacion.nombre}}</div>
+                            </div>
+                            <div>
+    
+                                Categoría: <span class="fw-light text-secondary">{{evaluacion.subcategoria.categoria}}</span>
+                            </div>
+                            <div>
+    
+                                Subcategoría: <span class="fw-light text-secondary">{{evaluacion.subcategoria}}</span>
+                            </div>
+                            <div class="row mt-2 justify-content-center mx-0">
+                                <div class="col-md-12 border rounded px-0  ">
+                                    <div class="row text-center align-items-center border-bottom  mx-0 fw-light " style="font-size: 0.95rem;">
+                                        <div class="col px-0">
+                                            Cantidad preguntas
+                                        </div>
+                                        <div class="col px-0">
+                                            Puntaje minimo
+                                        </div>
+                                        <div class="col px-0">
+                                            Intentos permitidos
+                                        </div>
+                                        <div class="col px-0">
+                                            Tiempo Limite
+                                        </div>
+                                        <div class="col px-0">
+                                            Dificultad
+                                        </div>
+                                    </div>
+                                    <div class="row text-center py-1 mx-0 " style="font-size: 0.95rem;">
+                                        <div class="col px-0 ">
+                                            {{evaluacion.cant_preguntas}}
+                                        </div>
+                                        <div class="col px-0 ">
+                                            {{evaluacion.puntaje_minimo}} / 100
+                                        </div>
+                                        <div class="col px-0">
+                                            {{evaluacion.intentos_permitidos}}
+                                        </div>
+                                        <div class="col px-0">
+                                            {{evaluacion.tiempo_limite}} mins
+                                        </div>
+                                        
+                                        
+                                        {% if evaluacion.dificultad_ponderada > 7 %}
+                                            
+                                        <div class="col text-danger  fw-bold px-0">
+                                            {{evaluacion.dificultad_ponderada|floatformat:2}} 
+                                        </div>
+                                        {% elif evaluacion.dificultad_ponderada > 4 %}
+                                        <div class="col text-primary fw-bold px-0">
+                                            {{evaluacion.dificultad_ponderada|floatformat:2}} 
+                                        </div>
+                                        {% else %}
+                                        <div class="col text-success fw-bold px-0">
+                                            {{evaluacion.dificultad_ponderada|floatformat:2}} 
+                                        </div>
+            
+                                        {% endif %}
+                                    </div>
+            
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                    <div class="col-md-5 fw-light">
+                        <div class="row mb-2 mx-1">
+                            <div class="col-md-12 border rounded px-0 ">
+                                <div class="row text-center align-items-center border-bottom  mx-0 fw-light " style="font-size: 0.95rem;">
+                                    <div class="col px-0">
+                                        Maxima puntuación
+                                    </div>
+                                    <div class="col px-0">
+                                        Intentos realizados
+                                    </div>
+                                    <div class="col px-0">
+                                        Intentos restantes
+                                    </div>
+                                    <div class="col px-0">
+                                        Aprobado?
+                                    </div>
+
+                                </div>
+                                <div class="row text-center py-1 mx-0 " style="font-size: 0.95rem;">
+                                    <div class="col px-0 ">
+                                        {% if evaluacion.max_p == 100.0 %}
+                                       <span class="fw-bold text-success">{{evaluacion.max_p|floatformat:2}}</span>
+                                        
+                                        {% else %}
+                                         <span class="fw-bold">{{evaluacion.max_p|floatformat:2}}</span>
+                
+                                        {% endif %}
+                                    </div>
+                                    <div class="col px-0 ">
+                                        {{evaluacion.tot_intentos}}
+                                    </div>
+                                    <div class="col px-0 fw-bold">
+                                        {{evaluacion.restantes}}
+                                    </div>
+                                    <div class="col px-0">
+                                        {% if evaluacion.max_p >= evaluacion.puntaje_minimo %}
+                                        <span class="fw-bold text-success">
+                                            Si
+                                        </span>
+                                        {% else %}
+                                        <span class=" fw-bold text-danger">
+                                            No
+                                        </span>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+        
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-7">
+                                <div>
+                                    Ultimo intento: {{evaluacion.ultimo_intento|date:"d F Y"}}
+                                </div>
+                                <div>
+                                    <a href="{% url 'users_app:verintentoseva' evaluacion.id %}"
+                                        class="text-decoration-none fw-normal">Ver intentos</a>
+                                </div>
+
+                            </div>
+                            <div class="col-md-5">
+                                <div class="row px-2">
+            
+                                    {% if evaluacion.max_p == 100 or evaluacion.restantes == 0 %}
+                                    <button class="btn btn-outline-dark px-3 disabled">Presentar evaluación</button>
+                                    {% else %}
+                                    <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
+                                        <div class="row">
+                                            <button class="btn btn-outline-success px-3" type="submit">Presentar evaluación</button>
+                    
+                                        </div>
+                                    </form>
+            
+                                    {% endif %}
+            
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+  
+                    </div>
+                    
+                </div>
+                {% endfor %}
+                
+            </div>
+            {% include 'paginacion_eva.html' %}
+        </div>
+            
+        
+        
+        <div class="col-md-3 border-start">
+            <br>
+            <div class="container fs-3 fw-light">
+                Espacio Publicitario
+
+            </div> 
+        </div>
+        
+        
+    </div>
+    
+    
+</div>
+{% endif %}
+
+
+
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+{% if request.user == evaluacion.user %}
+
+<div class="container col-md-8">
+    <div class="row">
+        <div class="fs-3">
+            Resumen de intentos | {{usuario.username}}
+        </div>
+        <div class="fs-3">
+            Evaluación: {{evaluacion.nombre}}
+        </div>
+    </div>
+    <br>
+
+    <table class="table">
+        <thead>
+            <tr class="text-center">
+                <th>Item</th>
+                <th>Hora Inicio</th>
+                <th>Duración</th>
+                <th>Puntuación</th>
+                <th>Aprobado</th>
+                <th>Puntos obtenidos</th>
+                <th>Preguntas correctas</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            
+            {% for intento in intentos %}
+            <tr class="text-center">
+                <td>{{forloop.counter}}</td>
+                <td>{{intento.hora_inicio|date:"D d M Y P"}}</td>
+                <td> {{intento.hora_inicio|timesince:intento.hora_fin}}</td>
+                <td>{{intento.puntuacion|floatformat:2}} / 100,00</td>
+                <td>{{intento.aprobado}}</td>
+                <td>{{intento.puntos}}</td>
+                <td>{{intento.correctas}} / {{evaluacion.cant_preguntas}} </td>
+            </tr>
+                
+            {% endfor %}
+                
+
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+<h1>Que haces aqui????</h1>
+{% endif %}
+
+
+{% endblock content %}

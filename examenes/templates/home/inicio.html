@@ -5,7 +5,6 @@
 
 
 {% block content %}
-
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-info m-0 p-2 px-3 " role="alert">
@@ -21,19 +20,69 @@
 {% endfor %}
 {% endif %}
 
-<h2>Bienvenidos a esta pagina wek</h2>
-
-Nombre de usuario: {{user.username}}
-Email: {{user.email}}
-
-
-{% if user.foto %}
-Foto: {{user.foto.url}}
-
-{{user.foto}}
-<img src="{{user.foto.url}}" alt="">
+<div class="container-fluid">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="container col-md-9">
+            <div class="row fs-3 fw-light">
+                Mide y comparte tus conocimientos...
+            </div>
+            <br>
+            <br>
+            <br>
+            <form action="{% url 'exams_app:evaluaciones' %}" method="get">
+            <div class="row busqueda">
+                <div class="autoComplete_wrapper">
+                    <input class="w-100 py-3 fs-5 shadow" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off"  id="autoComplete" name="kword" >
+                    <input type="submit" style="display:none"/ class="formula">
+                </div>
+            </div>
+        </form>
     
-{% endif %}
-    
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="row bg-light">
+        <div class="container col-md-9">
+            <br>
+            <div class="row fs-3 fw-light">
+                O selecciona una categoría:
+            </div>
+            <br>
+            
+            <div class="row align-items-center">
+            {% for cat in categorias %}
+                    <div class="col-md-4 text-center ">
+                        <form action="{% url 'exams_app:evaluaciones' %}" method="get">
+
+                            <button class="btn fs-4 fw-light my-2 border rounded px-3 py-2" type="submit" value="{{cat.nombre}}" name="categoria" id="categoria">
+
+                                {{cat.nombre}}
+                            </button>
+                                
+
+                        </form>
+                    </div>
+                {% endfor %}
+                    
+            </div>
+            <br>
+            <br>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.1.1/dist/js/autoComplete.min.js"></script>
+<script src="{% static 'js/inicio.js' %}"></script>
+
 {% endblock content %}
     

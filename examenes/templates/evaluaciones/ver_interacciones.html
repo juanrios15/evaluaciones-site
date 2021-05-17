@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+{% if request.user == evaluacion.user %}
+
+<div class="container">
+
+
+    <div class="row fs-3 mb-3">
+        Interacciones | {{evaluacion.nombre}}
+    </div>  
+    <table id="table_id" class="table table-hover align-middle text-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Username</th>
+                <th>País</th>
+                <th>Rango</th>
+                <th>Intentos</th>
+                <th>Max Puntaje</th>
+                <th>Aprobado</th>
+                <th>Valoración</th>
+                <th>Seguidor</th>
+                <th>Dificultad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios  %}
+            <tr class="text-center">
+                    <td class="d-flex justify-content-center">
+                        {% if usuario.foto %}
+                        <img class="d-block rounded"  src="{{usuario.foto.url }}" alt="" style="max-height: 50px;">
+                        {% else %}
+                        <img class=" d-block rounded" src="{% static 'img/no-image.png' %}" alt="" style="max-height: 50px;">
+                        {% endif %}
+                    </td>
+                    <td >{{usuario.username}}</td>
+                    <td >{{usuario.pais}}</td>
+                    <td >{{usuario.rango}}</td>
+                    <td >{{usuario.total_intentos}} <span class="text-primary fst-italic"> <a href="{% url 'exams_app:verintentos' evaluacion.id usuario.id %}"> Ver</a></span> </td>
+                    <td >{{usuario.max_puntaje|floatformat:2}}</td>
+                    
+                    
+                    {% if usuario.max_puntaje == None  %}
+                    <td class="text-danger"> - </td>
+                    {% else %}
+                    {% if usuario.max_puntaje < evaluacion.puntaje_minimo %}
+                    <td class="text-danger">NO</td>
+                    
+                    {% else %}
+                    <td class="text-success">SI </td>
+                    {% endif %}
+
+                    {% endif %}
+                        
+                    
+                    
+                    {% if usuario.valoracion %}
+                    <td >{{usuario.valoracion}}</td>
+                    {% else %}
+                    <td > - </td>
+                    {% endif %}
+                        
+                    
+                    {% if usuario.seguido %}
+                    <td class="text-success">SI</td>
+                    {% else %}
+                    <td class="text-danger">NO</td>
+            
+                    {% endif %}
+                    
+                    {% if usuario.dificul %}
+                    <td >{{usuario.dificul}}</td>
+                    {% else %}
+                    <td > - </td>
+                    {% endif %}
+                        
+                    
+            
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  
+</div>
+
+
+{% else %}
+<h1>Que haces aqui????</h1>
+{% endif %}
+
+
+
+
+<script>
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+{% endblock content %}

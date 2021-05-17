@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 {% if messages %}
 {% for message in messages %}
@@ -19,46 +19,315 @@
 
 <br>
 <br>
-<div class="container col-md-9">
+<div class="container col-md-10 border-start">
+
     <div class="row">
-        <h2>Lista de Evaluaciones</h2>
-    </div>
-    <div class="row">
-        <div class="container">
+        <div class="col-md-4 px-3">
+            <form method="get">
+            <div class="row mb-3 mx-0 px-0">
+                <div class="col-md-9">
+                        <div class="row me-1">
+                            <input class="form-control me-1 px-2" value="{{kword}}" type="text" id="kword" name="kword" placeholder="Buscar ...">
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+                <div class="row">
+                    <div class="fs-3 mb-2">Categorias</div>
+                </div>
+                <div class="row mx-0 mb-2">
+                    <div class="list-group px-3">
+                        
+                        {% if cat_sel == "todos" %}
+                        <a  class="list-group-item list-group-item-action bg-dark text-white" name="categoria" value="todos" href="?kword={{kword}}&categoria=todos">
+                            Todos
+                        </a>
+                        {% else %}
+                        <a  class="list-group-item list-group-item-action" name="categoria" value="todos"  href="?kword={{kword}}&categoria=todos">
+                            Todos
+                        </a>
+                        
+                        {% endif %}
+                        {% for cat in categorias %}
+                        {% if cat_sel == cat.nombre %}
+                        <a  class="list-group-item list-group-item-action bg-dark text-white" value="{{cat.nombre}}" name="categoria" href="?kword={{kword}}&categoria={{cat.nombre}}" >
+                            {{cat.nombre}}
+                        </a>
+                        {% else %}
+                        <a  class="list-group-item list-group-item-action" name="categoria" value="{{cat.nombre}}" href="?kword={{kword}}&categoria={{cat.nombre}}">
+                            {{cat.nombre}}
+                        </a>
+                        
+                        {% endif %}
+                            
+                            
+                        {% endfor %}
+                            
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="fs-3 mb-2">Ordenar por</div>
+                </div>
+                <div class="row mx-0 mb-2">
+                    <div class="list-group px-3">
+                        
+                    
+                    {% if cat_sel == "" %}
+                    {% if ord_sel == "populares" %}
+                     
+                    <a class="list-group-item list-group-item-action bg-dark text-white" value="populares" name="orden" href="?kword={{kword}}&orden=populares">
+                        Más populares
+                    </a>   
+                    {% else %}
+                    <a class="list-group-item list-group-item-action" value="populares" name="orden" href="?kword={{kword}}&orden=populares">
+                        Más populares
+                    </a>
+                    {% endif %}
+                    
+                    {% if ord_sel == "valorados" %}
+                  
+                    <a class="list-group-item list-group-item-action bg-dark text-white" value="valorados" name="orden" id="orden2"  href="?kword={{kword}}&orden=valorados">
+                        Mejor valorados
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action" value="valorados" name="orden" id="orden2"  href="?kword={{kword}}&orden=valorados">
+                        Mejor valorados
+                    </a>
+                    
+                    {% endif %}
+                    {% if ord_sel == "nuevos" %}
+                    
+                    <a class="list-group-item list-group-item-action bg-dark text-white"  value="nuevos" name="orden"   href="?kword={{kword}}&orden=nuevos">
+                        Más nuevos
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action"  value="nuevos" name="orden"  href="?kword={{kword}}&orden=nuevos" >
+                        Más nuevos
+                    </a>
+                    
+                    {% endif %}
+                    {% if ord_sel == "faciles" %}
+       
+                    <a class="list-group-item list-group-item-action bg-dark text-white"  value="faciles" name="orden"  href="?kword={{kword}}&orden=faciles">
+                        Más faciles primero
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action"  value="faciles" name="orden"  href="?kword={{kword}}&orden=faciles">
+                        Más faciles primero
+                    </a>
+
+                    {% endif %}
+                    {% if ord_sel == "dificiles" %}
+                
+                    <a class="list-group-item list-group-item-action bg-dark text-white"  value="dificiles" name="orden"  href="?kword={{kword}}&orden=dificiles">
+                        Más dificiles primero
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action"  value="dificiles" name="orden"  href="?kword={{kword}}&orden=dificiles" >
+                        Más dificiles primero
+                    </a>
+
+                    {% endif %}                    
+                    {% else %}
+                    {% if ord_sel == "populares" %}
+                     
+                    <a class="list-group-item list-group-item-action bg-dark text-white" value="populares" name="orden"  href="?kword={{kword}}&categoria={{cat_sel}}&orden=populares">
+                        Más populares
+                    </a>   
+                    {% else %}
+                    <a class="list-group-item list-group-item-action" value="populares" name="orden" href="?kword={{kword}}&categoria={{cat_sel}}&orden=populares">
+                        Más populares
+                    </a>
+                    {% endif %}
+                    
+                    {% if ord_sel == "valorados" %}
+                  
+                    <a class="list-group-item list-group-item-action bg-dark text-white" value="valorados" name="orden" id="orden2"href="?kword={{kword}}&categoria={{cat_sel}}&orden=valorados">
+                        Mejor valorados
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action" value="valorados" name="orden" id="orden2"href="?kword={{kword}}&categoria={{cat_sel}}&orden=valorados">
+                        Mejor valorados
+                    </a>
+                    
+                    {% endif %}
+                    {% if ord_sel == "nuevos" %}
+                    
+                    <a class="list-group-item list-group-item-action bg-dark text-white"  value="nuevos" name="orden" href="?kword={{kword}}&categoria={{cat_sel}}&orden=nuevos">
+                        Más nuevos
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action"  value="nuevos" name="orden"href="?kword={{kword}}&categoria={{cat_sel}}&orden=nuevos" >
+                        Más nuevos
+                    </a>
+                    
+                    {% endif %}
+                    {% if ord_sel == "faciles" %}
+       
+                    <a class="list-group-item list-group-item-action bg-dark text-white"  value="faciles" name="orden" href="?kword={{kword}}&categoria={{cat_sel}}&orden=faciles">
+                        Más faciles primero
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action"  value="faciles" name="orden" href="?kword={{kword}}&categoria={{cat_sel}}&orden=faciles">
+                        Más faciles primero
+                    </a>
+
+                    {% endif %}
+                    {% if ord_sel == "dificiles" %}
+                
+                    <a class="list-group-item list-group-item-action bg-dark text-white"  value="dificiles" name="orden" href="?kword={{kword}}&categoria={{cat_sel}}&orden=dificiles">
+                        Más dificiles primero
+                    </a>
+                    
+                    {% else %}
+                    <a class="list-group-item list-group-item-action"  value="dificiles" name="orden" href="?kword={{kword}}&categoria={{cat_sel}}&orden=dificiles">
+                        Más dificiles primero
+                    </a>
+
+                    {% endif %}                    
+                    {% endif %}
+                        
+                    
+                                
+                    
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="fs-3 mb-2">Espacio publicitario</div>
+                </div>
+
+        
+        </div>
+        <div class="container col-md-8">
+            <div class="row">
+                {% if kword %}
+                    <h3 class="text-primary">Busqueda por palabra clave: {{kword}}</h3>
+                {% endif %}
+            </div>
+            <div class="row align-items-center mb-2">
+                <div class="col-md-9">
+                    <h2 class="text-secondary fw-light mb-2 fs-3">Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} de {{ page_obj.paginator.count }} evaluaciones</h2>
+                </div>
+            
+
+            </div>
     
             {% for e in evaluaciones  %}
-            <div class="row bg-info mb-2 p-2">
-                <h3>{{e.nombre}}</h3>
-                <div class="row">
-                    <div class="col-md-4">
-                        Cantidad de preguntas: {{e.cant_preguntas}}
+            <div class="row border border-1 rounded mb-3 p-2 align-items-center shadow">
+                <a class="col-md-2 px-0" href="{% url 'exams_app:detalleeva' e.slug %}">
+                    {% if e.imagen %}
+                    <img class="w-100 d-block rounded"  src="{{e.imagen.url}}" alt="">
+                    {% else %}
+    
+                    <img class="w-100 d-block rounded" src="/static/img/subcats/{{e.subcategoria.nombre}}.jpg" alt="">
+                            
+                    {% endif %}
+                </a>
+                <div class="col-md-10">
+                    <div class="row mb-2">
+                        <div class="col-md-9">
+                            <a class="fs-4 fw-light text-decoration-none" href="{% url 'exams_app:detalleeva' e.slug %}">{{e.nombre}}</a>
+                            <div class="row">
+                                <div class="col-md-6 fs-6 fw-light text-secondary">Categoría: {{e.subcategoria.categoria}}</div>
+                                <div class="col-md-6 fs-6 fw-light text-secondary">Subcategoría: {{e.subcategoria}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <div class="row text-center border rounded justify-content-center" style="font-size: 0.8rem;">
+                                <div class="row text-center px-0">
+                                    <div class="col-md-6 ">
+                                        Favoritos
+                                    </div>
+                                    <div class="col-md-6">
+                                        Valoración
+                                    </div>
+                                </div>
+                                <div class="row text-center px-0">
+                                    <div class="col-md-6">
+                                        {{e.favoritos}}  <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        {{e.valoracion|floatformat:2}} <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        Puntaje minimo para pasar: {{e.puntaje_minimo}}
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4">
-                        Intentos permitidos: {{e.intentos_permitidos}}
-                    </div>
-                    <div class="col-md-4">
-                        Tiempo limite: {{e.tiempo_limite}} minutos
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 d-flex">
-                        <a href="{% url 'exams_app:detalleeva' e.slug %}"  class="btn btn-dark mx-2"> Ver detalle </a>
-                        <form action="{% url 'intentos_app:iniciarintento' e.id %}" method="post"> {% csrf_token %}
-                            <button type="submit" class="btn btn-danger"> Presentar examen </button>
-                        </form>
+                    <div class="col-md-12 container border rounded px-0">
+                        <div class="row text-center align-items-center border-bottom  mx-0 fw-light">
+                            <div class="col">
+                                Cantidad de preguntas
+                            </div>
+                            <div class="col">
+                                Puntaje minimo
+                            </div>
+                            <div class="col">
+                                Intentos permitidos
+                            </div>
+                            <div class="col">
+                                Tiempo Limite
+                            </div>
+                            <div class="col ">
+                                Dificultad
+                            </div>
+                        </div>
+                        <div class="row text-center py-1 mx-0" style="font-size: 0.95rem;">
+                            <div class="col">
+                                {{e.cant_preguntas}}
+                            </div>
+                            <div class="col">
+                                {{e.puntaje_minimo}} / 100
+                            </div>
+                            <div class="col">
+                                {{e.intentos_permitidos}}
+                            </div>
+                            <div class="col">
+                                {{e.tiempo_limite}} mins
+                            </div>
+                            
+                            
+                            {% if e.dificultad_ponderada > 7 %}
+                                
+                            <div class="col text-danger  fw-bold">
+                                {{e.dificultad_ponderada|floatformat:2}} 
+                            </div>
+                            {% elif e.dificultad_ponderada > 4 %}
+                            <div class="col text-primary fw-bold">
+                                {{e.dificultad_ponderada|floatformat:2}} 
+                            </div>
+                            {% else %}
+                            <div class="col text-success fw-bold">
+                                {{e.dificultad_ponderada|floatformat:2}} 
+                            </div>
+
+                            {% endif %}
+                        </div>
 
                     </div>
-
                 </div>
+
 
             </div>
             
             {% endfor %}
+            {% include 'paginacion_eva.html' %}
         </div>
 
     </div>

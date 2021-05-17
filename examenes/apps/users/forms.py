@@ -91,7 +91,7 @@ class UpdateUserForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ('username','foto','full_name','genero','fecha_nacimiento','pais','codigo_pais')
+        fields = ('username','foto','full_name','genero','fecha_nacimiento','pais','codigo_pais','biografia')
         
         widgets = {
             'username': forms.TextInput(
@@ -132,6 +132,12 @@ class UpdateUserForm(forms.ModelForm):
                 }
                 
             ),
+            'biografia':forms.Textarea(
+                attrs= {
+                    'class': 'form-control',
+                }
+                
+            ),
         }
 
 
@@ -142,6 +148,7 @@ class CreatePasswordForm(forms.Form):
         required=True,
         widget=forms.EmailInput(
             attrs={
+                'class': 'form-control',
                 'placeholder': 'Correo Eléctronico'
             }
         )
@@ -152,6 +159,7 @@ class CreatePasswordForm(forms.Form):
         required=True,
         widget=forms.PasswordInput(
             attrs={
+                'class': 'form-control',
                 'placeholder': 'Contraseña Actual'
             }
         )
@@ -161,6 +169,7 @@ class CreatePasswordForm(forms.Form):
         required=True,
         widget=forms.PasswordInput(
             attrs={
+                'class': 'form-control',
                 'placeholder': 'Contraseña Nueva'
             }
         )

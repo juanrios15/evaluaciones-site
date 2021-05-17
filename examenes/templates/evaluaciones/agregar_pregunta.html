@@ -22,49 +22,76 @@
 
 {% if request.user == evaluacion.user %}
 
-<div class="container">
+<div class="container col-md-9">
 
-    <div class="row">
-
-        <div class="mb-3 col-md-6">
-            <div id="pregunta5">
-                <label for="pregunta-5" class="form-label">Pregunta</label>
-                <textarea class="form-control" id="pregunta-5" name="pregunta-5" rows="3" required></textarea>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-2">
-                        <div class="mb-2">Correcta?</div>
-                        <div class="form-check form-switch d-flex justify-content-center">
-                            <input class="form-check-input pregunta5" type="checkbox" value="1"
-                                id="pregunta-5-correcta" name="pregunta-5-opcion-1-correcta">
-                        </div>
-                    </div>
-                    <div class="col-md-10">
-                        <label for="opcion-1" class="form-label">Opción</label>
-                        <input type="text" class="form-control" id="pregunta-5-opcion-1"
-                            name="pregunta-5-opcion-1" placeholder="" required>
-
-                    </div>
-
+    <form method="post" id="form-editarpregunta"> {% csrf_token %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="fs-4 fw-light mb-2">
+                    Pregunta
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-2 d-flex align-items-center justify-content-center">
-                        <div class="form-check mt-3 form-switch d-flex justify-content-center">
-                            <input class="form-check-input pregunta5" type="checkbox" value="1"
-                                id="pregunta-5-correcta" name="pregunta-5-opcion-2-correcta">
-                        </div>
+                <textarea name="descripcion" id="id_descripcion" class="form-control" rows="10"></textarea>
+                <br>
+ 
+                    <div class="col-md-12 text-end">
+                        <button type="submit" class="btn btn-dark p-3 fs-5 fw-light" id="enviar"> Guardar pregunta</button>
                     </div>
-                    <div class="col-md-10">
-                        <label for="opcion-1" class="form-label">Opción</label>
-                        <input type="text" class="form-control" id="pregunta-5-opcion-2"
-                            name="pregunta-5-opcion-2" placeholder="" required>
-                    </div>
-                </div>
+
+
             </div>
-            <button type="button" class="btn btn-success mt-2" id="addoption5">Agregar otra opción</button>
+            <div class="col-md-7" >
+                <div class="row mb-2">
+                    <div class="col-md-2 fs-4 fw-light"> Correcta?</div>
+                    <div class="col-md-9 fs-4 fw-light text-center ps-0"> Opciones </div>
+                </div>
+                <div class="row" id="caja-opciones">
+                    <div class="row mb-2 m-0" id="cont-1">
+                        <div class="col-md-2  d-flex justify-content-center align-items-center">
+                            <div class="form-check form-switch d-flex justify-content-center ">
+                                
+                                <input class="form-check-input" type="checkbox" value="1"
+                                    id="correcta1" name="correcta1">
+                                     
+                            </div>
+                        </div>
+
+                        <div class="col-md-9 ps-0">
+                            <textarea type="text" class="form-control" rows="2" name="opcion1" id="opcion1" required></textarea>
+                            
+                        </div>
+                            
+                    </div>
+                    <div class="row mb-2 m-0" id="cont-2">
+                        <div class="col-md-2  d-flex justify-content-center align-items-center">
+                            <div class="form-check form-switch d-flex justify-content-center ">
+                                
+                                <input class="form-check-input" type="checkbox" value="1"
+                                    id="correcta2" name="correcta2">
+                                     
+                            </div>
+                        </div>
+
+                        <div class="col-md-9 ps-0">
+                            <textarea type="text" class="form-control" rows="2" name="opcion2" id="opcion2" required></textarea>
+                            
+                        </div>
+                            
+                    </div>
+                    
+                </div>
+                <div class="col-md-12 text-end pe-3">
+                    <button type="button" class="btn btn-outline-dark mt-2" id="agregaropcion">Agregar opcion</button>
+
+                </div>
+                
+            </div>
+
         </div>
 
-    </div>
+            
+
+    </form>
+
 </div>
 
 

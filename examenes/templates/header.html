@@ -1,13 +1,13 @@
 {% load static %}
 
-<div class="sticky-top" >
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 55px;">
+<div class="sticky-top bg-white" >
+  <nav class="navbar col-md-6 container navbar-expand-lg navbar-dark shadow" style="height: 55px; background-color: #333; border-radius: 25px 25px">
     <div class="container">
       
-      <a class="navbar-brand p-0 m-0" href="*">EVAMAX</a>
+     
       
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="collapse navbar-collapse"  id="navbarText">
+        <ul class="navbar-nav col-md-12 me-auto mb-2 mb-lg-0 justify-content-center align-items-center">
           <li class="nav-item">
             {% if request.path == '/' %}
             <a class="nav-link active" aria-current="page" href="{% url 'users_app:inicio' %}">Inicio</a>
@@ -18,28 +18,19 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="{% url 'exams_app:evaluaciones' %}">Evaluaciones</a>
           </li>
+          <a class="navbar-brand p-0 m-0 fs-2 px-3 " href="{% url 'users_app:inicio' %}">
+            SOMA
+  
+        </a>
           <li class="nav-item">   
-            <a class="nav-link" aria-current="page" href="#">Rankings</a>
+            <a class="nav-link" aria-current="page" href="{% url 'users_app:rankings' %}">Rankings</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="#">Docs</a>
           </li>
         </ul>
       </div>
-      <span class="navbar-text">
-        {% if user.username %}
-        
-        <a class="text-decoration-none text-white fw-lighter" href="{% url 'users_app:detalleusuario' request.user.slug %}">  Mi perfil</a> &nbsp;
-        <a class="text-decoration-none text-white fw-lighter" href="{% url 'users_app:logout' %}">  Salir </a> &nbsp;
 
-        {%else%}
-
-        <a class="text-decoration-none text-white fw-lighter" href="{% url 'users_app:registro' %} "> Registro</a>
-        <a class="text-decoration-none text-white fw-lighter" href="{% url 'users_app:login' %} "> Ingreso </a>
-
-        {% endif %}
-
-      </span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

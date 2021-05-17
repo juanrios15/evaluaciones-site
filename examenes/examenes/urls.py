@@ -1,3 +1,5 @@
+import debug_toolbar
+
 from django.contrib import admin
 from django.urls import path, re_path,include
 from django.conf import settings
@@ -8,4 +10,5 @@ urlpatterns = [
     re_path('',include('apps.users.urls')),
     re_path('',include('apps.evaluaciones.urls')),
     re_path('',include('apps.intentos.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

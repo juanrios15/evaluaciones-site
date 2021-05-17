@@ -20,52 +20,56 @@
 {% endif %}
 <br>
 {% include 'users/base_perfil.html' %}
-<div class="container">
-    <ul class="nav nav-tabs sticky-top bg-white justify-content-center" id="myTab" role="tablist" style="top:55px;">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" type="button" role="tab"  aria-selected="true" href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link text-dark" type="button" role="tab" aria-selected="false" href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link text-dark" type="button" role="tab" aria-selected="false" href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Evaluaciones</a>
-        </li>
-    </ul>
-
-</div>
 
 
 
-<div class="container col-md-9">
-    <br>
-    <div class="row mb-2">
-        <div class="fs-2">
-            Seguidores: {{usuario.seguidos.count}}
-        </div>
-    </div>
-    <hr>
-    <div class="row ">
-        
-        {% for seguido in usuario.seguidos.all %}
-        <div class="col-md-2">
-                {% if seguido.seguidor.foto %}
-                <img src="{{seguido.seguidor.foto.url}}" alt=""  class="w-100 d-block m-1 rounded">
+
+<div class="container col-md-10">
+    <div class="row">
+        <div class="col-md-9 border-end">
+            <br>
+            <div class="row mb-2">
+                <div class="fs-2">
+                    Seguidores ({{seguidores}})
+                </div>
+            </div>
+            <hr>
+            <div class="row ">
                 
-                {% else %}
-                <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded">
-                {% endif %}
-            <div class="row justify-content-center">
-                {{seguido.seguidor.username}}
+                {% for seguido in seguidores_list %}
+                <div class="col-md-3">
+                        {% if seguido.seguidor.foto %}
+                        <a href="{% url 'users_app:detalleusuario' seguido.seguidor.slug %}"><img src="{{seguido.seguidor.foto.url}}" alt=""  class="w-100 d-block m-1 rounded shadow-sm" style="height: 180px;"> </a>
+                        
+                        {% else %}
+                        <a href="{% url 'users_app:detalleusuario' seguido.seguidor.slug %}"> <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded shadow-sm" style="height: 180px;"></a>
+                        {% endif %}
+                    <div class="row justify-content-center text-center">
+      
+                    <a href="{% url 'users_app:detalleusuario' seguido.seguidor.slug %}" class="text-decoration-none "> {{seguido.seguidor.username}} </a>
+                    Rango | {{seguido.seguidor.rango}}
+                    </div>
+        
+        
+                </div>
+            
+                    {{seguidor.seguidor.foto.url}}
+                {% endfor %}
+        
             </div>
 
+        </div>
+        <div class="col-md-3">
+            <br>
+            <div class="container fs-3 fw-light">
+                Espacio Publicitario
+
+            </div> 
 
         </div>
-    
-            {{seguidor.seguidor.foto.url}}
-        {% endfor %}
 
     </div>
+    
         
 </div>
 

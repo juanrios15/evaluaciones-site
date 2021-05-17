@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+<div class="container col-md-10">
+    <div class="row">
+
+        <div class="col-md-9 border-end">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    {% if evaluacion.imagen %}
+                    <a href="{% url 'exams_app:detalleeva' evaluacion.slug %}"><img src="{{evaluacion.imagen.url}}" alt="" class="w-100 d-block m-1 rounded"> </a>
+            
+                    {% else %}
+                    <a href="{% url 'exams_app:detalleeva' evaluacion.slug %}"><img src="/static/img/subcats/{{evaluacion.subcategoria.nombre}}.jpg" alt="" class="w-100 d-block m-1 rounded"></a>
+                    {% endif %}
+                </div>
+                <div class="col-md-10">
+                    <div class="fs-3">
+                        Resumen de intentos | {{usuario.username}}
+                    </div>
+                    <div class="fs-3">
+                        <a href="{% url 'exams_app:detalleeva' evaluacion.slug %}" class="text-decoration-none">{{evaluacion.nombre}}</a>
+                    </div>
+                    <div class="text-secondary">
+                        Categoría: {{evaluacion.subcategoria.categoria}}
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <table class="table table-bordered table-striped table-dark shadow">
+                <thead>
+                    <tr class="text-center">
+                        <th>Item</th>
+                        <th>Hora Inicio</th>
+                        <th>Duración</th>
+                        <th>Puntuación</th>
+                        <th>Preguntas correctas</th>
+                        <th>Aprobado</th>
+                        <th>Puntos obtenidos</th>
+        
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    
+                    {% for intento in intentos %}
+                    <tr class="text-center">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{intento.hora_inicio|date:"d M Y P"}}</td>
+                        <td> {{intento.hora_inicio|timesince:intento.hora_fin}}</td>
+                        <td>{{intento.puntuacion|floatformat:2}} / 100,00</td>
+                        <td>{{intento.correctas}} / {{evaluacion.cant_preguntas}} </td>
+                        
+                        {% if intento.aprobado == False %}
+                        <td class="text-danger">{{intento.aprobado}}</td>
+                        {% else %}
+                        <td class="text-success">{{intento.aprobado}}</td>
+                        {% endif %}
+                            
+                        <td>{{intento.puntos|floatformat:2}}</td>
+                    </tr>
+                        
+                    {% endfor %}
+                        
+        
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="col-md-3">
+            <br>
+            <div class="container fs-3 fw-light">
+                Espacio Publicitario
+
+            </div> 
+
+        </div>
+    </div>
+    
+
+</div>
+
+{% endblock content %}

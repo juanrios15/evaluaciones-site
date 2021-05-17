@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-info m-0 p-2 px-3 " role="alert">
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<br>
+
+
+<div class="container col-md-10 fw-light">
+    <div class="row">
+        <div class="col-md-3 border-end">
+            <div class="fs-4 mb-3 ">
+                Rankings
+            </div>
+            <div class="list-group " id="list-tab" role="tablist">
+    
+                 {% for e in categorias  %}
+                 <form class="d-flex" method="GET"> {% csrf_token %}
+                    <input type="text" id="categoria" name="categoria" value="{{e}}" hidden> 
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" type="submit">Top 20 {{e.nombre}}</button>
+                </form>
+                 {% endfor %}
+                 
+             </div>
+        </div>
+        <div class="col-md-9 text-center" style="font-size: 0.95rem;">
+            <div class="row px-2 mx-0">
+                <br>    
+                <div class="row justify-content-center fw-normal mb-2" style="font-size: 4rem;">
+                    <span><i class="fas fa-trophy"></i> Top 20 </span> 
+                </div>
+                <div class="row py-2 align-items-center border">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-1">No.</div>
+                            <div class="col-md-2">User</div>
+                            <div class="col-md-3">Username</div>
+                            <div class="col-md-3">Rango</div>
+                            <div class="col-md-3">País</div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-3 px-0">Aprobadas</div>
+                            <div class="col-md-3 px-0">Perfectas</div>
+                            <div class="col-md-3 px-0">Presentadas</div>
+                            <div class="col-md-3 px-0">Puntos</div>
+
+                        </div>
+                    </div>
+
+                </div>
+                {% for x in ranking_user %}
+                <div class="row py-2 align-items-center border">
+                    <div class="col-md-7">
+                        <div class="row align-items-center ">
+                            <div class="col-md-1 px-0">
+                                
+                                {% if forloop.counter == 1 %}
+                                <span><i class="fas fa-trophy"></i> {{forloop.counter}} </span> 
+                                {% elif forloop.counter == 2 %}
+                                <i class="fas fa-medal"></i> {{forloop.counter}}
+                                {% elif forloop.counter == 3 %}
+                                <i class="fas fa-award"></i> {{forloop.counter}}
+                                {% else %}
+                                {{forloop.counter}}
+                                {% endif %}
+                            </div>
+                                    
+                            <div class="col-md-2">
+                                {% if x.foto %}
+                                    <img src="{{x.foto.url}}" alt="" class="mw-100 d-block rounded" style="height: 40px;">
+                                {% else %}
+                                    <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block rounded" style="height: 40px;">
+                                {% endif %}
+                                
+                            </div>
+                            <div class="col-md-3">{{x.username}} </div>
+                            <div class="col-md-3 ">{{x.rango}} </div>
+                            <div class="col-md-3"><span class="flag-icon flag-icon-{{x.codigo_pais}} rounded"></span> {{x.pais}}</div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row align-items-center ">
+                            <div class="col-md-3 px-0">{{x.aprobadas}} </div>
+                            <div class="col-md-3 px-0">{{x.perfectas}} </div>
+                            <div class="col-md-3 px-0">{{x.total_evas}}</div>
+                            <div class="col-md-3 px-0 fw-bold">{{x.puntos_total|floatformat:2}}</div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}   
+                
+                {% if usuario_actual == None %}
+                {% else %}
+                <div class="row py-2  align-items-center border border-3 rounded mt-1">
+                    <div class="col-md-7">
+                        <div class="row align-items-center">
+                            <div class="col-md-1">{{rango}} </div>
+                            <div class="col-md-2">
+                                {% if usuario_actual.foto %}
+                                    <img src="{{usuario_actual.foto.url}}" alt="" class="mw-100 d-block rounded" style="height: 40px;">
+                                {% else %}
+                                    <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block rounded" style="height: 40px;">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-3">{{usuario_actual.username}}  </div>
+                            <div class="col-md-3 ">{{usuario_actual.rango}} </div>
+                            <div class="col-md-3"><span class="flag-icon flag-icon-{{usuario_actual.codigo_pais}} rounded"></span> {{usuario_actual.pais}}</div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 px-0"> {{usuario_actual.aprobadas}}  </div>
+                            <div class="col-md-3 px-0">{{usuario_actual.perfectas}}  </div>
+                            <div class="col-md-3 px-0">{{usuario_actual.total_evas}} </div>
+                            <div class="col-md-3 px-0 fw-bold">{{usuario_actual.puntos_total|floatformat:2}}</div>
+                        </div>
+                    </div>
+                </div> 
+
+                {% endif %}
+                    
+
+
+            </div>
+            
+        </div>
+    </div>
+    
+        
+</div>
+
+
+
+{% endblock content %}

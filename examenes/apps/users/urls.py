@@ -20,8 +20,16 @@ urlpatterns = [
    
    #seguir usuario
    path('seguirusuario/<pk>/',views.SeguirUsuarioView.as_view(),name="seguirusuario"),
+   
+   path('intentosusuario/<pk>/',views.IntentosUsuario.as_view(),name="intentosperfilusuario"),
+   path('evaluacionessusuario/<pk>/',views.EvaluacionesUsuario.as_view(),name="evaluacionesperfilusuario"),
    path('seguidoresusuario/<pk>/',views.SeguidoresPerfilView.as_view(),name="seguidoresusuario"),
    path('seguidosusuario/<pk>/',views.SeguidosPerfilView.as_view(),name="seguidosusuario"),
    path('favoritosusuario/<pk>/',views.EvaluacionesFavoritasPerfilView.as_view(),name="evaluacionesfavoritasusuario"),
+   path('verintentoseva/<pk>/',views.VerIntentos.as_view(),name="verintentoseva"),
+   
+   #Rankings
+   
+   path('rankings/',views.RankingsListView.as_view(),name="rankings"),
 
 ]

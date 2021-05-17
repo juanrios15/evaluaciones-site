@@ -2,16 +2,45 @@ import datetime
 from django.utils import timezone
 
 from django.shortcuts import render
-from apps.intentos.models import Intento, IntentoPregunta
+from apps.intentos.models import Intento, IntentoPregunta, PuntosObtenidos
 from django.views.generic import View, TemplateView,DetailView
 from apps.evaluaciones.models import Evaluacion, Opcion, Pregunta
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib import messages
-from django.db.models import Max
+from django.db.models import Max, Sum
+from django.contrib.auth.mixins import LoginRequiredMixin 
 
-class IniciarIntento(View):
+def ranquear_usuario(puntos):
+
+    rango = ""
+    if puntos < 100:
+        rango = "Practicante"
+    elif puntos < 200:
+        rango = "Principiante I"
+    elif puntos < 350:
+        rango = "Principiante II"
+    elif puntos < 450:
+        rango = "Intermedio I"
+    elif puntos < 600:
+        rango = "Intermedio II"
+    elif puntos < 700:
+        rango = "Avanzado I"
+    elif puntos < 850:
+        rango = "Avanzado II"
+    elif puntos < 950:
+        rango = "Master I"
+    elif puntos < 1050:
+        rango = "Master II"
+    elif puntos > 1050:
+        rango = "Master III"
+        
+    return rango
+        
+
+class IniciarIntento(LoginRequiredMixin,View):
+    login_url = reverse_lazy('users_app:login')
     
     def post(self,request,*args,**kwargs):
         evaluacion_id = self.kwargs["exam"]
@@ -28,39 +57,46 @@ class IniciarIntento(View):
         ) 
         print(timezone.now() + datetime.timedelta(minutes=evaluacion.tiempo_limite))
         
-        x= Intento(
+        x= Intento.objects.create(
             evaluacion=evaluacion,
             usuario=self.request.user,
-            abierto=True,
             aprobado=False,
             puntuacion=0,
-            hora_fin= timezone.now() + datetime.timedelta(minutes=evaluacion.tiempo_limite)
         )
+        x.hora_fin = x.hora_inicio + datetime.timedelta(minutes=evaluacion.tiempo_limite)
         x.save()
-    
+        preguntas_query = Pregunta.objects.values_list('id').filter(evaluacion__id=evaluacion.id).order_by('?')[:evaluacion.cant_preguntas]
+        preguntas = list(preguntas_query)
+        text_preguntas = f"preguntas-{x.id}"
+        self.request.session[text_preguntas] = [int(x[0]) for x in preguntas]
         return HttpResponseRedirect(
             reverse(
                 'intentos_app:intentopregunta',kwargs={'intento': x.id}
             )
         )     
    
-class IntentoView(TemplateView):
+class IntentoView(LoginRequiredMixin,TemplateView):
     template_name = "intentos/intento.html"
+    login_url = reverse_lazy('users_app:login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         intento = Intento.objects.get(id=self.kwargs["intento"])
-        evaluacion = Evaluacion.objects.get(id=intento.evaluacion.id)
-        cant_preguntas = evaluacion.cant_preguntas
-        context["evaluacion"] = evaluacion
+        cant_preguntas = intento.evaluacion.cant_preguntas
+        context["evaluacion"] = intento.evaluacion
+        text_preguntas = f"preguntas-{intento.id}"
         
-        context['preguntas'] = Pregunta.objects.filter(evaluacion__id=evaluacion.id).order_by('?')[:cant_preguntas]
+        try:
+            context['preguntas'] = Pregunta.objects.filter(evaluacion__id=intento.evaluacion.id,id__in=self.request.session[text_preguntas])
+        except:
+            context["preguntas"] = 0
         context['intento'] = intento
         context['ahora'] = timezone.now()
         return context
     
     def post(self,request,*args,**kwargs):
-        evaluacion= self.get_context_data()["evaluacion"]
+
+        intento = Intento.objects.get(id=self.kwargs["intento"])
         items = request.POST.dict()
         del items["csrfmiddlewaretoken"]
         all_intentos = []
@@ -74,6 +110,7 @@ class IntentoView(TemplateView):
                 acierto +=1
             
             intento_pregunta = IntentoPregunta(
+                intento=intento,
                 pregunta = pregunta,
                 opcion = opcion,
                 correcto = correcto
@@ -81,40 +118,43 @@ class IntentoView(TemplateView):
             all_intentos.append(intento_pregunta)
         
         IntentoPregunta.objects.bulk_create(all_intentos)
-        
-        dificultad = evaluacion.dificultad_ponderada
+
+        dificultad = intento.evaluacion.dificultad_ponderada
         
         intento = Intento.objects.get(id=self.kwargs["intento"]) 
-        intento.puntuacion = (acierto/evaluacion.cant_preguntas)*100 
+        intento.puntuacion = (acierto/intento.evaluacion.cant_preguntas)*100 
         puntos_obtenidos=0
-        if intento.puntuacion >= evaluacion.puntaje_minimo:
+        obj, created = PuntosObtenidos.objects.get_or_create(
+                evaluacion=intento.evaluacion,
+                usuario=intento.usuario,
+            )
+        if intento.puntuacion >= intento.evaluacion.puntaje_minimo:
             intento.aprobado = True
-            
-            max_previo = Intento.objects.filter(
-                    usuario__id=intento.usuario.id,
-                    evaluacion__id=evaluacion.id
-                    ).exclude(
-                        id=intento.id
-                    ).aggregate(max_puntaje=Max('puntuacion'),max_puntos=Max('puntos'))
-            print(max_previo["max_puntos"])
-            if max_previo["max_puntaje"]==None:
-                max_previo["max_puntaje"] = 0
-            if max_previo["max_puntos"]==None:
-                max_previo["max_puntos"] = 0
+            obj, created = PuntosObtenidos.objects.get_or_create(
+                evaluacion=intento.evaluacion,
+                usuario=intento.usuario,
+            )
                 
-            if intento.puntuacion > max_previo["max_puntaje"]:
-                if intento.puntuacion == 100:
-                    puntos_obtenidos =dificultad*0.2*intento.puntuacion
-                    agregar_puntos = puntos_obtenidos - max_previo["max_puntos"]
-                    print("puntos_obtenidos",puntos_obtenidos)
-                    print("agregar_puntos",agregar_puntos)
-                    intento.usuario.puntaje_total += agregar_puntos
-                else:
-                    puntos_obtenidos =dificultad*0.1*intento.puntuacion
-                    agregar_puntos = puntos_obtenidos - max_previo["max_puntos"]
-                    intento.usuario.puntaje_total += agregar_puntos
+            if intento.puntuacion == 100:
+                puntos_obtenidos =dificultad*0.2*intento.puntuacion
+                obj.puntos = puntos_obtenidos
+                obj.save()
+                puntaje = PuntosObtenidos.objects.filter(
+                    evaluacion__id=intento.evaluacion.id,usuario__id=intento.usuario.id
+                    ).aggregate(total=Sum('puntos'))
+                rango = ranquear_usuario(puntaje["total"])
+                intento.usuario.rango = rango
+            else:
+                puntos_obtenidos =dificultad*0.1*intento.puntuacion
+                if puntos_obtenidos > obj.puntos:
+                    obj.puntos = puntos_obtenidos
+                    obj.save()
+                    puntaje = PuntosObtenidos.objects.filter(
+                        evaluacion__id=intento.evaluacion.id,usuario__id=intento.usuario.id
+                        ).aggregate(total=Sum('puntos'))
+                    rango = ranquear_usuario(puntaje["total"])
+                    intento.usuario.rango = rango
         intento.puntos = puntos_obtenidos
-        intento.abierto = False
         intento.hora_fin = timezone.now()
         intento.save()
         intento.usuario.save()
