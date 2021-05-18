@@ -29,6 +29,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 
 ]
+
 MEDIA_URL = '/media/'
 
 cred = credentials.Certificate("accountkey.json")
