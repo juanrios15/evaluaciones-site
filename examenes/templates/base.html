@@ -36,6 +36,22 @@
   {% endblock content %}
   
   {% block js %}{% endblock js %} 
+  <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-firestore.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-20K7JL0S75"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-20K7JL0S75');
+  </script>
   <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
