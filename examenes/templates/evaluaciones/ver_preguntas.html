@@ -2,7 +2,9 @@
 
 {% load static %}
 
-
+{% block title %}
+    Ver preguntas {{evaluacion.nombre}}
+{% endblock title %}
 {% block content %}
 {% if messages %}
 {% for message in messages %}

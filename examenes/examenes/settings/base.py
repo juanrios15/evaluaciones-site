@@ -13,19 +13,6 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-with open("/home/bitnami/projects/evaluaciones-site/examenes/secret.json") as f:
-    secret = json.loads(f.read())
-
-def get_secret(secret_name,secrets = secret):
-    try:
-        return secrets[secret_name]
-    except:
-        msg= "La variable %s no existe" % secret_name
-        raise ImproperlyConfigured(msg)
-
-
-SECRET_KEY = get_secret("SECRET_KEY")
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
