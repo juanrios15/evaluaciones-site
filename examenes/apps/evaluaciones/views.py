@@ -115,7 +115,7 @@ class EvaluacionesListView(ListView):
     def get_queryset(self):
         kword = self.request.GET.get("kword",'')
         categoria = self.request.GET.get("categoria",'')
-        if categoria == "todos":
+        if categoria == "Global":
             categoria = ""
                     
         orden = self.request.GET.get("orden",'')

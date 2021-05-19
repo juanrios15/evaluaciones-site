@@ -48,19 +48,15 @@ LISTO --- En el ranking los filtros de categorias no quedan seleccionados al ser
 LISTO --- El top 20 global tambien deberia ser una opcion en el menu de ranking
 LISTO --- Pagina activa en nav bar deberia brillar
 LISTO --- Cambiar el nombre de las imagenes en static para que no fallen al cargar las categorias
+LISTO --- Google Analytics
 
 
 EVALUACIONES 
 
-Google Analytics
 Google adsense
-La pagina de docs aun falta por hacerla toda, usar el nav vertical de bootstrap
 En el listado de evaluaciones propias, se debe modificar el enlace que dirija con el nombre de la pagina real
-Al finalizar el intento se debe poder valorar la evaluacion y si la ha superado tambien podrá calificarla
-Al aprobar una evaluacion y subir de rango, debe aparecer un mensaje (animado posiblemente) felicitando por subir de rango
-Filtrar por pais todos los rankings, buscar la forma de meterlo todo dentro de un get que se active con cualquier boton oprimido
-
-
+Mejorar todas las vistas para movil, sm, md, lg
+La pagina de docs aun falta por hacerla toda, usar el nav vertical de bootstrap
 Realizar todas las validaciones posibles en los formularios de la pagina:
     Registro usuario
     Login usuario
@@ -70,6 +66,11 @@ Realizar todas las validaciones posibles en los formularios de la pagina:
     Crear evaluación
     Editar evaluación
     Agregar pregunta
+
+Al aprobar una evaluacion y subir de rango, debe aparecer un mensaje (animado posiblemente) felicitando por subir de rango
+Al finalizar el intento se debe poder valorar la evaluacion y si la ha superado tambien podrá calificarla
+Filtrar por pais todos los rankings, buscar la forma de meterlo todo dentro de un get que se active con cualquier boton oprimido
+
 
 
 
