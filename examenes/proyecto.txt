@@ -42,18 +42,19 @@ LISTO --- Agregar fecha de realizacion en donde aparece el listado de intentos
 LISTO --- Agregar una foto para cada subcategoria que sea el default en caso de que la persona no ponga foto
 LISTO --- Se encotraron elementos con el mismo id (JS) en la creación de una evaluación
 LISTO --- Visualizar de una vez la foto que se sube a la evaluación
+LISTO --- Arreglar todos los titulos de todas las paginas
+LISTO --- Debe decir evaluaciones gratis en casi todas las paginas para mejorar su visibilidad en google
+LISTO --- En el ranking los filtros de categorias no quedan seleccionados al ser elegidos
+LISTO --- El top 20 global tambien deberia ser una opcion en el menu de ranking
+LISTO --- Pagina activa en nav bar deberia brillar
+LISTO --- Cambiar el nombre de las imagenes en static para que no fallen al cargar las categorias
 
 
 EVALUACIONES 
 
-Arreglar todos los titulos de todas las paginas
-Debe decir evaluaciones gratis en casi todas las paginas para mejorar su visibilidad en google
-En el ranking los filtros de categorias no quedan seleccionados al ser elegidos
-El top 20 global tambien deberia ser una opcion en el menu de ranking
-Pagina activa en nav bar deberia brillar
 Google Analytics
 Google adsense
-Cambiar el nombre de las imagenes en static para que no fallen al cargar las categorias
+La pagina de docs aun falta por hacerla toda, usar el nav vertical de bootstrap
 En el listado de evaluaciones propias, se debe modificar el enlace que dirija con el nombre de la pagina real
 Al finalizar el intento se debe poder valorar la evaluacion y si la ha superado tambien podrá calificarla
 Al aprobar una evaluacion y subir de rango, debe aparecer un mensaje (animado posiblemente) felicitando por subir de rango

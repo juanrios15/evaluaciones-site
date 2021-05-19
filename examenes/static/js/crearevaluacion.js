@@ -114,12 +114,11 @@ $(document).ready(function(){
 
         })
 
-
         jQuery(document).on('click', "input[class^='form-check-input']", function (event) {
-            console.log("si entra en la funcion");
-            id = event.target.id.replace(/\D/g,'')
-            console.log(id);
-            $('.form-check-input.pregunta'+id).not(this).prop('checked', false);
+
+            id = event.target.id.match(/\d+/)
+
+            $('.form-check-input.pregunta'+id[0]).not(this).prop('checked', false);
         });
         jQuery(document).on('click', ".btn-close.opc", function (event) {
             jQuery(this).closest('.row').remove()

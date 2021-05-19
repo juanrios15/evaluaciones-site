@@ -99,7 +99,12 @@ class CrearEvaluacionView(LoginRequiredMixin,CreateView):
                     )
                     opcion.save()
                     
-        return super().post(request, *args, **kwargs)
+        messages.success(self.request,"Evaluación creada con exito")
+        return HttpResponseRedirect(
+            reverse(
+                'users_app:detalleusuario',kwargs={'slug': self.request.user.slug}
+            )
+        )
 
 class EvaluacionesListView(ListView):
     model = Evaluacion
@@ -153,6 +158,7 @@ class EvaluacionesListView(ListView):
         context["categorias"] = Categoria.objects.all()
         
         return context
+
 
 class EvaluacionesListAPIView(ListAPIView):
     serializer_class = EvaluacionSerializer

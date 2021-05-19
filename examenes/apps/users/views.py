@@ -439,7 +439,7 @@ class RankingsListView(ListView):
                 
                 contador += 1
         
-        return queryset[:5]
+        return queryset[:20]
     
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -447,6 +447,8 @@ class RankingsListView(ListView):
         try:
             print("aca")
             categoria = self.request.GET["categoria"]
+            print(categoria)
+            context["cat_actual"] = categoria
             qs = User.objects.filter(
                 id=self.request.user.id,intentos__evaluacion__subcategoria__categoria__nombre=categoria
                 ).annotate(
@@ -461,7 +463,7 @@ class RankingsListView(ListView):
                 ).first()
             print(qs)
         except:
-            
+            context["cat_actual"] = "Global"
             qs = User.objects.filter(
                 id=self.request.user.id
                 ).annotate(
@@ -471,7 +473,7 @@ class RankingsListView(ListView):
                     puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
                 ).first()
         
-        
+                
         context["usuario_actual"] = qs
         try:
             context["rango"] = self.request.session["rango"]
@@ -553,7 +555,7 @@ class EvaluacionesUsuario(DetailView):
         cat_sel= self.request.GET.get("categoria","")
 
         orden = establecer_orden_eva(ord_sel)
-        if self.request.user == context["usuario"].id:
+        if self.request.user.id == context["usuario"].id:
 
             eva_propias = Evaluacion.objects.filter(
                 user__id=context["usuario"].id,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
@@ -586,7 +588,7 @@ class EvaluacionesUsuario(DetailView):
 
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         
-        p = Paginator(eva_propias,5) 
+        p = Paginator(eva_propias,10) 
         page_number = self.request.GET.get('page')
         page_obj = p.get_page(page_number)
 
