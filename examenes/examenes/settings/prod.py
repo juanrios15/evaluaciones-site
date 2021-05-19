@@ -1,6 +1,8 @@
+
 from .base import *
 import firebase_admin
 from firebase_admin import credentials
+import os
 
 DEBUG = True
 
@@ -15,7 +17,7 @@ DATABASES = {
         'NAME': get_secret("DB_NAME"),
         'USER': get_secret("USER"),
         'PASSWORD': get_secret("PASSWORD"),
-        'HOST': '/opt/bitnami/postgresql',
+        'HOST': '/tmp/',
         'PORT': '5432'
         
     }
@@ -25,12 +27,11 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
 
-]
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 
-cred = credentials.Certificate("accountkey.json")
+cred = credentials.Certificate("/home/bitnami/projects/evaluaciones-site/examenes/accountkey.json")
 firebase_admin.initialize_app(cred)
