@@ -49,12 +49,15 @@ LISTO --- El top 20 global tambien deberia ser una opcion en el menu de ranking
 LISTO --- Pagina activa en nav bar deberia brillar
 LISTO --- Cambiar el nombre de las imagenes en static para que no fallen al cargar las categorias
 LISTO --- Google Analytics
+LISTO --- Icono de la pagina
+LISTO --- En el listado de evaluaciones propias, se debe modificar el enlace que dirija con el nombre de la pagina real
 
 
 EVALUACIONES 
 
 Google adsense
-En el listado de evaluaciones propias, se debe modificar el enlace que dirija con el nombre de la pagina real
+Mensaje durante el examen pidiendo que no haga trampa (codigo de honor)
+No permitir copiar el texto de las preguntas
 Mejorar todas las vistas para movil, sm, md, lg
 La pagina de docs aun falta por hacerla toda, usar el nav vertical de bootstrap
 Realizar todas las validaciones posibles en los formularios de la pagina:

@@ -68,8 +68,8 @@
             <div class="row mb-2">
                 <h5>O registrese con el siguiente formulario:</h5>
             </div>
-            <div class="row mb-2">
-                <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                <div class="row mb-2">
                     <div class="row mb-2">
                         <div class="col-md-6">
                             {{form.username}}

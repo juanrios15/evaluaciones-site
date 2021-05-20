@@ -50,7 +50,7 @@
 
         
         {% for p in preguntas %}
-        <div class="col-md-6 p-2" >
+        <div class="col-md-6 p-2 mt-2" >
             <div class="row mx-2 border rounded p-2 shadow-sm">
                 <div class="row mb-1 mx-0">
                    Pregunta {{forloop.counter}}
@@ -130,7 +130,7 @@
     
     var partes = $(".col-md-6.p-2")
     var numPages = partes.length;
-    var perPage = 4;
+    var perPage = 8;
     partes.slice(perPage).hide();
     $(".paginador").pagination({
         items:numPages,
