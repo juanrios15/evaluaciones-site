@@ -137,7 +137,11 @@ class SocialLoginView(APIView):
         login(request,usuario)
         
         messages.success(request,"Login exitoso")
-        return Response({ 'user': name, } )
+        return HttpResponseRedirect(
+                reverse(
+                    'users_app:inicio'
+                )
+            )
     
 
 

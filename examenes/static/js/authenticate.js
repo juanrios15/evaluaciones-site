@@ -40,13 +40,7 @@ function loginsocial(tipo) {
           var data = {'token_id':idToken}
           axios.post('/api/sociallogin/',data).then(
             function(response){
-              if(document.referrer.split('/')[2]!=location.hostname){
-                //User came from other domain or from direct
-                window.location.href = '/';
-              }else{
-                //User came from another page on your site
-                window.history.go(-1)
-              }
+       
             }
         )
           
