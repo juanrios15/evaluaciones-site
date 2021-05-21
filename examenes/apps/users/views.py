@@ -95,6 +95,13 @@ class LoginView(SuccessMessageMixin,LoginView):
     success_message = "Bienvenido!!!"
     authentication_form = AuthenticationEmailForm
     
+    def get_success_url(self):
+        
+        return reverse(
+                'users_app:inicio'
+            )
+        
+    
 class LogoutView(LoginRequiredMixin,LogoutView):
     login_url = reverse_lazy('users_app:login')
     next_page = reverse_lazy('users_app:inicio')
