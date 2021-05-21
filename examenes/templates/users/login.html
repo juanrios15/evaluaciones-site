@@ -1,9 +1,9 @@
 {% extends "users/base_users.html" %}
 
-{% load  static %}
+{% load static %}
 
 {% block title %}
-    Login de usuario
+Login de usuario
 {% endblock title %}
 {% block content %}
 {% if messages %}
@@ -14,7 +14,7 @@
         <div class="row d-flex justify-content-between">
             {{message}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    
+
         </div>
     </div>
 </div>
@@ -28,69 +28,74 @@
 
 
 {% if user.username %}
-    <div class="container">
-        <div class="fs-1 text-success">
-            {{user.username}} ya has iniciado sesión!
-        </div>
+<div class="container">
+    <div class="fs-1 text-success">
+        {{user.username}} ya has iniciado sesión!
     </div>
-    
+</div>
+
 {% else %}
-<div class="container col-md-4 shadow py-3 ">
+<div class="container col-md-6 col-xl-4 shadow py-3 ">
     <div class="row text-center">
         <div class="fs-3">Ingreso</div>
     </div>
     <br>
-<div class="container col-md-9">
-    <div class="row">
-        <button class="btn bg-white py-2 rounded shadow" onclick="loginsocial(1)"><i class="fab fa-google fs-4"></i> Ingrese con Gmail</button>
-    </div>
+    <div class="container col-md-9">
+        <div class="row">
+            <button class="btn bg-white py-2 rounded shadow" onclick="loginsocial(1)"><i class="fab fa-google fs-4"></i>
+                Ingrese con Gmail</button>
+        </div>
 
-</div>
-<br>
-<div class="container col-md-9">
-    <div class="row">
-        <button class="btn py-2 text-white rounded shadow" onclick="loginsocial(2)" style="background-color: #1a538a;"><span><i class="fab fa-facebook-square fs-4"></i> </span> Ingrese con Facebook</button>
     </div>
-</div>
-<br>
-<div class="container col-md-9 text-center">
+    <br>
+    <div class="container col-md-9">
+        <div class="row">
+            <button class="btn py-2 text-white rounded shadow" onclick="loginsocial(2)"
+                style="background-color: #1a538a;"><span><i class="fab fa-facebook-square fs-4"></i> </span> Ingrese con
+                Facebook</button>
+        </div>
+    </div>
+    <br>
+    <div class="container col-md-9 text-center">
 
-    <div class="row mb-2">
-        <h5>Ingrese con su usuario o email:</h5>
-    </div>
-    <div class="row mb-2">
-        <form method="post"> {% csrf_token %}
-            <div class="mb-2">
-                <div class="row">
-                        <input type="text" placeholder="Usuario o email" class="form-control" name="username" id="id_username" maxlength="150" required>
+        <div class="row mb-2">
+            <h5>Ingrese con su usuario o email:</h5>
+        </div>
+        <div class="row mb-2">
+            <form method="post"> {% csrf_token %}
+                <div class="mb-2">
+                    <div class="row">
+                        <input type="text" placeholder="Usuario o email" class="form-control" name="username"
+                            id="id_username" maxlength="150" required>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-2">
-                <div class="row">
-                    <input type="password" placeholder="Contraseña" class="form-control" name="password" id="id_password"required>
-    
+                <div class="mb-2">
+                    <div class="row">
+                        <input type="password" placeholder="Contraseña" class="form-control" name="password"
+                            id="id_password" required>
+
+                    </div>
                 </div>
-            </div>
-            <br>
-            <div class="mb-2">
-                <div class="row">
-                    <button type="submit" class="btn btn-dark">Ingresar</button>
+                <br>
+                <div class="mb-2">
+                    <div class="row">
+                        <button type="submit" class="btn btn-dark">Ingresar</button>
+                    </div>
                 </div>
-            </div>
-            <br>
-        
-        </form>
+                <br>
+
+            </form>
+
+        </div>
+
 
     </div>
-
-    
-</div>
 </div>
 <br>
 <br>
 <br>
 
 {% endif %}
-    
+
 
 {% endblock content %}

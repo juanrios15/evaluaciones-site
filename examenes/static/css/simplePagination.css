@@ -110,7 +110,7 @@ span.ellipse.clickable {
 .light-theme a, .light-theme span {
 	float: left;
 	color: #666;
-	font-size:14px;
+	font-size:16px;
 	line-height:24px;
 	font-weight: normal;
 	text-align: center;
@@ -161,7 +161,7 @@ span.ellipse.clickable {
 .dark-theme a, .dark-theme span {
 	float: left;
 	color: #CCC;
-	font-size:14px;
+	font-size:16px;
 	line-height:24px;
 	font-weight: normal;
 	text-align: center;

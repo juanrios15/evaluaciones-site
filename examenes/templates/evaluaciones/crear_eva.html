@@ -30,7 +30,7 @@
     <form id="form1" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
         <div class="row">
             <div class="col-md-9">
-                <div class="row">
+                <div class="row mb-3">
                     <label for="id_nombre" class="form-label"> Nombre </label>
                     <input type="text" name="nombre" maxlength="150" required id="id_nombre" class="form-control"
                         placeholder="Ejemplo: Test basico de Python 3.9.4 - OOP">
@@ -110,9 +110,9 @@
                 </div>
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 d-flex align-items-center">
 
-                <div class="row justify-content-center">
+                <div class="row justify-content-center px-1 ">
                     <div class="col-md-12 text-center d-flex justify-content-center ">
                         <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block m-1 rounded" id="mostrarimg"
                         style="height: 200px;">
@@ -142,6 +142,7 @@
         </div>
         <div class="row my-2">
             <div class="fs-4"> Preguntas</div>
+            <div class="fs-6 text-secondary">(*) Las preguntas y opciones aparecerán en orden aleatorio</div>
 
         </div>
 
