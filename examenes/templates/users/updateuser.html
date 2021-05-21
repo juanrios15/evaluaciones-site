@@ -40,13 +40,13 @@
                 </div>
                 <div class="col-md-3 text-end">
                     <div class="row pe-2 text-end mb-0">
-                        <button type="button" class="btn btn-outline-light  text-danger  text-end fs-6"
+                        <button type="button" class="btn btn-outline-light  text-danger  text-end fs-6 px-1"
                             data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Borrar mi cuenta
                         </button>
                         
                         {% if user.password %}
-                        <a type="button" class="btn text-danger btn-outline-light text-end fs-6"
+                        <a type="button" class="btn text-danger btn-outline-light text-end fs-6 px-1"
                             href="{% url 'users_app:cambiarpassword' %}">
                             Cambiar contraseña
                         </a>

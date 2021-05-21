@@ -80,11 +80,15 @@ Agregar pregunta se debe convertir en agregar preguntaS
 
 En la tabla de ranking cuando las columnas se encogen, los nombres de usuario se salen de la columna y tapan el rango
 
+Esconder el menu cuando sale el keyboard en mobile
+
+La barra del menu del perfil de usuario pasa un poco por encima del menu lateral
+
+Revisar que login social funcione en celular, sino toca cambiarlo por redirect()
 
 
 
-
-
+Al hacer login debe redireccionar a la pagina anterior siempre. Revisar que tambien ocurra con login social
 
 
 

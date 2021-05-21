@@ -39,7 +39,7 @@
             <div class="row ">
                 
                 {% for seguido in seguidores_list %}
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-4 col-xl-3">
                         {% if seguido.seguidor.foto %}
                         <a href="{% url 'users_app:detalleusuario' seguido.seguidor.slug %}"><img src="{{seguido.seguidor.foto.url}}" alt=""  class="w-100 d-block m-1 rounded shadow-sm" style="height: 180px;"> </a>
                         
