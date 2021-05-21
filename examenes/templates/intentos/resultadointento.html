@@ -62,7 +62,7 @@
             <hr>
             <div class="row ">
                 <div class="container col-md-6 text-center border rounded shadow-sm">
-                    <div class="row" style="font-size: 3rem;">
+                    <div class="row " style="font-size: 3rem;">
                         <div>
                             Pts. 
                             {% if intento.puntos == 0 %}
@@ -78,7 +78,7 @@
                             
                     </div>
                         <div class="row px-3 justify-content-center mb-2">
-                            <div class="col-md-3">
+                            <div class="col-md-3 px-0">
                                 
                                 {% if intento.usuario.foto %}
                                     <img src="{{intento.usuario.foto.url}}" alt="" class="w-100 d-block rounded">
@@ -87,7 +87,7 @@
                                 {% endif %}
                                     
                             </div>
-                            <div class="col-md-6 text-start ">
+                            <div class="col-md-6 text-start px-1">
                                 {{intento.usuario.username}}
                                 <br>
                                 Rango | {{intento.usuario.rango}}

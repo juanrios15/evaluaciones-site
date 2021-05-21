@@ -37,7 +37,8 @@
 <div class="container col-md-10">
     <br>
     <div class="row">
-        <div class="fs-4 fw-light">Conteste las siguientes preguntas</div>
+        <div class="col-md-6 fs-4 fw-light">Conteste las siguientes preguntas</div>
+        <div class="col-md-6 fs-3 fw-light text-end">NO HAGAS TRAMPA!</div>
     </div>
     <hr>
     <form method="post"> {% csrf_token %}
@@ -85,7 +86,7 @@
         </div>
             <div class="col-md-12 text-end">
                 
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2"> Enviar</button>
+                <button type="button" class="btn btn-outline-success fs-4 px-3" data-bs-toggle="modal" data-bs-target="#exampleModal2"> Enviar</button>
                 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">                            

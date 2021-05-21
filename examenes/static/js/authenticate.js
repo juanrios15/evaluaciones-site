@@ -45,7 +45,7 @@ function loginsocial(tipo) {
                 window.location.href = '/';
               }else{
                 //User came from another page on your site
-                windows.go(-1)
+                window.go(-1)
               }
             }
         )

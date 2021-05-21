@@ -74,7 +74,11 @@ Al aprobar una evaluacion y subir de rango, debe aparecer un mensaje (animado po
 Al finalizar el intento se debe poder valorar la evaluacion y si la ha superado tambien podrá calificarla
 Filtrar por pais todos los rankings, buscar la forma de meterlo todo dentro de un get que se active con cualquier boton oprimido
 
+A seguidores, seguidos y favoritos hacerles el endless paginator
 
+Agregar pregunta se debe convertir en agregar preguntaS
+
+En la tabla de ranking cuando las columnas se encogen, los nombres de usuario se salen de la columna y tapan el rango
 
 
 
