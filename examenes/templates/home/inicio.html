@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% load  static %}
+{% load static %}
 
 {% block title %}
-    Pagina de inicio
+Pagina de inicio
 {% endblock title %}
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="row d-flex justify-content-between">
             {{message}}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    
+
         </div>
     </div>
 </div>
@@ -23,28 +23,29 @@
 {% endif %}
 
 <div class="container-fluid">
-    <br>
-    <br>
-    
+    <br class="d-none d-md-block">
+    <br class="d-none d-md-block">
+
     <br>
     <br>
     <div class="row">
         <div class="container col-md-9">
-            <div class="row fs-3 fw-light">
+            <div class="row fs-3 fw-light px-2 px-md-0">
                 Mide y comparte tus conocimientos...
             </div>
             <br>
             <br>
             <br>
             <form action="{% url 'exams_app:evaluaciones' %}" method="get">
-            <div class="row busqueda">
-                <div class="autoComplete_wrapper">
-                    <input class="w-100 py-3 fs-5 shadow" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off"  id="autoComplete" name="kword" >
-                    <input type="submit" style="display:none"/ class="formula">
+                <div class="row busqueda justify-content-center">
+                    <div class="autoComplete_wrapper px-0">
+                        <input class="w-100 py-3 fs-5 shadow" type="search" dir="ltr" spellcheck=false autocorrect="off"
+                            autocomplete="off" autocapitalize="off" id="autoComplete" name="kword">
+                        <input type="submit" style="display:none" / class="formula">
+                    </div>
                 </div>
-            </div>
-        </form>
-    
+            </form>
+
         </div>
 
     </div>
@@ -52,28 +53,29 @@
     <br>
     <br>
     <div class="row bg-light">
-        <div class="container col-md-9">
+        <div class="container col-md-9 ">
             <br>
-            <div class="row fs-3 fw-light">
+            <div class="row fs-3 fw-light text-center justify-content-center">
                 O selecciona una categoría:
             </div>
             <br>
-            
+
             <div class="row align-items-center">
-            {% for cat in categorias %}
-                    <div class="col-md-4 text-center ">
-                        <form action="{% url 'exams_app:evaluaciones' %}" method="get">
+                {% for cat in categorias %}
+                <div class="col-md-4 text-center ">
+                    <form action="{% url 'exams_app:evaluaciones' %}" method="get">
 
-                            <button class="btn fs-4 fw-light my-2 border rounded px-3 py-2" type="submit" value="{{cat.nombre}}" name="categoria" id="categoria">
+                        <button class="btn fs-4 fw-light my-2 border rounded px-3 py-2" type="submit"
+                            value="{{cat.nombre}}" name="categoria" id="categoria">
 
-                                {{cat.nombre}}
-                            </button>
-                                
+                            {{cat.nombre}}
+                        </button>
 
-                        </form>
-                    </div>
+
+                    </form>
+                </div>
                 {% endfor %}
-                    
+
             </div>
             <br>
             <br>
@@ -99,4 +101,3 @@
 <script src="{% static 'js/inicio.js' %}"></script>
 
 {% endblock content %}
-    

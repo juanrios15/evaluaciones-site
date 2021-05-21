@@ -1,14 +1,14 @@
 {% load static %}
 
 <div class="sticky-top bg-white" >
-  <nav class="navbar col-md-6 container navbar-expand-lg navbar-dark shadow" style="height: 55px; background-color: #333; border-radius: 25px 25px">
+  <nav class="navbar col-md-6 container navbar-expand-lg navbar-dark shadow" style="min-height: 55px; background-color: #333; border-radius: 25px 25px">
     <div class="container">
       
      
       
-      <div class="collapse navbar-collapse"  id="navbarText">
-        <ul class="navbar-nav col-md-12 me-auto mb-2 mb-lg-0 justify-content-center align-items-center">
-          <li class="nav-item">
+      <div class="collapse navbar-collapse "  id="navbarText">
+        <ul class="navbar-nav col-md-12 me-auto mb-2 mb-lg-0 justify-content-center align-items-center ">
+          <li class="nav-item ">
             {% if request.path == '/' %}
             <a class="nav-link active" aria-current="page" href="{% url 'users_app:inicio' %}">Inicio</a>
             {% else %}
@@ -26,7 +26,7 @@
             {% endif %}
               
           </li>
-          <a class="navbar-brand p-0 m-0 fs-2 px-3 " href="{% url 'users_app:inicio' %}">
+          <a class="navbar-brand p-0 m-0 fs-2 px-3 d-none d-md-block" href="{% url 'users_app:inicio' %}">
             SOMA
   
         </a>
@@ -60,6 +60,12 @@
         <span class="navbar-toggler-icon"></span>
         
       </button>
+      <div class="d-md-none">
+        <a class="navbar-brand p-0 m-0 fs-2 px-3" href="{% url 'users_app:inicio' %}">
+          SOMA
+
+      </a>
+      </div>
     </div>
   </nav>
   
