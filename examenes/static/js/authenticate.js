@@ -41,9 +41,9 @@ function loginsocial(tipo) {
           axios.post('/api/sociallogin/',data).then(
             function(response){
               console.log(response);
+              console.log(document.referrer);
+              console.log(document.referrer.split('/')[2]);
               if(document.referrer.split('/')[2]!=location.hostname){
-                console.log(document.referrer);
-                console.log(document.referrer.split('/')[2]);
                 //User came from other domain or from direct
                 window.location.href = '/';
               }else{
