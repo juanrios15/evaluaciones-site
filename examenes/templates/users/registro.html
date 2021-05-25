@@ -22,9 +22,8 @@
 {% endif %}
 
 
-<br>
-<br>
-<br>
+<br class="d-none d-md-block">
+<br class="d-none d-md-block">
 
 
 
@@ -36,11 +35,11 @@
 </div>
 
 {% else %}
-<div class="container col-md-9">
-    <div class="row mt-3">
+<div class="container col-md-8 col-lg-9">
+    <div class="row mt-2">
 
 
-        <div class="col-md-4 shadow-sm">
+        <div class="col-md-12 col-lg-4 shadow-sm">
             <div class="row text-center mt-3">
                 <div class="fs-3 fw-light mb-2">Ingrese directamente</div>
             </div>
@@ -61,9 +60,10 @@
                         Ingrese con Facebook</button>
                 </div>
             </div>
+            <br class="d-lg-none">
         </div>
         <br>
-        <div class="container col-md-8 text-center bg-light px-3 rounded shadow-sm">
+        <div class="container col-md-12 col-lg-8 text-center bg-light px-3 rounded shadow-sm">
             <br>
             <div class="row mb-2">
                 <h5>O registrese con el siguiente formulario:</h5>
@@ -71,7 +71,7 @@
             <form method="post" enctype="multipart/form-data"> {% csrf_token %}
                 <div class="row mb-2">
                     <div class="row mb-2">
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6 mb-2">
                             {{form.username}}
                             {% if form.username.errors %}
                             {% for error in form.username.errors %}
@@ -79,7 +79,7 @@
                             {% endfor %}
                             {% endif %}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                             {{form.email}}
                             {% if form.email.errors %}
                             {% for error in form.email.errors %}
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6 mb-2">
                             {{form.full_name}}
                             {% if form.full_name.errors %}
                             {% for error in form.full_name.errors %}
@@ -97,7 +97,7 @@
                             {% endfor %}
                             {% endif %}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                             <div class="row">
                                 <div class="col-md-3 align-self-center">Genero</div>
                                 <div class="col-md-9">{{form.genero}}</div>
@@ -110,8 +110,8 @@
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-md-6">
-                            <div class="row align-items-center mt-1">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="row align-items-center mt-1 mb-2">
                                 <div class="col-md-3 align-self-center">País</div>
                                 <div class="col-md-9">
                                     <input type="text" id="pais" class="form-control" name="pais">
@@ -119,8 +119,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="row mb-2">
                                 <div class="col-md-3">Fecha nacimiento</div>
                                 <div class="col-md-9 d-flex">
                                     {{form.fecha_nacimiento}}
@@ -136,8 +136,8 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-6">
-                            <div class="row align-items-center">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="row align-items-center mb-2">
                                 <div class="col-md-3">Foto de perfil</div>
                                 <div class="col-md-9">
                                     {{form.foto}}
@@ -151,7 +151,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                             <div class="row mb-2">
                                 <div class="col-md-3 align-self-center">Contraseña</div>
                                 <div class="col-md-9">
@@ -175,7 +175,7 @@
                     </div>
             </div>
             <div class="row flex-row-reverse">
-                <div class="col-md-6">
+                <div class="col-md-12 col-lg-6">
                     <div class="row px-2">
 
                         <button type="submit" class="btn btn-dark">Registrarse</button>

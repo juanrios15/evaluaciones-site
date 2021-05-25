@@ -29,7 +29,7 @@
     </div>
     <form id="form1" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12 col-lg-9">
                 <div class="row mb-3">
                     <label for="id_nombre" class="form-label"> Nombre </label>
                     <input type="text" name="nombre" maxlength="150" required id="id_nombre" class="form-control"
@@ -110,7 +110,7 @@
                 </div>
 
             </div>
-            <div class="col-md-3 d-flex align-items-center">
+            <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-center ">
 
                 <div class="row justify-content-center px-1 ">
                     <div class="col-md-12 text-center d-flex justify-content-center ">
@@ -123,8 +123,8 @@
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col-md-6">
-                <div class="row me-2">
+            <div class="col-md-12 col-lg-6">
+                <div class="row me-lg-2 mb-2 mb-lg-0">
                     <label for="id_descripcion" class="form-label fs-4"> Descripción </label>
 
                     <textarea class="form-control shadow-sm" name="descripcion" cols="40" rows="6" maxlength="400"
@@ -132,8 +132,8 @@
 
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row ms-2">
+            <div class="col-md-12  col-lg-6">
+                <div class="row ms-lg-2">
                     <label for="id_requisitos_minimos" class="form-label fs-4"> Requisitos minimos </label>
                     <textarea class="form-control shadow-sm" name="requisitos_minimos" cols="40" rows="6"
                         maxlength="400" required="" id="id_requisitos_minimos"></textarea>
@@ -148,7 +148,7 @@
 
 
         <div class="row shadow py-3 rounded px-2" id="questions">
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-12 col-lg-6">
                 <div id="pregunta1">
 
                     <label for="pregunta-1" class="form-label">Pregunta</label>
@@ -189,7 +189,7 @@
                 <button type="button" class="btn rounded border shadow mt-2" id="addoption1">Agregar opción</button>
 
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-12 col-lg-6">
                 <div id="pregunta2">
                     <label for="pregunta-2" class="form-label">Pregunta</label>
                     <textarea class="form-control" id="pregunta-2" name="pregunta-2" rows="3" required style="font-size: 0.85rem;"></textarea>
@@ -226,7 +226,7 @@
                 </div>
                 <button type="button" class="btn rounded border shadow mt-2" id="addoption2">Agregar opción</button>
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-12 col-lg-6">
                 <div id="pregunta3">
 
                     <label for="pregunta-3" class="form-label">Pregunta</label>
@@ -264,7 +264,7 @@
                 </div>
                 <button type="button" class="btn rounded border shadow mt-2" id="addoption3">Agregar opción</button>
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-12 col-lg-6">
                 <div id="pregunta4">
                     <label for="pregunta-4" class="form-label">Pregunta</label>
                     <textarea class="form-control" id="pregunta-4" name="pregunta-4" rows="3" required style="font-size: 0.85rem;"></textarea>
@@ -300,7 +300,7 @@
                 </div>
                 <button type="button" class="btn rounded border shadow mt-2" id="addoption4">Agregar opción</button>
             </div>
-            <div class="mb-3 col-md-6">
+            <div class="mb-3 col-md-12 col-lg-6">
                 <div id="pregunta5">
                     <label for="pregunta-5" class="form-label">Pregunta</label>
                     <textarea class="form-control" id="pregunta-5" name="pregunta-5" rows="3" required style="font-size: 0.85rem;"></textarea>

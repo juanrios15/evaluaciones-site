@@ -2,7 +2,19 @@
 <br>
 <footer class="bg-dark m-0 py-3">
     <div class="container text-white">
-        &copy Desarrollado con Django Framework | Juan Rios</div>
+        <div class="row">
+            <div class="col-md-3">
+                <a href="{% url 'users_app:politica' %}" class="text-decoration-none text-white">
+                    Política de privacidad
+                </a> 
+            </div>
+
+            <div class="col-md-9 text-end">
+                &copy Desarrollado con Django Framework | Juan Rios
+            </div>
+        </div>
+    
+    </div>
 </footer>
 
 <div class="d-md-none" style="height: 65px;"> </div>

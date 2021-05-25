@@ -2,7 +2,7 @@
 <a class="fs-4 text-decoration-none my-1" href="{% url 'exams_app:detalleeva' epropia.slug %}">{{epropia.nombre}}</a>
 
 <div class="row align-items-center border boder-light rounded mb-3 py-2 mx-0 ">
-    <div class="col-md-2">
+    <div class="col-md-3 col-lg-2">
 
         {% if epropia.imagen %}
         <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="{{epropia.imagen.url}}" alt="" class="w-100 d-block m-1 rounded"> </a>
@@ -11,7 +11,7 @@
         <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="/static/img/subcats/{{epropia.subcategoria.nombre}}.jpg" alt="" class="w-100 d-block m-1 rounded"></a>
         {% endif %}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-9 col-lg-4">
         <div class="row px-1">
             <div>
                 <div>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6 col-lg-4">
         <div class="row fw-light mb-2">
             <div class="col-md-7">
                 <div>Valoraciones</div>
@@ -116,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2 px-0 ">
+    <div class="col-md-5 col-lg-2 px-0 ">
         <div class="list-group text-center  shadow" style="font-size: 0.9rem;">
             <a href="{% url 'exams_app:verpreguntaseva' epropia.id %}" class="list-group-item list-group-item-action">Ver preguntas <span class="fw-bold text-primary">
                 ({{epropia.total_preguntas}}) </span> </a>

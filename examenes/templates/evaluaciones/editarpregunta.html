@@ -30,20 +30,15 @@
 
     <form method="post" id="form-editarpregunta"> {% csrf_token %}
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-12 col-lg-5">
                 <div class="fs-2 fw-light mb-2">
                     Pregunta
                 </div>
                 <textarea name="descripcion" id="id_descripcion" class="form-control" rows="10">{{pregunta.descripcion}}</textarea>
                 <br>
- 
-                    <div class="col-md-12 text-end">
-                        <button type="submit" class="btn btn-dark p-3 fs-5 fw-light" id="enviar"> Enviar cambios</button>
-                    </div>
-
 
             </div>
-            <div class="col-md-7" >
+            <div class="col-md-12 col-lg-7" >
                 <div class="row mb-2">
                     <div class="col-md-2 fs-4 fw-light"> Correcta?</div>
                     <div class="col-md-9 fs-4 fw-light text-center ps-0"> Opciones </div>
@@ -85,7 +80,7 @@
                     
                 {% endfor %}
                 </div>
-                <div class="col-md-12 text-end pe-3">
+                <div class="col-md-12 text-end pe-3 mb-2">
                     <button type="button" class="btn btn-outline-dark mt-2" id="agregaropcion">Agregar opcion</button>
 
                 </div>
@@ -93,7 +88,12 @@
             </div>
 
         </div>
-
+        <div class="row">
+             
+            <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-dark p-3 fs-5 fw-light" id="enviar"> Enviar cambios</button>
+            </div>
+        </div>
             
 
     </form>

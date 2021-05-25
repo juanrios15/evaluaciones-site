@@ -7,18 +7,18 @@
 {% block content %}
 <br>
 
-<div class="container col-md-8">
+<div class="container col-md-10 col-xl-8">
 
-    <div class="row ">
+    <div class="row justify-content-center">
         <br>
-        <div class="col-md-8 rounded shadow-sm bg-light pb-3">
+        <div class="col-md-10 col-lg-8 rounded shadow-sm bg-light pb-3">
             <div class="row text-center mt-3">
                 <h1>Resultado</h1>
 
             </div>
             <br>
             <div class="row">
-                <div class="container col-md-6 border border-primary shadow rounded bg-white">
+                <div class="container col-md-8 col-xl-6 border border-primary shadow rounded bg-white">
                     <div class="col-md-12 text-primary py-3 text-center" style="font-size: 3rem;">
 
                         {{intento.puntuacion|floatformat:2}} / 100
@@ -28,7 +28,7 @@
             <br>
             <div class="row mt-2">
 
-                <div class="container col-md-5 border rounded text-center">
+                <div class="container col-md-8 col-xl-5 border rounded text-center">
                     <div class="row">
                         <div class="col-md-6 fs-5">
 
@@ -61,7 +61,7 @@
             <br>
             <hr>
             <div class="row ">
-                <div class="container col-md-6 text-center border rounded shadow-sm">
+                <div class="container col-md-8 col-xl-6 text-center border rounded shadow-sm">
                     <div class="row " style="font-size: 3rem;">
                         <div>
                             Pts. 
@@ -87,7 +87,7 @@
                                 {% endif %}
                                     
                             </div>
-                            <div class="col-md-6 text-start px-1">
+                            <div class="col-md-12 px-1">
                                 {{intento.usuario.username}}
                                 <br>
                                 Rango | {{intento.usuario.rango}}
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 ">
+        <div class="col-md-12 col-lg-4 ">
             <br>
             <div class="container fs-3 fw-light border-start">
                 Espacio Publicitario

@@ -24,11 +24,11 @@
 
 <div class="container">
     <div class="row align-items-center">
-        <div class="col-md-9">
+        <div class="col-md-12 col-lg-9">
             <div class="fw-light lh-sm" style="font-size: 45px;"> {{evaluacion.nombre}}</div>
             <div class="fs-6 text-secondary fst-italic">{{evaluacion.created_at}}</div>
         </div>
-        <div class="col-md-3 d-flex justify-content-end px-0">
+        <div class="col-md-12 col-lg-3 d-flex justify-content-end px-0">
             
             {% if evaluacion.id  in evaluaciones_seguidas %}
             <form action="{% url 'exams_app:seguireva' evaluacion.id %}" method="post"> {% csrf_token %}
@@ -156,7 +156,7 @@
         </div>
     </div>
     <div class="row mt-2 p-2">
-        <div class="col-md-7 py-2 px-3">
+        <div class="col-md-12 col-lg-7 py-2 px-3">
             
             <div class="row p-0 py-1 m-0 align-items-center text-center fw-light border-top border-start border-end shadow-sm">
                 <div class="col-md-2">
@@ -200,7 +200,7 @@
                 </div>
                 
             </div>
-            <div class="col-md-10 container ">
+            <div class="col-md-12 col-xl-10 container ">
                 <div class="row  p-0 py-1 m-0 mt-2 align-items-center border text-center fw-light border-top border-start border-end shadow-sm">
                     <div class="col-md-3">
                         Intentos Realizados
@@ -244,7 +244,7 @@
             
             <div class="p-0 m-0 row align-items-center ">
 
-                <div class="col-md-3">
+                <div class="col-md-4 col-xl-3">
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-5">
                             
@@ -269,7 +269,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8 col-xl-6 ">
                     <div class="row p-0 m-0">
                         <div class="col-md-4 align-self-center">
                             <div class="fs-6">
@@ -295,7 +295,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5 col-xl-3">
                     <div class="row text-center border border-2 rounded justify-content-center shadow" style="font-size: 0.9rem;">
                         <div class="row text-center px-0">
                             <div class="col-md-6 ">
@@ -338,10 +338,10 @@
                 
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-12 col-lg-5">
             <div class="row mx-2">
                 <div class="row ">
-                    <div class="col-md-12  text-center rounded mb-3">
+                    <div class="col-md-6 col-lg-12  text-center rounded mb-0 mb-lg-3 ">
                         {% if evaluacion.imagen %}
                         <img class="w-100 d-block rounded" src="{{evaluacion.imagen.url}}" alt="" style="max-height: 350px;">
                         {% else %}
@@ -355,49 +355,54 @@
                     {% if request.user == evaluacion.user %}
                     
                     {% else %}
-                    <div class="row mt-2 py-1 align-items-center">
-                            <div class="col-md-5">
-                                <div class="row border rounded text-center mx-1 px-0 shadow" style="font-size: 0.9rem;">
+                    <div class="col-md-6 col-lg-12 d-flex align-items-center">
+
+                        <div class="row mt-2 py-1 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="row border rounded text-center mx-1 px-0 shadow" style="font-size: 0.9rem;">
+            
+                                        <div class="col-md-12">
+                                            Intentos restantes
+                                        </div>
+    
+                                        <div class="col-md-12 fw-bold">
+                                            {{intentos_restantes}}
+                                        </div>
+    
+    
+                                    </div>
         
-                                    <div class="col-md-12">
-                                        Intentos restantes
-                                    </div>
-
-                                    <div class="col-md-12 fw-bold">
-                                        {{intentos_restantes}}
-                                    </div>
-
-
                                 </div>
-    
-                            </div>
-                            {% if intentos_restantes > 0 and maxima_puntuacion < 100 %}
-                            <div class="col-md-7">
-                                <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
-                                    <div class="row">
-                                        <button type="submit" class="btn btn-success shadow border py-2"> Presentar Evaluación </button>
-                
-                                    </div>
-                                </form>
-    
-                            </div>
-                            {% else %}
-                            <div class="col-md-7">
-                                <div class="row mt-2 py-1">
-                                        <button type="submit" class="btn btn-outline-dark shadow border py-2" disabled> Presentar Evaluación </button>
+                                {% if intentos_restantes > 0 and maxima_puntuacion < 100 %}
+                                <div class="col-md-7">
+                                    <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
+                                        <div class="row">
+                                            <button type="submit" class="btn btn-success shadow border py-2"> Presentar Evaluación </button>
                     
+                                        </div>
+                                    </form>
+        
                                 </div>
-                                
-                            </div>
-                
-                            {% endif %}
+                                {% else %}
+                                <div class="col-md-7">
+                                    <div class="row mt-2 py-1">
+                                            <button type="submit" class="btn btn-outline-dark shadow border py-2" disabled> Presentar Evaluación </button>
+                        
+                                    </div>
+                                    
+                                </div>
+                    
+                                {% endif %}
+    
+                        </div>
+
 
                     </div>
 
                     {% endif %}
                     {% else %}
-                    <div class="col-md-12">
-                        <div class="row mt-2 py-1">
+                    <div class="col-md-6 col-lg-12 ">
+                        <div class="row mt-2 py-1 ">
                             <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
                                 <div class="row">
                                     <button type="submit" class="btn btn-outline-dark fs-5 fw-light py-3 shadow border"> Presentar Evaluación </button>

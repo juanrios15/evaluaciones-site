@@ -31,5 +31,6 @@ urlpatterns = [
    #Rankings
    
    path('rankings/',views.RankingsListView.as_view(),name="rankings"),
+   path('politica-de-privacidad/',views.PoliticaPrivacidad.as_view(),name="politica"),
 
 ]

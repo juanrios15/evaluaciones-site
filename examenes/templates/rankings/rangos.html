@@ -26,7 +26,7 @@
 
 <div class="container col-md-10 fw-light">
     <div class="row">
-        <div class="col-md-3 border-end">
+        <div class="col-lg-3 border-end d-none d-lg-block">
             <div class="fs-4 mb-3 ">
                 Rankings
             </div>
@@ -60,7 +60,53 @@
                  
              </div>
         </div>
-        <div class="col-md-9 text-center" style="font-size: 0.95rem;">
+        <div class="col-12 d-lg-none" >
+            <div class="row justify-content-center">
+                
+                {% if cat_actual == "Global" %}
+                    <div class="col-3 bg-success">
+                        <form method="GET"> {% csrf_token %}
+                         <input type="text" id="categoria" name="categoria" value="Global" hidden> 
+                         <button class="btn bg-dark text-white mb-2" type="submit">Top 20 Global</button>
+
+                        </form>
+                     </div>
+                     {% else %}
+                     <div class="col-3">
+                        <form method="GET"> {% csrf_token %}
+                            <input type="text" id="categoria" name="categoria" value="Global" hidden> 
+                            <button class="btn border rounded mb-2 " type="submit">Top 20 Global</button>
+                        </form>
+                    </div>
+
+                     {% endif %}
+                         
+                 {% for e in categorias  %}
+                 
+                 {% if cat_actual == e.nombre %}
+                 <div class="col-3">
+                     <form method="GET"> {% csrf_token %}
+                         <input type="text" id="categoria" name="categoria" value="{{e}}" hidden> 
+                         <button class="btn bg-dark text-white mb-2" type="submit">Top 20 {{e.nombre}}</button>
+                    </form>
+                </div>
+                        {% else %}
+                <div class="col-3">
+                        <form method="GET"> {% csrf_token %}
+                        <input type="text" id="categoria" name="categoria" value="{{e}}" hidden> 
+                        <button class="btn border rounded mb-2" type="submit">Top 20 {{e.nombre}}</button>
+                    </form>
+                    </div>
+
+                     {% endif %}
+                         
+                 {% endfor %}
+                 
+             </div>
+
+
+        </div>
+        <div class="col-md-12 col-lg-9 text-center" style="font-size: 0.95rem;">
             <div class="row px-2 mx-0">
                 <br>    
                 <div class="row justify-content-center fw-normal mb-2" style="font-size: 3rem;">

@@ -65,7 +65,7 @@ $(document).ready(function(){
             $("#questions")
             .append(
                 `
-                <div class="mb-3 col-md-6">
+                <div class="mb-3 col-md-12 col-lg-6">
                     <div id="pregunta`+(ultima_pregunta+1)+`">
                         <div class="row">
                             <div class="col-md-10">

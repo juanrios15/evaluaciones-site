@@ -3,7 +3,7 @@
 {% if user.username %}
 
 <div class="position-fixed top-50 end-0 rounded-start text-center translate-middle-y shadow d-none d-md-block"
-    style="font-size: 0.75rem; background-color: #333;">
+    style="font-size: 0.75rem; background-color: #333; z-index: 1;">
     <div class="col-md-12 border-bottom py-2">
         <a class=" text-decoration-none text-white" href="{% url 'users_app:detalleusuario' user.slug %}">
             <div class="fs-4">

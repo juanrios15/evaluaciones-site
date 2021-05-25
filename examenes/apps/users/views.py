@@ -408,7 +408,9 @@ class RankingsListView(ListView):
         queryset = super(RankingsListView, self).get_queryset()
         try:
             categoria = self.request.GET["categoria"]
-            queryset = User.objects.filter(intentos__evaluacion__subcategoria__categoria__nombre=categoria
+            if categoria == "Global":
+                categoria = ""
+            queryset = User.objects.filter(intentos__evaluacion__subcategoria__categoria__nombre__contains=categoria
                 ).annotate(
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
@@ -452,9 +454,9 @@ class RankingsListView(ListView):
         context = super().get_context_data(**kwargs)
         
         try:
-            print("aca")
+
             categoria = self.request.GET["categoria"]
-            print(categoria)
+            
             context["cat_actual"] = categoria
             qs = User.objects.filter(
                 id=self.request.user.id,intentos__evaluacion__subcategoria__categoria__nombre=categoria
@@ -468,7 +470,7 @@ class RankingsListView(ListView):
                                 filter=Q(puntos__evaluacion__subcategoria__categoria__nombre=categoria)),
                             Value(0))
                 ).first()
-            print(qs)
+            print("qs",qs)
         except:
             context["cat_actual"] = "Global"
             qs = User.objects.filter(
@@ -631,4 +633,8 @@ class EvaluacionesUsuario(DetailView):
         
         return context
         
-        
+
+class PoliticaPrivacidad(TemplateView):
+    
+    template_name = "home/politica.html"
+    

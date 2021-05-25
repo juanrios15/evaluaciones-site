@@ -71,7 +71,6 @@ class CrearEvaluacionView(LoginRequiredMixin,CreateView):
         for pregunta in range(1,(ultima_pregunta+1)):
             texto_busqueda = f"pregunta-{pregunta}"
             res = dict(filter(lambda item: texto_busqueda in item[0], request.POST.items()))
-            print(res)
             opcion_correcta_key = dict(filter(lambda x:"correcta" in x[0], res.items()))
             asd = list(opcion_correcta_key)[0] 
             res.pop(asd)
@@ -115,7 +114,7 @@ class EvaluacionesListView(ListView):
     def get_queryset(self):
         kword = self.request.GET.get("kword",'')
         categoria = self.request.GET.get("categoria",'')
-        if categoria == "Global":
+        if categoria == "todos":
             categoria = ""
                     
         orden = self.request.GET.get("orden",'')

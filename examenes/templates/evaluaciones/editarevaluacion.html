@@ -35,7 +35,7 @@
         </div>
         <form method="post" id="formupdate" enctype="multipart/form-data"> {% csrf_token %}
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-12 col-lg-9">
                     <div class="row">
                         <label for="id_nombre" class="form-label"> Nombre </label>
                         <input type="text" name="nombre" maxlength="150" required id="id_nombre" class="form-control"
@@ -118,7 +118,7 @@
     
     
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-12 col-lg-3">
     
                     <div class="row justify-content-center">
                         <div class="col-md-12 text-center d-flex justify-content-center ">
@@ -141,8 +141,8 @@
 
             </div>
             <div class="row mt-2">
-                <div class="col-md-6">
-                    <div class="row me-2">
+                <div class="col-md-12 col-lg-6">
+                    <div class="row me-lg-2 mb-2 mb-lg-0">
                         <label for="id_descripcion" class="form-label fs-4"> Descripción </label>
         
                         <textarea class="form-control shadow-sm" name="descripcion" cols="40" rows="6" maxlength="400"
@@ -150,8 +150,8 @@
         
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row ms-2">
+                <div class="col-md-12 col-lg-6"">
+                    <div class="row ms-lg-2">
                         <label for="id_requisitos_minimos" class="form-label fs-4"> Requisitos minimos </label>
                         <textarea class="form-control shadow-sm" name="requisitos_minimos" cols="40" rows="6"
                             maxlength="400" required="" id="id_requisitos_minimos" >{{form.requisitos_minimos.value}}</textarea>
