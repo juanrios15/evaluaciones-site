@@ -15,7 +15,7 @@ $(document).ready(function(){
     console.log($("#listasubcategoria").text());
 
     
-    axios.get('http://127.0.0.1:8000/api/categorias/list').then(
+    axios.get('/api/categorias/list').then(
         
         function(response){
             var y = response.data
