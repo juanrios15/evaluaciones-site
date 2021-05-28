@@ -354,9 +354,24 @@ class VerPreguntasEvaluacion(LoginRequiredMixin,DetailView):
 class BorrarPregunta(LoginRequiredMixin,View):
     
     def post(self,request,*args,**kwargs):
-        
+                
         pregunta = Pregunta.objects.get(id=self.kwargs["pk"])
         evaluacion = pregunta.evaluacion.id
+        
+        cant_preguntas = pregunta.evaluacion.cant_preguntas
+        print(cant_preguntas)
+        total_preguntas = Pregunta.objects.filter(evaluacion__id= evaluacion).count()
+        print(total_preguntas)
+        
+        if cant_preguntas > total_preguntas-1:
+            messages.error(request,"NO tienes suficientes preguntas")
+            return HttpResponseRedirect(
+            reverse(
+                'exams_app:verpreguntaseva',kwargs={'pk': evaluacion}
+            )
+            )
+        
+        
         if self.request.user == pregunta.evaluacion.user:
             pregunta.delete()
 
