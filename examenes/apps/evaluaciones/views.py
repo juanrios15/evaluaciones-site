@@ -359,16 +359,14 @@ class BorrarPregunta(LoginRequiredMixin,View):
         evaluacion = pregunta.evaluacion.id
         
         cant_preguntas = pregunta.evaluacion.cant_preguntas
-        print(cant_preguntas)
         total_preguntas = Pregunta.objects.filter(evaluacion__id= evaluacion).count()
-        print(total_preguntas)
-        
+
         if cant_preguntas > total_preguntas-1:
             messages.error(request,"NO tienes suficientes preguntas")
             return HttpResponseRedirect(
-            reverse(
-                'exams_app:verpreguntaseva',kwargs={'pk': evaluacion}
-            )
+                reverse(
+                    'exams_app:verpreguntaseva',kwargs={'pk': evaluacion}
+                )
             )
         
         
