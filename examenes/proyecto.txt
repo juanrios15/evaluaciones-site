@@ -91,6 +91,6 @@ El login social debe enviar mensajes de validación cuando hay errores en el log
 Al hacer login debe redireccionar a la pagina anterior siempre. Revisar que tambien ocurra con login social.
 
 
-
+Hacer una nueva vista para los profesores más populares... Que se pueda filtrar por categorias y buscar por nombre del profesor
 
 

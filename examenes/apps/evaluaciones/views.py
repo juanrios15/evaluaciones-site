@@ -42,6 +42,8 @@ class CrearEvaluacionView(LoginRequiredMixin,CreateView):
     
     def post(self, request, *args, **kwargs):
         
+        print(request.POST)
+        
         if request.POST.get("publico") == "on":
             publico = True
         else:

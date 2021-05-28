@@ -155,16 +155,22 @@ Ranking, Top, Clasificaciones
                             <td class="px-0">
                                 <div class="col-12 d-flex justify-content-center ">
                                     {% if x.foto %}
-                                    <img src="{{x.foto.url}}" alt="" class="mw-100 d-block rounded" style="max-height: 50px;">
+                                    <a href="{% url 'users_app:detalleusuario' x.slug %}">
+                                        <img src="{{x.foto.url}}" alt="" class="mw-100 d-block rounded" style="max-height: 50px;">
+                                    </a>
                                     {% else %}
-                                    <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block rounded"
-                                        style="max-height: 50px;">
+                                    <a href="{% url 'users_app:detalleusuario' x.slug %}">
+                                        <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block rounded"
+                                            style="max-height: 50px;">
+                                    </a>
                                     {% endif %}
 
                                 </div>
                             </td>
                             <td class="px-0 mx-0">
-                                {{x.username}}
+                                <a class="text-decoration-none" href="{% url 'users_app:detalleusuario' x.slug %}">
+                                    {{x.username}}
+                                </a>
                             </td>
                             <td class="px-0">{{x.rango}}</td>
                             <td class="px-0"><span class="flag-icon flag-icon-{{x.codigo_pais}} rounded"></span>
