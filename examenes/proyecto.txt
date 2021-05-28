@@ -51,14 +51,17 @@ LISTO --- Cambiar el nombre de las imagenes en static para que no fallen al carg
 LISTO --- Google Analytics
 LISTO --- Icono de la pagina
 LISTO --- En el listado de evaluaciones propias, se debe modificar el enlace que dirija con el nombre de la pagina real
+LISTO --- Mensaje durante el examen pidiendo que no haga trampa (codigo de honor)
+LISTO --- No permitir copiar el texto de las preguntas
+LISTO --- La barra del menu del perfil de usuario pasa un poco por encima del menu lateral
+LISTO --- Revisar que login social funcione en celular, sino toca cambiarlo por redirect()
+LISTO --- Mejorar todas las vistas para movil, sm, md, lg
 
 
 EVALUACIONES 
 
+Al eliminar una pregunta se debe validar que la cantidad de preguntas sea suficiente para el minimo por intento
 Google adsense
-Mensaje durante el examen pidiendo que no haga trampa (codigo de honor)
-No permitir copiar el texto de las preguntas
-Mejorar todas las vistas para movil, sm, md, lg
 La pagina de docs aun falta por hacerla toda, usar el nav vertical de bootstrap
 Realizar todas las validaciones posibles en los formularios de la pagina:
     Registro usuario
@@ -82,11 +85,8 @@ En la tabla de ranking cuando las columnas se encogen, los nombres de usuario se
 
 Esconder el menu cuando sale el keyboard en mobile
 
-La barra del menu del perfil de usuario pasa un poco por encima del menu lateral
 
-Revisar que login social funcione en celular, sino toca cambiarlo por redirect()
-
-
+El login social debe enviar mensajes de validación cuando hay errores en el login
 
 Al hacer login debe redireccionar a la pagina anterior siempre. Revisar que tambien ocurra con login social.
 

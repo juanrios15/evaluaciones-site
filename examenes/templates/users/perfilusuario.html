@@ -32,12 +32,12 @@
     <br>
     <br>
     <div class="row justify-content-center">
-        <div class="col-md-12 col-lg-6 col-xl-4 d-flex align-items-center border-end mb-3 justify-content-center">
-            <div class="row border rounded mx-3 py-2 pb-3 ">
+        <div class="col-12 col-md-12 col-lg-6 col-xl-4 d-flex align-items-center border-end mb-3 justify-content-center letrapeque px-0">
+            <div class="row border rounded mx-3 py-2 pb-3">
                 <div class="fs-3">Intentos</div>
                 <hr>
-                <div class="row">
-                    <div class="col-md-7">
+                <div class="row px-1 mx-0">
+                    <div class="col-8 col-md-7 px-0 py-1">
                         <div>
                             Total Intentos
                         </div>
@@ -48,7 +48,7 @@
                         <div>
                             Evaluaciones aprobadas
                         </div>
-                        <div>
+                        <div class="my-1">
                             % aprobadas
                         </div>
                         <div class="fw-bold text-success">
@@ -61,7 +61,7 @@
                             Promedio calificaciones
                         </div>
                     </div>
-                    <div class="col-md-5 text-center">
+                    <div class="col-4 col-md-5 text-center px-0 py-1">
                         <div>
                             {{total_intentos.total}}
                         </div>
@@ -104,12 +104,12 @@
             </div>
 
         </div>
-        <div class="col-md-12 col-lg-6 col-xl-4 d-flex align-items-center border-end justify-content-center">
+        <div class="col-12 col-md-12 col-lg-6 col-xl-4 d-flex align-items-center border-end justify-content-center px-0 letrapeque">
             <div class="row border rounded  mx-3 py-2 pb-3">
                 <div class="fs-3">Evaluaciones Propias</div>
                 <hr>
-                <div class="row">
-                    <div class="col-md-7">
+                <div class="row mx-0 px-1">
+                    <div class="col-8 col-md-7 px-0 py-1">
                         <div>
                             Evaluaciones elaboradas
                         </div>
@@ -130,7 +130,7 @@
                         </div>
     
                     </div>
-                    <div class="col-md-5 text-center">
+                    <div class="col-4 col-md-5 text-center px-0 py-1">
                         <div>
                             {{total_evaluaciones}}
                         </div>
@@ -154,14 +154,14 @@
 
             </div>
         </div>
-        <div class="col-md-8 col-lg-6 col-xl-4 text-center mt-lg-0 mt-3">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-4 text-center mt-lg-0 mt-3 px-0">
             <div class=" row justify-content-center border rounded mx-3 py-2 mb-2 justify-content-center">
                 <div class="row fs-3">
                     Social
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row justify-content-center">
+                    <div class="col-6 col-sm-4 mb-1">
                         <a class="btn border text-dark" href="{% url 'users_app:seguidoresusuario' usuario.id %}">
         
                             <span class="fw-bold"> {{seguidores}} </span>
@@ -174,7 +174,7 @@
                         </a>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-6 col-sm-4">
                         <a class="btn border text-dark" href="{% url 'users_app:seguidosusuario' usuario.id %}">
         
                             <span class="fw-bold"> {{seguidos}} </span>
@@ -187,7 +187,7 @@
                         </a>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-6 col-sm-4">
                         <a class="btn border text-dark"
                             href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">
                             <span class="fw-bold"> {{favoritos}} </span>

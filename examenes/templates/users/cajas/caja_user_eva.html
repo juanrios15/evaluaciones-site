@@ -1,8 +1,8 @@
 {% load static %}
 <a class="fs-4 text-decoration-none my-1" href="{% url 'exams_app:detalleeva' epropia.slug %}">{{epropia.nombre}}</a>
 
-<div class="row align-items-center border boder-light rounded mb-3 py-2 mx-0 ">
-    <div class="col-md-3 col-lg-2">
+<div class="row align-items-center border boder-light rounded mb-3 py-2 mx-0 letrapeque px-0">
+    <div class="container col-6 col-md-3 col-lg-2">
 
         {% if epropia.imagen %}
         <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="{{epropia.imagen.url}}" alt="" class="w-100 d-block m-1 rounded"> </a>
@@ -11,8 +11,8 @@
         <a href="{% url 'exams_app:detalleeva' epropia.slug %}"><img src="/static/img/subcats/{{epropia.subcategoria.nombre}}.jpg" alt="" class="w-100 d-block m-1 rounded"></a>
         {% endif %}
     </div>
-    <div class="col-md-9 col-lg-4">
-        <div class="row px-1">
+    <div class="col-12 col-md-9 col-lg-4 px-0 mx-0">
+        <div class="row px-0 mx-0">
             <div>
                 <div>
                     Categoría: <span class="fw-light text-secondary">{{epropia.subcategoria.categoria}}</span>
@@ -24,8 +24,8 @@
                     Creado: <span class="fw-light text-secondary">{{epropia.created_at}}</span>
                 </div>
             </div>
-            <div class="row mx-2 fw-light border rounded shadow-sm">
-                <div class="col-md-7">
+            <div class="row fw-light border rounded shadow-sm px-0 mx-0 ">
+                <div class="col-7">
                     <div>Preguntas</div>
                     <div>Puntaje minimo</div>
                     <div>Intentos permitidos</div>
@@ -35,7 +35,7 @@
 
                     
                 </div>
-                <div class="col-md-5">
+                <div class="col-5">
                     <div>{{epropia.cant_preguntas}}</div>
                     <div>{{epropia.puntaje_minimo}} / 100</div>
                     <div>{{epropia.intentos_permitidos}}</div>
@@ -57,16 +57,16 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 col-lg-4">
-        <div class="row fw-light mb-2">
-            <div class="col-md-7">
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="row fw-light mb-2 mt-2 mt-md-0">
+            <div class="col-7">
                 <div>Valoraciones</div>
                 <div>Promedio Valoraciones</div>
                 <div>Seguidores</div>
                 <div>Dificultad ponderada</div>
 
             </div>
-            <div class="col-md-5">
+            <div class="col-5">
                 <div>{{epropia.tot_valoraciones}} <i class="fas fa-star-half-alt"></i></div>
 
                 {% if epropia.prom_valoraciones == None %}
@@ -85,15 +85,15 @@
 
         </div>
         <hr class="my-2 me-2">
-        <div class="row fw-light">
+        <div class="row fw-light mb-2 mb-md-0">
 
-            <div class="col-md-7">
+            <div class="col-7">
                 <div>Total de intentos</div>
                 <div>Aprobados</div>
                 <div>% Aprobados</div>
                 <div>Promedio intentos</div>
             </div>
-            <div class="col-md-5">
+            <div class="col-5">
                 <div>
                     {{epropia.tot_intentos}}
                 </div>
@@ -116,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-5 col-lg-2 px-0 ">
+    <div class="container col-10 col-md-5 col-lg-2 px-0 ">
         <div class="list-group text-center  shadow" style="font-size: 0.9rem;">
             <a href="{% url 'exams_app:verpreguntaseva' epropia.id %}" class="list-group-item list-group-item-action">Ver preguntas <span class="fw-bold text-primary">
                 ({{epropia.total_preguntas}}) </span> </a>
@@ -128,7 +128,7 @@
         </div>
 
     </div>
-    <div class="col-md-12 pt-1">
+    <div class="col-md-12 pt-1 text-break">
         Enlace: <a href="{% url 'exams_app:detalleeva' epropia.slug %}" class=" text-decoration-none fw-light">https://www.somabeta.com/detalleevaluacion/{{epropia.slug}}/</a>
     </div>
 </div>

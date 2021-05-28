@@ -22,15 +22,12 @@
 {% endif %}
 
 
-    
-
-
 {% if ahora < intento.hora_fin and preguntas != 0 %}
 <div hidden id="hora_inicio" > {{intento.hora_inicio|date:"Y m d H:i:s"}}</div>
 <div hidden id="hora_fin" > {{intento.hora_fin|date:"Y m d H:i:s"}}</div>
 
-<div class="position-fixed start-0 border border-3 border-primary px-3 mx-1 rounded" style="top: 25%!important;">
-    <div class="text-secondary text-center" style="font-size: 0.75rem;"> Tiempo restante </div>
+<div class="position-fixed end-0 border border-3 border-primary px-3 mx-1 rounded bg-white" style="top: 75%!important;">
+    <div class="text-secondary text-center " style="font-size: 0.75rem;"> Tiempo restante </div>
     <div class=" fs-1 fw-light text-center"  id="timer"> 00:00</div>
 </div>
 
@@ -56,7 +53,7 @@
                 <div class="row mb-1 mx-0">
                    Pregunta {{forloop.counter}}
                 </div>
-                <div class="row mx-0 mb-2 pb-1 border-bottom" >
+                <div class="row mx-0 mb-2 pb-1 border-bottom intocable" >
                     {{p.descripcion}}
                 </div>
                 <div class="row mx-0" >
@@ -66,8 +63,8 @@
                         {% for op in p.opciones.aleatorios %}
                         
                         <div class="form-check">
+                            <label class="form-check-label intocable">
                             <input class="form-check-input" type="radio" name="{{p.id}}" id="id_form-{{forloop.counter0}}-opcion" value="{{op.id}}">
-                            <label class="form-check-label" for="flexRadioDefault1">
                                 {{op}}
                             </label>
                           </div>

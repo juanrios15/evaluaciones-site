@@ -31,36 +31,36 @@
     <div class="row">
 
         {% for pregunta in preguntas  %}
-        <div class="col-md-12 col-lg-6 mb-3 ">
+        <div class="col-md-12 col-lg-6 mb-3 letrapeque px-0">
             <div class="row border rounded mx-1 p-2 shadow">
-                <div class="col-md-10">
-                    <div class="fs-6 mb-2">Pregunta</div>
+                <div class="col-sm-10">
+                    <div class=" mb-2">Pregunta</div>
     
-                    <div class="fs-6">{{pregunta.descripcion|linebreaks}} </div>
+                    <div>{{pregunta.descripcion|linebreaks}} </div>
                     <hr>
-                    <div class="fs-6 mb-2">Opciones</div>
+                    <div class=" mb-2">Opciones</div>
                     {% for opcion in pregunta.opciones.all  %}
-                        <div class="container">
+                        <div class="container px-0 px-sm-3">
                             <div class="row">
     
-                                <div class="col-md-1">
+                                <div class="col-2 col-sm-1">
                                     {{forloop.counter}}.
                                 </div>
-                                <div class="col-md-11">
+                                <div class="col-10 col-sm-11">
                                     {{opcion}}
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="col-md-2 d-flex align-items-end p-0">
-                    <div class="row">
+                <div class="col-sm-2 d-flex align-items-end p-0">
+                    <div class="row mt-2 mt-sm-0 px-0 mx-0">
 
-                        <div class="col-md-12 mb-2 text-center">
+                        <div class="col-6 col-sm-12 mb-2 text-center">
                             <a class="btn btn-outline-primary" href="{% url 'exams_app:editarpregunta' pregunta.id %}">Editar</a>
                             
                         </div>
-                        <div class="col-md-12 text-center">
+                        <div class="col-6 col-sm-12 text-center">
                             <form action="{% url 'exams_app:borrarpregunta' pregunta.id %}" method="post"> {% csrf_token %}
 
                                 <button class="btn btn-outline-danger">Borrar</button>

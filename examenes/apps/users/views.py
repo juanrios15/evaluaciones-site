@@ -409,7 +409,7 @@ class RankingsListView(ListView):
         try:
             categoria = self.request.GET["categoria"]
             if categoria == "Global":
-                categoria = ""
+                raise Exception
             queryset = User.objects.filter(intentos__evaluacion__subcategoria__categoria__nombre__contains=categoria
                 ).annotate(
             total_evas=Count('intentos__evaluacion',distinct=True),

@@ -5,19 +5,19 @@
 
         <div class="col-md-12 col-lg-7">
             <div class="row">
-                <div class="col-md-2 align-self-center border rounded py-1">
+                <div class="col-3 col-md-2 align-self-center border rounded py-1 px-0">
 
                     {% if usuario.foto %}
-                    <img src="{{usuario.foto.url }}" alt="" class="w-100 d-block rounded" style="min-height: 70px;">
+                    <img src="{{usuario.foto.url }}" alt="" class="mw-100 d-block rounded" style="min-height: 70px;">
 
                     {% else %}
-                    <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block rounded">
+                    <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block rounded">
                     {% endif %}
 
                 </div>
-                <div class="col-md-10">
+                <div class="col-9 col-md-10">
                     <div class="row">
-                        <div class="col-md-6 col-lg-5 border-end">
+                        <div class="col-12 col-sm-6 col-lg-5 border-end">
                             <div class="fs-3 text-secondary">{{usuario.username}}</div>
                             {{usuario.full_name}}
                             <br>
@@ -27,7 +27,7 @@
                             <div class="text-secondary" style="font-size: 0.9rem;"> Usuario desde:
                                 {{usuario.created_at|date:"d F Y"}}</div>
                         </div>
-                        <div class="col-md-6 col-lg-7 align-self-center">
+                        <div class="col-12 col-sm-6 col-lg-7 align-self-center">
                             <div class="fs-4 fw-dark"> Rango | <span class="fs-4 fw-light">{{usuario.rango}}</span>
                             </div>
                             <div class="fs-3 fw-light py-0"> Pts. <span class="text-primary"
@@ -128,19 +128,19 @@
 
     </div>
 </div>
-<div class="container sticky-top" style="top:64px;">
-    <div class="row">
+<div class="container col-md-12 sticky-top " style="top:64px;">
+    <div class="row  letrapeque px-0 mx-0">
 
 
-        <ul class="container col-md-10 nav nav-tabs  bg-white px-3" id="myTab" role="tablist">
+        <ul class="container col-md-12 bg-white nav nav-tabs px-0 " id="myTab" role="tablist">
             {% if path_actual == "detalleusuario" %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link active text-dark" id="home-tab" type="button" role="tab" aria-selected="true"
+                <a class="nav-link active text-dark px-2 px-md-3" id="home-tab" type="button" role="tab" aria-selected="true"
                     href="{% url 'users_app:detalleusuario' usuario.slug %}">Perfil</a>
             </li>
             {% else %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark" id="home-tab" type="button" role="tab" aria-selected="false"
+                <a class="nav-link text-dark px-2 px-md-3" id="home-tab" type="button" role="tab" aria-selected="false"
                     href="{% url 'users_app:detalleusuario' usuario.slug %}">Perfil</a>
             </li>
         
@@ -149,7 +149,7 @@
             {% if user == usuario %}
             {% if path_actual == "intentosusuario" %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link  text-dark active" id="profile-tab" type="button" aria-selected="true"
+                <a class="nav-link  text-dark active px-2 px-md-3" id="profile-tab" type="button" aria-selected="true"
                     href="{% url 'users_app:intentosperfilusuario' usuario.id %}">Intentos
                     <span class="badge rounded-pill bg-dark">
                         {{total_intentos_usuario}}
@@ -157,7 +157,7 @@
             </li>
             {% else %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link  text-dark" id="profile-tab" type="button" aria-selected="false"
+                <a class="nav-link  text-dark px-2 px-md-3" id="profile-tab" type="button" aria-selected="false"
                     href="{% url 'users_app:intentosperfilusuario' usuario.id %}">Intentos
                     <span class="badge rounded-pill bg-dark">
                         {{total_intentos_usuario}}
@@ -171,7 +171,7 @@
         
             {% if path_actual == "evaluacionessusuario" %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link active text-dark" id="contact-tab" type="button" aria-selected="true"
+                <a class="nav-link active text-dark px-2 px-md-3" id="contact-tab" type="button" aria-selected="true"
                     href="{% url 'users_app:evaluacionesperfilusuario' usuario.id %}">Evaluaciones
                     <span class="badge rounded-pill bg-dark">
                         {{total_evaluaciones}}
@@ -180,7 +180,7 @@
         
             {% else %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link  text-dark" id="contact-tab" type="button" aria-selected="false"
+                <a class="nav-link  text-dark px-1 px-md-3" id="contact-tab" type="button" aria-selected="false"
                     href="{% url 'users_app:evaluacionesperfilusuario' usuario.id %}">Evaluaciones
                     <span class="badge rounded-pill bg-dark">
                         {{total_evaluaciones}}
@@ -192,7 +192,7 @@
             {% endif %}
             {% if path_actual == "seguidoresusuario" %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark active" type="button" role="tab" aria-selected="true"
+                <a class="nav-link text-dark active px-1 px-md-3" type="button" role="tab" aria-selected="true"
                     href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores
         
                     <span class="badge rounded-pill bg-dark">
@@ -203,7 +203,7 @@
             </li>
             {% else %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark " type="button" role="tab" aria-selected="false"
+                <a class="nav-link text-dark px-2 px-md-3" type="button" role="tab" aria-selected="false"
                     href="{% url 'users_app:seguidoresusuario' usuario.id %}">Seguidores
                     <span class="badge rounded-pill bg-dark">
                         {{seguidores}}
@@ -213,7 +213,7 @@
             {% endif %}
             {% if path_actual == "seguidosusuario" %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark active" type="button" role="tab" aria-selected="true"
+                <a class="nav-link text-dark active px-1 px-md-3" type="button" role="tab" aria-selected="true"
                     href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos
                     <span class="badge rounded-pill bg-dark">
                         {{seguidos}}
@@ -222,7 +222,7 @@
             </li>
             {% else %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link text-dark" type="button" role="tab" aria-selected="false"
+                <a class="nav-link text-dark px-1 px-md-3" type="button" role="tab" aria-selected="false"
                     href="{% url 'users_app:seguidosusuario' usuario.id %}">Seguidos
                     <span class="badge rounded-pill bg-dark">
                         {{seguidos}}
@@ -232,7 +232,7 @@
             {% endif %}
             {% if path_actual == "favoritosusuario" %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link active text-dark" type="button" role="tab" aria-selected="true"
+                <a class="nav-link active text-dark px-1 px-md-3" type="button" role="tab" aria-selected="true"
                     href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Favoritos
                     <span class="badge rounded-pill bg-dark">
                         {{favoritos}}
@@ -242,7 +242,7 @@
             </li>
             {% else %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link  text-dark" type="button" role="tab" aria-selected="false"
+                <a class="nav-link  text-dark px-1 px-md-3" type="button" role="tab" aria-selected="false"
                     href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">Favoritos
                     <span class="badge rounded-pill bg-dark">
                         {{favoritos}}

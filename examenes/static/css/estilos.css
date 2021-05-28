@@ -168,3 +168,38 @@ select[id$="_year"].form-select.me-1 {
       background-position:left 1.1rem top .8rem}
     }
 /*# sourceMappingURL=/sm/da1d504da9e494df386cb4038a39324f317b193a4920e7965923845f6f3f46ef.map */
+
+
+
+
+@media (max-width: 580px) {
+  .letrapeque {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 773px) {
+  .letrapequena {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 773px) {
+  .letrapequerank {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 773px) {
+  .titulopequerank {
+    font-size: 2rem;
+  }
+}
+.intocable {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}

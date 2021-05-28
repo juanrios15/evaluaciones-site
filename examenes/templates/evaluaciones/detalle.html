@@ -25,7 +25,7 @@
 <div class="container">
     <div class="row align-items-center">
         <div class="col-md-12 col-lg-9">
-            <div class="fw-light lh-sm" style="font-size: 45px;"> {{evaluacion.nombre}}</div>
+            <div class=" display-6 fw-light lh-sm letrapequena"> {{evaluacion.nombre}}</div>
             <div class="fs-6 text-secondary fst-italic">{{evaluacion.created_at}}</div>
         </div>
         <div class="col-md-12 col-lg-3 d-flex justify-content-end px-0">
@@ -155,77 +155,71 @@
                 
         </div>
     </div>
-    <div class="row mt-2 p-2">
-        <div class="col-md-12 col-lg-7 py-2 px-3">
+    <div class="row mt-2 p-2 px-0 px-md-2 ">
+        <div class="col-md-12 col-lg-7 py-2 px-3" >
             
-            <div class="row p-0 py-1 m-0 align-items-center text-center fw-light border-top border-start border-end shadow-sm">
-                <div class="col-md-2">
+            <div class="row p-0 py-1 m-0 align-items-center text-center fw-light border-top border-start border-end shadow-sm letrapeque">
+                <div class="col px-0">
                         Puntaje minimo
                 </div>
-                <div class="col-md-2">
-                        Cantidad de preguntas
+                <div class="col px-0">
+                        Cantidad preguntas
                 </div>
-                <div class="col-md-2">
+                <div class="col px-0">
                         Intentos Permitidos
                 </div>
-                <div class="col-md-2">
+                <div class="col px-0">
                         Tiempo limite
                 </div>
-                <div class="col-md-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Promedio autor, usuarios y subcategoría">
+                <div class="col px-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Promedio autor, usuarios y subcategoría">
                     Dificultad ponderada
                 </div>
-                <div class="col-md-2 ">
-                        Dificultad autor
-                </div>
             </div>
-            <div class="row p-0 m-0 text-center py-2 mb-3 border shadow-sm">
-                <div class="col-md-2">
+            <div class="row p-0 m-0 text-center py-2 mb-3 border shadow-sm letrapeque">
+                <div class="col px-0">
                         <span class="fw-bold">{{evaluacion.puntaje_minimo}}  </span>/100
     
                 </div>
-                <div class="col-md-2">
+                <div class="col px-0">
                         <span class="fw-bold">{{evaluacion.cant_preguntas}}</span>
                 </div>
-                <div class="col-md-2">
+                <div class="col px-0">
                         <span class="fw-bold">{{evaluacion.intentos_permitidos}}</span>
                 </div>
-                <div class="col-md-2">
+                <div class="col px-0">
                         <span class="fw-bold">{{evaluacion.tiempo_limite}}</span> mins
                 </div>
-                <div class="col-md-2 text-white rounded">
+                <div class="col px-0 text-white rounded">
                         <span class="fw-bold bg-danger rounded p-1"> {{evaluacion.dificultad_ponderada}}</span>
-                </div>
-                <div class="col-md-2">
-                        <span class="fw-bold"> {{evaluacion.dificultad}}</span> 
                 </div>
                 
             </div>
-            <div class="col-md-12 col-xl-10 container ">
-                <div class="row  p-0 py-1 m-0 mt-2 align-items-center border text-center fw-light border-top border-start border-end shadow-sm">
-                    <div class="col-md-3">
+            <div class="col-md-12 col-xl-10 container px-0 px-md-2">
+                <div class="row  p-0 py-1 m-0 mt-2 align-items-center border text-center fw-light border-top border-start border-end shadow-sm letrapeque">
+                    <div class="col-3">
                         Intentos Realizados
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         Usuarios Aprobados
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         % aprobados
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         Promedio intentos
                     </div>
     
                 </div>
-                <div class="row  p-0 m-0 text-center py-2 mb-2 border shadow-sm">
-                    <div class="col-md-3">
+                <div class="row  p-0 m-0 text-center py-2 mb-2 border shadow-sm letrapeque">
+                    <div class="col-3">
                         
                         <div class="fs-6">{{evaluacion.intentos.count}}</div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <div class="fs-6">{{aprobados.aprobados}}</div>
                         
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <div class="fs-6">
                             <div class="progress mt-1">
                                 <div class="progress-bar" role="progressbar" style="width: {{porcentaje_aprobados|floatformat:'0'}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{porcentaje_aprobados|floatformat:2}}%
@@ -234,7 +228,7 @@
                         </div>
                         
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <div style="font-size: 0.9rem;">{{aprobados.promedio|floatformat:2}} / 100,00</div>
                     </div>
      
@@ -246,7 +240,7 @@
 
                 <div class="col-md-4 col-xl-3">
                     <div class="row mb-2 align-items-center">
-                        <div class="col-md-5">
+                        <div class="col-4 col-sm-3 col-md-5">
                             
                             {% if evaluacion.user.foto %}
                             <a href="{% url 'users_app:detalleusuario' evaluacion.user.slug %}"> <img class="w-100 d-block rounded shadow"  src="{{evaluacion.user.foto.url }}" alt=""> </a>
@@ -256,7 +250,7 @@
                             
                                 
                         </div>
-                        <div class="col-md-7 text-secondary" style="font-size: 0.85rem;">
+                        <div class="col-8 col-sm-9 col-md-7 text-secondary" style="font-size: 0.85rem;">
                             <div class="row">
                                 <div class="col-md-12 px-2">
                                     <a href="{% url 'users_app:detalleusuario' evaluacion.user.slug %}" class="text-decoration-none"> 
@@ -269,27 +263,27 @@
 
                     </div>
                 </div>
-                <div class="col-md-8 col-xl-6 ">
+                <div class="col-12 col-md-8 col-xl-6 px-0 letrapeque">
                     <div class="row p-0 m-0">
-                        <div class="col-md-4 align-self-center">
-                            <div class="fs-6">
+                        <div class="col-4 align-self-center">
+                            <div >
                                 Categoría
                             </div> 
                         </div>
-                        <div class="col-md-8">
-                            <div class="fs-6 text-secondary">
+                        <div class="col-8">
+                            <div class="text-secondary">
                                 {{evaluacion.subcategoria.categoria}}
                             </div>
                         </div>
                     </div>
                     <div class="row p-0 m-0 mb-2">
-                        <div class="col-md-4 align-self-center">
-                            <div class="fs-6">
+                        <div class="col-4 align-self-center">
+                            <div >
                                 Subcategoría
                             </div> 
                         </div>
-                        <div class="col-md-8">
-                            <div class="fs-6 text-secondary">
+                        <div class="col-8">
+                            <div class="text-secondary">
                                {{evaluacion.subcategoria}}
                             </div>
                         </div>
@@ -298,18 +292,18 @@
                 <div class="col-md-5 col-xl-3">
                     <div class="row text-center border border-2 rounded justify-content-center shadow" style="font-size: 0.9rem;">
                         <div class="row text-center px-0">
-                            <div class="col-md-6 ">
+                            <div class="col-6 ">
                                 Favoritos
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 Valoración
                             </div>
                         </div>
                         <div class="row text-center px-0">
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 {{evaluacion.favoritos}}  <i class="fas fa-users"></i>
                             </div>
-                            <div class="col-md-6 ">
+                            <div class="col-6 ">
                                 {{evaluacion.valoracion|floatformat:2}} <i class="fas fa-star-half-alt"></i>
                             </div>
                         </div>
@@ -340,7 +334,7 @@
         </div>
         <div class="col-md-12 col-lg-5">
             <div class="row mx-2">
-                <div class="row ">
+                <div class="row align-items-center">
                     <div class="col-md-6 col-lg-12  text-center rounded mb-0 mb-lg-3 ">
                         {% if evaluacion.imagen %}
                         <img class="w-100 d-block rounded" src="{{evaluacion.imagen.url}}" alt="" style="max-height: 350px;">
@@ -355,11 +349,11 @@
                     {% if request.user == evaluacion.user %}
                     
                     {% else %}
-                    <div class="col-md-6 col-lg-12 d-flex align-items-center">
+                    <div class="col-md-6 col-lg-12">
 
                         <div class="row mt-2 py-1 align-items-center">
-                                <div class="col-md-5">
-                                    <div class="row border rounded text-center mx-1 px-0 shadow" style="font-size: 0.9rem;">
+                                <div class="col-lg-5 ">
+                                    <div class="row border rounded text-center mx-1 px-0 shadow mb-2 mb-lg-0" style="font-size: 0.9rem;">
             
                                         <div class="col-md-12">
                                             Intentos restantes
@@ -374,12 +368,11 @@
         
                                 </div>
                                 {% if intentos_restantes > 0 and maxima_puntuacion < 100 %}
-                                <div class="col-md-7">
-                                    <form action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
-                                        <div class="row">
+                                <div class="col-lg-7 ">
+                                    <form class="row" action="{% url 'intentos_app:iniciarintento' evaluacion.id %}" method="post"> {% csrf_token %}
+                                        
                                             <button type="submit" class="btn btn-success shadow border py-2"> Presentar Evaluación </button>
                     
-                                        </div>
                                     </form>
         
                                 </div>

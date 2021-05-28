@@ -38,7 +38,7 @@
                     </h1>
                     <div class="text-secondary fs-5 fw-light">{{user.email}}</div>
                 </div>
-                <div class="col-md-12 col-lg-9 text-end">
+                <div class="col-md-12 col-lg-3 text-end">
                     <div class="row pe-2 text-end mb-0" >
                         <button type="button" class="btn btn-outline-light  text-danger  text-end fs-6 px-1"
                             data-bs-toggle="modal" data-bs-target="#exampleModal" >
@@ -94,16 +94,16 @@
                 </div>
                 <form method="post" enctype="multipart/form-data"> {% csrf_token %}
                     <div class="row px-1 pb-1 border-end">
-                        <div class="col-md-4 border-end">
+                        <div class="col-12 col-sm-4 border-end">
                             {% if user.foto %}
 
                             <img src="{{user.foto.url }}" alt=""
                                 class="w-100 d-block m-1 rounded border border-secondary" id="mostrarimg"
-                                style="min-height: 200px;">
+                                style="min-height: 150px;">
 
                             {% else %}
                             <img src="{% static 'img/no-image.png' %}" alt="" class="w-100 d-block m-1 rounded"
-                                id="mostrarimg" style="min-height: 200px;">
+                                id="mostrarimg" style="min-height: 150px;">
                             {% endif %}
                             <div class="col-md-12">
                                 {{form.foto}}
@@ -114,7 +114,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-md-8 d-flex align-items-center">
+                        <div class="col-12 col-sm-8 d-flex align-items-center">
                             <div class="row ">
                                 <div class="col-md-12">
                                     <div class="row my-1">

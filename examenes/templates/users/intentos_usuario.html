@@ -25,19 +25,19 @@
 
 
 {% if user == usuario %}
-<div class="container col-md-11">
+<div class="container col-12 col-md-11 px-0">
 
     <div class="row">
-        <div class="col-md-12 col-xl-9">
+        <div class="col-md-12 col-xl-9 ">
             <br>
-            <div class="row">
+            <div class="row ">
                 <form method="get">
                         <div class="row">
     
-                        <div class="col-md-4 px-1">
+                        <div class="col-md-4 px-1 mb-1">
                             <input class="form-control" type="text" name="kword" id="kword" placeholder="Buscar..." value="{{kword}}">
                         </div>
-                        <div class="col-md-3 px-1">
+                        <div class="col-md-3 px-1 mb-1">
                             <select class="form-select" aria-label="Default select example" name="categoria" id="categoria">
                                 <option value="" >Seleccione categoría</option>
                                 {% for categoria  in categorias  %}
@@ -52,7 +52,7 @@
                             </select>
                                 
                         </div>
-                        <div class="col-md-3 px-1">
+                        <div class="col-md-3 px-1 mb-1">
                             <select class="form-select" aria-label="Default select example" name="orden" id="orden">
                                 
                                 {% if orden == "" %}
@@ -102,15 +102,15 @@
                     <br>
                     </form>
                 <div class="row align-items-center mb-2">
-                    <div class="col-md-9">
+                    <div class="col-12 col-md-9">
                         <h2 class="text-secondary fw-light mb-2 fs-3">Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} de {{ page_obj.paginator.count }} evaluaciones</h2>
                     </div>
                 </div> 
                 <hr>
                 {% for evaluacion in page_obj %}
     
-                <div class="row align-items-center border boder-light rounded mb-3 py-2 shadow-sm my-2">
-                    <div class="col-md-3 col-lg-2">
+                <div class="row align-items-center border boder-light rounded mb-3 py-2 shadow-sm my-2 px-0 mx-0 letrapeque">
+                    <div class="container col-8 col-md-3 col-lg-2">
     
                         {% if evaluacion.imagen %}
                         <img src="{{evaluacion.imagen.url}}" alt="" class="w-100 d-block m-1 rounded">
@@ -120,7 +120,7 @@
                         {% endif %}
                     </div>
                     <div class="col-md-9 col-lg-5 border-end mb-2 mb-lg-0">
-                        <div class="row ">
+                        <div class="row px-1">
                             <div>
                                 <div class="fs-5 text-secondary">{{evaluacion.nombre}}</div>
                             </div>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="row mt-2 justify-content-center mx-0">
                                 <div class="col-md-12 border rounded px-0  ">
-                                    <div class="row text-center align-items-center border-bottom  mx-0 fw-light " style="font-size: 0.95rem;">
+                                    <div class="row text-center align-items-center border-bottom  mx-0 fw-light ">
                                         <div class="col px-0">
                                             Cantidad preguntas
                                         </div>
@@ -192,7 +192,7 @@
                     <div class="col-md-12 col-lg-5 fw-light">
                         <div class="row mb-2 mx-1">
                             <div class="col-md-7 col-lg-12 border rounded px-0 ">
-                                <div class="row text-center align-items-center border-bottom  mx-0 fw-light " style="font-size: 0.95rem;">
+                                <div class="row text-center align-items-center border-bottom  mx-0 fw-light ">
                                     <div class="col px-0">
                                         Maxima puntuación
                                     </div>
@@ -207,7 +207,7 @@
                                     </div>
 
                                 </div>
-                                <div class="row text-center py-1 mx-0 " style="font-size: 0.95rem;">
+                                <div class="row text-center py-1 mx-0 ">
                                     <div class="col px-0 ">
                                         {% if evaluacion.max_p == 100.0 %}
                                        <span class="fw-bold text-success">{{evaluacion.max_p|floatformat:2}}</span>
@@ -247,7 +247,7 @@
                                         </div>
                                         <div>
                                             <a href="{% url 'users_app:verintentoseva' evaluacion.id %}"
-                                                class="text-decoration-none fw-normal">Ver intentos</a>
+                                                class="text-decoration-none fw-normal" style="font-size: 1rem;">Ver intentos</a>
                                         </div>
         
                                     </div>

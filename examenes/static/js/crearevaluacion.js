@@ -43,16 +43,16 @@ $(document).ready(function(){
             $("#pregunta"+id)
             .append(
                 `<div class="row justify-content-center">
-                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <div class="col-2 d-flex align-items-center justify-content-center">
                     <div class="form-check mt-3 form-switch d-flex justify-content-center">
                         <input class="form-check-input pregunta`+id+`" type="checkbox"  value="1" id="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`-correcta" name="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`-correcta">
                       </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-9">
                     <label for="opcion-`+(ultima_opcion+1)+`" class="form-label">Opción</label>
                     <input type="text" class="form-control" id="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`" name="pregunta-`+id+`-opcion-`+(ultima_opcion+1)+`" placeholder="" required>
                 </div>
-                <div class="col-md-1 d-flex justify-content-center align-items-end pb-2">
+                <div class="col-1 d-flex justify-content-center align-items-end pb-2 px-0">
                     <button type="button" class="btn-close opc border rounded shadow-sm p-1 " aria-label="Close"></button>
                 </div>
             </div>`
@@ -78,14 +78,14 @@ $(document).ready(function(){
                         <textarea class="form-control" id="pregunta-`+(ultima_pregunta+1)+`" name="pregunta-`+(ultima_pregunta+1)+`" rows="3" required></textarea>
 
                         <div class="row justify-content-center">
-                            <div class="col-md-2">
+                            <div class="col-2 px-0">
                                 <div class="mb-2">Correcta?</div>
                                 <div class="form-check form-switch d-flex justify-content-center">
                                     <input class="form-check-input pregunta`+(ultima_pregunta+1)+`" type="checkbox" value="1"
                                         id="pregunta-`+(ultima_pregunta+1)+`-opcion-1-correcta" name="pregunta-`+(ultima_pregunta+1)+`-opcion-1-correcta">
                                 </div>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-10">
                                 <label for="opcion-1" class="form-label">Opción</label>
                                 <input type="text" class="form-control" id="pregunta-`+(ultima_pregunta+1)+`-opcion-1"
                                     name="pregunta-`+(ultima_pregunta+1)+`-opcion-1" placeholder="" required>
@@ -94,13 +94,13 @@ $(document).ready(function(){
 
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                            <div class="col-2 d-flex align-items-center justify-content-center">
                                 <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                     <input class="form-check-input pregunta`+(ultima_pregunta+1)+`" type="checkbox" value="1"
                                         id="pregunta-`+(ultima_pregunta+1)+`-opcion-2-correcta" name="pregunta-`+(ultima_pregunta+1)+`-opcion-2-correcta">
                                 </div>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-10">
                                 <label for="opcion-1" class="form-label">Opción</label>
                                 <input type="text" class="form-control" id="pregunta-`+(ultima_pregunta+1)+`-opcion-2"
                                     name="pregunta-`+(ultima_pregunta+1)+`-opcion-2" placeholder="" required>

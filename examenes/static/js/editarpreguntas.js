@@ -21,18 +21,18 @@ $(document).ready(function(){
         }
         $("#caja-opciones")
         .append(
-            `<div class="row mb-2  m-0" id="cont-`+(ultima)+`">
-                <div class="col-md-2  d-flex justify-content-center align-items-center">
+            `<div class="row mb-2  m-0 px-0" id="cont-`+(ultima)+`">
+                <div class="col-2 d-flex justify-content-center align-items-center">
                     <div class="form-check form-switch d-flex justify-content-center ">
                     <input class="form-check-input" type="checkbox" value="1"
                     id="correcta`+(ultima)+`" name="correcta`+(ultima)+`">
                     </div>
                 </div>
-                <div class="col-md-9 ps-0">
+                <div class="col-9 ps-0 px-0 px-sm-2 ">
                     <textarea type="text" class="form-control" rows="2" name="opcion`+(ultima)+`" id="opcion`+(ultima)+`" required></textarea>
                 </div>
                         
-                <div class="col-md-1 d-flex justify-content-center align-items-center border rounded my-1">
+                <div class="col-1 d-flex justify-content-center align-items-center border rounded my-1 px-0 mx-0">
                     <button type="button" class="btn-close opcion" aria-label="Close"></button>
                 </div>
             

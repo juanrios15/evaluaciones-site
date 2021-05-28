@@ -36,51 +36,51 @@
                         placeholder="Ejemplo: Test basico de Python 3.9.4 - OOP">
 
                 </div>
-                <div class="row mt-2 border p-2 rounded shadow-sm">
-                    <div class="row text-center align-items-center mx-0 mb-2 border-bottom pb-1">
-                        <div class="col">Puntaje minimo</div>
+                <div class="row mt-2 border px-0 p-2 rounded shadow-sm letrapequerank d-none d-sm-block">
+                    <div class="row text-center align-items-center mx-0 mb-2 border-bottom pb-1 px-0">
+                        <div class="col ">Puntaje minimo</div>
                         <div class="col">Cantidad preguntas</div>
                         <div class="col">Intentos permitidos</div>
                         <div class="col">Tiempo limite (mins)</div>
                         <div class="col">Dificultad</div>
                     </div>
-                    <div class="row mx-0">
-                        <div class="col text-center ">
-                            <div class="row align-items-center">
-                                <div class="col-md-8">
+                    <div class="row mx-0 px-0">
+                        <div class="col text-center d-flex   justify-content-center">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-6 col-md-8  px-0 ">
                                     <input type="number" name="puntaje_minimo" value="70" min="60" max="90" required
-                                        id="id_puntaje_minimo" class="form-control">
+                                        id="id_puntaje_minimo" class="form-control px-1">
 
                                 </div>
-                                <div class="col-md-4 px-0">
+                                <div class="col-6 col-md-4 px-0">
                                     / 100
                                 </div>
 
                             </div>
                         </div>
-                        <div class="col text-center">
-                            <div class="container col-md-12">
+                        <div class="col text-center px-0 d-flex  justify-content-center"  >
+                            <div class="col-md-12 px-0 px-md-2">
                                 <input type="number" name="cant_preguntas" value="5" max="50" required
                                     id="id_cant_preguntas" class="form-control">
 
                             </div>
                         </div>
-                        <div class="col text-center">
-                            <div class="container col-md-12">
+                        <div class="col text-center  d-flex   justify-content-center">
+                            <div class="container col-md-12 px-0 px-md-2">
                                 <input type="number" name="intentos_permitidos" value="3" min="0" max="5" required
                                     id="id_intentos_permitidos" class="form-control">
                             </div>
 
                         </div>
-                        <div class="col  text-center">
-                            <div class="container col-md-12">
+                        <div class="col  text-center  d-flex   justify-content-center">
+                            <div class="container col-md-12 px-0 px-md-2">
                                 <input type="number" name="tiempo_limite" value="20" required id="id_tiempo_limite"
                                     class="form-control">
 
                             </div>
                         </div>
-                        <div class="col text-center">
-                            <div class="container col-md-12">
+                        <div class="col text-center  d-flex   justify-content-center">
+                            <div class="container col-md-12 px-0 px-md-2">
                                 <input type="number" name="dificultad" value="5.0" step="any" required=""
                                     id="id_dificultad" class="form-control">
 
@@ -89,37 +89,97 @@
 
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-2 border px-0 p-2 rounded shadow-sm letrapequerank d-sm-none">
+                    <div class="row text-center align-items-center mx-0 mb-2 border-bottom pb-1 px-0">
+                        <div class="col ">Puntaje minimo</div>
+                        <div class="col">Cantidad preguntas</div>
+                        <div class="col">Intentos permitidos</div>
+                    </div>    
+                    <div class="row mx-0 px-0">
+                        <div class="col text-center d-flex   justify-content-center">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-6 col-md-8  px-0 ">
+                                    <input type="number" name="puntaje_minimo" value="70" min="60" max="90" required
+                                        id="id_puntaje_minimo" class="form-control px-1">
 
-                    <div class="col-md-5 px-0">
-                        <select class="form-select my-3" aria-label="Default select example" id="listacategoria"
-                            required>
-                            <option value="" selected>Seleccione una categoría</option>
-                        </select>
-                    </div>
-                    <div class="col-md-5">
-                        <select class="form-select my-3" aria-label="Default select example" id="listasubcategoria"
-                            name="subcategoria" required>
-                            <option selected>Subcategoría</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 bg-light shadow-sm my-2 border rounded d-flex align-items-center fs-5">
+                                </div>
+                                <div class="col-6 col-md-4 px-0">
+                                    / 100
+                                </div>
 
-                        Publico? &nbsp; {{form.publico}}
+                            </div>
+                        </div>
+                        <div class="col text-center px-0 d-flex  justify-content-center"  >
+                            <div class="col-md-12 px-0 px-md-2">
+                                <input type="number" name="cant_preguntas" value="5" max="50" required
+                                    id="id_cant_preguntas" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col text-center  d-flex   justify-content-center">
+                            <div class="container col-md-12 px-0 px-md-2">
+                                <input type="number" name="intentos_permitidos" value="3" min="0" max="5" required
+                                    id="id_intentos_permitidos" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row text-center align-items-center mx-0 mb-2 border-bottom pb-1 px-0">
+                        <div class="col">Tiempo limite (mins)</div>
+                        <div class="col">Dificultad</div>
+                    
+                    </div>
+                    <div class="row mx-0 px-0" >
+                        <div class="col  text-center  d-flex   justify-content-center">
+                            <div class="container col-md-12 px-0 px-md-2">
+                                <input type="number" name="tiempo_limite" value="20" required id="id_tiempo_limite"
+                                    class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col text-center  d-flex   justify-content-center">
+                            <div class="container col-md-12 px-0 px-md-2">
+                                <input type="number" name="dificultad" value="5.0" step="any" required=""
+                                    id="id_dificultad" class="form-control">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    </div>
+                    <div class="row">
+    
+                        <div class="col-md-5 px-0">
+                            <select class="form-select my-2 my-md-3" aria-label="Default select example" id="listacategoria"
+                                required>
+                                <option value="" selected>Seleccione una categoría</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 px-0 px-md-2">
+                            <select class="form-select my-2 my-md-3" aria-label="Default select example" id="listasubcategoria"
+                                name="subcategoria" required>
+                                <option selected>Subcategoría</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 bg-light shadow-sm my-2 border rounded d-flex align-items-center fs-5">
+    
+                            Publico? &nbsp; {{form.publico}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-center ">
+    
+                    <div class="row justify-content-center px-1 ">
+                        <div class="col-md-12 text-center d-flex justify-content-center ">
+                            <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block m-1 rounded" id="mostrarimg"
+                            style="height: 200px;">
+    
+                        </div>
+                        <input type="file" name="imagen" accept="image/*" id="inputimg" class="form-control">
                     </div>
                 </div>
 
-            </div>
-            <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-center ">
-
-                <div class="row justify-content-center px-1 ">
-                    <div class="col-md-12 text-center d-flex justify-content-center ">
-                        <img src="{% static 'img/no-image.png' %}" alt="" class="mw-100 d-block m-1 rounded" id="mostrarimg"
-                        style="height: 200px;">
-
-                    </div>
-                    <input type="file" name="imagen" accept="image/*" id="inputimg" class="form-control">
-                </div>
             </div>
         </div>
         <div class="row mt-2">
@@ -147,7 +207,7 @@
         </div>
 
 
-        <div class="row shadow py-3 rounded px-2" id="questions">
+        <div class="row shadow py-3 rounded px-2 letrapeque text-center" id="questions">
             <div class="mb-3 col-md-12 col-lg-6">
                 <div id="pregunta1">
 
@@ -155,15 +215,15 @@
                     <textarea class="form-control" id="pregunta-1" name="pregunta-1" rows="3" required style="font-size: 0.85rem;"></textarea>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-2">
+                        <div class="col-2 px-0">
                             <div class="mb-2">Correcta?</div>
                             <div class="form-check form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta1" type="checkbox" value="1"
                                     id="pregunta-1-opcion-1-correcta" name="pregunta-1-opcion-1-correcta" >
                             </div>
                         </div>
-                        <div class="col-md-10">
-                            <label for="opcion-1" class="form-label">Opcion</label>
+                        <div class="col-10">
+                            <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-1-opcion-1" name="pregunta-1-opcion-1"
                                 placeholder="" required style="font-size: 0.85rem;">
 
@@ -172,13 +232,13 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="col-2 d-flex align-items-center justify-content-center ">
                             <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta1" type="checkbox" value="1"
                                     id="pregunta-1-opcion-2-correcta" name="pregunta-1-opcion-2-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-1-opcion-2" name="pregunta-1-opcion-2"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -195,14 +255,14 @@
                     <textarea class="form-control" id="pregunta-2" name="pregunta-2" rows="3" required style="font-size: 0.85rem;"></textarea>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-2">
+                        <div class="col-2 px-0">
                             <div class="mb-2">Correcta?</div>
                             <div class="form-check form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta2" type="checkbox" value="1"
                                     id="pregunta-2-opcion-1-correcta" name="pregunta-2-opcion-1-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-2-opcion-1" name="pregunta-2-opcion-1"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -211,13 +271,13 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
                             <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta2" type="checkbox" value="1"
                                     id="pregunta-2-opcion-2-correcta" name="pregunta-2-opcion-2-correcta" >
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-2-opcion-2" name="pregunta-2-opcion-2"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -233,14 +293,14 @@
                     <textarea class="form-control" id="pregunta-3" name="pregunta-3" rows="3" required style="font-size: 0.85rem;"></textarea>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-2">
+                        <div class="col-2 px-0">
                             <div class="mb-2">Correcta?</div>
                             <div class="form-check form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta3" type="checkbox" value="1"
                                     id="pregunta-3-opcion-1-correcta" name="pregunta-3-opcion-1-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-3-opcion-1" name="pregunta-3-opcion-1"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -249,13 +309,13 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
                             <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta3" type="checkbox" value="1"
                                     id="pregunta-3-opcion-2-correcta" name="pregunta-3-opcion-2-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-3-opcion-2" name="pregunta-3-opcion-2"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -270,27 +330,27 @@
                     <textarea class="form-control" id="pregunta-4" name="pregunta-4" rows="3" required style="font-size: 0.85rem;"></textarea>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-2">
+                        <div class="col-2 px-0">
                             <div class="mb-2">Correcta?</div>
                             <div class="form-check form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta4" type="checkbox" value="1"
                                     id="pregunta-4-opcion-1-correcta" name="pregunta-4-opcion-1-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-4-opcion-1" name="pregunta-4-opcion-1"
                                 placeholder="" required style="font-size: 0.85rem;">
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
                             <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta4" type="checkbox" value="1"
                                     id="pregunta-4-opcion-2-correcta" name="pregunta-4-opcion-2-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-4-opcion-2" name="pregunta-4-opcion-2"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -306,14 +366,14 @@
                     <textarea class="form-control" id="pregunta-5" name="pregunta-5" rows="3" required style="font-size: 0.85rem;"></textarea>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-2">
+                        <div class="col-2 px-0">
                             <div class="mb-2">Correcta?</div>
                             <div class="form-check form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta5" type="checkbox" value="1"
                                     id="pregunta-5-opcion-1-correcta" name="pregunta-5-opcion-1-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-5-opcion-1" name="pregunta-5-opcion-1"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -322,13 +382,13 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="col-2 d-flex align-items-center justify-content-center">
                             <div class="form-check mt-3 form-switch d-flex justify-content-center">
                                 <input class="form-check-input pregunta5" type="checkbox" value="1"
                                     id="pregunta-5-opcion-2-correcta" name="pregunta-5-opcion-2-correcta">
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <label for="opcion-1" class="form-label">Opción</label>
                             <input type="text" class="form-control" id="pregunta-5-opcion-2" name="pregunta-5-opcion-2"
                                 placeholder="" required style="font-size: 0.85rem;">
@@ -339,7 +399,7 @@
             </div>
         </div>
         <div class="position-fixed start-0" style="top: 80%!important;">
-            <a type="button" class="btn shadow  text-decoration-none rounded-end p-2 fs-5 py-3"
+            <a type="button" class="btn shadow  text-decoration-none rounded-end p-2 fs-5 py-3 bg-white"
                 id="addpregunta">
                 <i class="fas fa-plus "></i> Agregar  pregunta</a>
         </div>
