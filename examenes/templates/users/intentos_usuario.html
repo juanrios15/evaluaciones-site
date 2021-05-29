@@ -113,16 +113,20 @@
                     <div class="container col-8 col-md-3 col-lg-2">
     
                         {% if evaluacion.imagen %}
-                        <img src="{{evaluacion.imagen.url}}" alt="" class="w-100 d-block m-1 rounded">
+                        <a class="text-decoration-none" href="{% url 'exams_app:detalleeva' evaluacion.slug %}">
+                            <img src="{{evaluacion.imagen.url}}" alt="" class="w-100 d-block m-1 rounded">
+                        </a>
     
                         {% else %}
-                        <img class="w-100 d-block rounded" src="/static/img/subcats/{{evaluacion.subcategoria.nombre}}.jpg" alt="">
+                        <a class="text-decoration-none" href="{% url 'exams_app:detalleeva' evaluacion.slug %}">
+                            <img class="w-100 d-block rounded" src="/static/img/subcats/{{evaluacion.subcategoria.nombre}}.jpg" alt="">
+                        </a>
                         {% endif %}
                     </div>
                     <div class="col-md-9 col-lg-5 border-end mb-2 mb-lg-0">
                         <div class="row px-1">
                             <div>
-                                <div class="fs-5 text-secondary">{{evaluacion.nombre}}</div>
+                                <a class="text-decoration-none" href="{% url 'exams_app:detalleeva' evaluacion.slug %}"><div class="fs-5 text-secondary">{{evaluacion.nombre}}</div> </a>
                             </div>
                             <div>
     

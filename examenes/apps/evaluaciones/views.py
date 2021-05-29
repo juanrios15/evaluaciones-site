@@ -42,7 +42,6 @@ class CrearEvaluacionView(LoginRequiredMixin,CreateView):
     
     def post(self, request, *args, **kwargs):
         
-        print(request.POST)
         
         if request.POST.get("publico") == "on":
             publico = True
@@ -68,23 +67,30 @@ class CrearEvaluacionView(LoginRequiredMixin,CreateView):
             pass
         evaluacion.save()
         ultimo_letras = str(list(request.POST.keys())[-1])
+        print(ultimo_letras)
         ultima_pregunta = int(re.findall(r'^\D*(\d+)', ultimo_letras)[0])
+        print(ultima_pregunta)
 
         for pregunta in range(1,(ultima_pregunta+1)):
-            texto_busqueda = f"pregunta-{pregunta}"
+            texto_busqueda = f"pregunta-{pregunta}-"
+       
             res = dict(filter(lambda item: texto_busqueda in item[0], request.POST.items()))
+
             opcion_correcta_key = dict(filter(lambda x:"correcta" in x[0], res.items()))
+
             asd = list(opcion_correcta_key)[0] 
+
             res.pop(asd)
             opcion_correcta = int(re.findall(r'\d+', asd)[-1])
-            registros = list(res.values())
 
+            registros = list(res.values())
+            print(registros)
             pregunta = Pregunta.objects.create(
-                descripcion=registros[0],
+                descripcion=request.POST[f"pregunta-{pregunta}"],
                 evaluacion=Evaluacion.objects.get(id=evaluacion.id)
             )
             pregunta.save()
-            for i in range(1,len(registros[1:])+1):
+            for i in range(len(registros)):
                 if opcion_correcta != i:
                     opcion = Opcion.objects.create(
                         texto = registros[i],
@@ -111,7 +117,7 @@ class EvaluacionesListView(ListView):
     model = Evaluacion
     template_name = "evaluaciones/lista.html"
     context_object_name = "evaluaciones"
-    paginate_by = 5
+    paginate_by = 10
     
     def get_queryset(self):
         kword = self.request.GET.get("kword",'')
