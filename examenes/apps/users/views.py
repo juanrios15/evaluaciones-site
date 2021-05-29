@@ -410,6 +410,7 @@ class RankingsListView(ListView):
             categoria = self.request.GET["categoria"]
             if categoria == "Global":
                 raise Exception
+            print("aqui en categoria")
             queryset = User.objects.filter(intentos__evaluacion__subcategoria__categoria__nombre__contains=categoria
                 ).annotate(
             total_evas=Count('intentos__evaluacion',distinct=True),
@@ -435,6 +436,7 @@ class RankingsListView(ListView):
                 contador += 1
 
         except:
+            print("aqui")
             queryset = User.objects.annotate(
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
@@ -456,7 +458,8 @@ class RankingsListView(ListView):
         try:
 
             categoria = self.request.GET["categoria"]
-            
+            if categoria == "Global":
+                raise Exception
             context["cat_actual"] = categoria
             qs = User.objects.filter(
                 id=self.request.user.id,intentos__evaluacion__subcategoria__categoria__nombre=categoria

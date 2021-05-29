@@ -291,11 +291,8 @@ class ValorarEvaView(LoginRequiredMixin,View):
     def post(self,request,*args,**kwargs):
         
         valoracion =  float(request.POST.get("rating"))
-        print(valoracion)
         evaluacion = Evaluacion.objects.get(id=self.kwargs["pk"])
-        print(evaluacion)
         usuario = self.request.user
-        print(usuario)
         try:
             valoracion_eva =ValorarEvaluacion.objects.get(evaluacion=evaluacion,usuario=usuario)
             valoracion_eva.valor = valoracion
@@ -317,14 +314,20 @@ class EditarEvaluacionView(LoginRequiredMixin,UpdateView):
         
         subcategoria = SubCategoria.objects.get(nombre=form.cleaned_data["subcategoria"])
         form.subcategoria = subcategoria
-        form.save()
+        promedio_usuarios = CalificarDificultad.objects.filter(evaluacion__id=self.kwargs["pk"]).aggregate(promedio=Avg("dificultad"))
+        if promedio_usuarios["promedio"] == None:
+            dificultad_ponderada = form.cleaned_data["dificultad"]
+        else:
+            dificultad_ponderada = (form.cleaned_data["dificultad"]*0.3)+(promedio_usuarios["promedio"]*0.7)
+        x = form.save()
+        x.dificultad_ponderada = dificultad_ponderada
+        x.save()
         
         return super().form_valid(form)
     
     def get_success_url(self):
         
         messages.success(self.request,"Cambios realizados con exito")
-        print(self.request.user)
         
         return reverse(
                 'users_app:detalleusuario',kwargs={'slug': self.request.user.slug}
