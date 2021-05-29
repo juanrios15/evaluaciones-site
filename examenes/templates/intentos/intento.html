@@ -22,6 +22,7 @@
 {% endif %}
 
 
+
 {% if ahora < intento.hora_fin and preguntas != 0 %}
 <div hidden id="hora_inicio" > {{intento.hora_inicio|date:"Y m d H:i:s"}}</div>
 <div hidden id="hora_fin" > {{intento.hora_fin|date:"Y m d H:i:s"}}</div>
@@ -54,7 +55,7 @@
                    Pregunta {{forloop.counter}}
                 </div>
                 <div class="row mx-0 mb-2 pb-1 border-bottom intocable" >
-                    {{p.descripcion}}
+                    {{p.descripcion|linebreaks}}
                 </div>
                 <div class="row mx-0" >
                     <div class="row mb-2">Seleccione una respuesta:</div>
