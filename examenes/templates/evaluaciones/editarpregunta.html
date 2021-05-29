@@ -34,7 +34,9 @@
                 <div class="fs-2 fw-light mb-2">
                     Pregunta
                 </div>
+                {% autoescape off %}
                 <textarea name="descripcion" id="id_descripcion" class="form-control" rows="10">{{pregunta.descripcion|escape}}</textarea>
+                {% endautoescape %}
                 <br>
 
             </div>
