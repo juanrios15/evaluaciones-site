@@ -49,7 +49,7 @@
                                 <div class="col text-center d-flex   justify-content-center">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-6 col-md-8  px-0 ">
-                                            <input type="number" name="puntaje_minimo" value="70" min="60" max="90" required
+                                            <input type="number" name="puntaje_minimo" value="{{form.puntaje_minimo.value}}" min="60" max="90" required
                                                 id="id_puntaje_minimo" class="form-control px-1">
     
                                         </div>
@@ -66,7 +66,7 @@
                             <div class="row">
                                 <div class="col text-center px-0 d-flex  justify-content-center">
                                     <div class="col-md-12 px-0 px-md-2">
-                                        <input type="number" name="cant_preguntas" value="5" max="50" required
+                                        <input type="number" name="cant_preguntas" value="{{form.cant_preguntas.value}}" max="50" required
                                             id="id_cant_preguntas" class="form-control">
     
                                     </div>
@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col text-center  d-flex   justify-content-center">
                                     <div class="container col-md-12 px-0 px-md-2">
-                                        <input type="number" name="intentos_permitidos" value="3" min="0" max="5" required
+                                        <input type="number" name="intentos_permitidos" value="{{form.intentos_permitidos.value}}" min="0" max="5" required
                                             id="id_intentos_permitidos" class="form-control">
                                     </div>
     
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col  text-center  d-flex   justify-content-center">
                                     <div class="container col-md-12 px-0 px-md-2">
-                                        <input type="number" name="tiempo_limite" value="20" required id="id_tiempo_limite"
+                                        <input type="number" name="tiempo_limite" value="{{form.tiempo_limite.value}}" required id="id_tiempo_limite"
                                             class="form-control">
     
                                     </div>
@@ -102,7 +102,7 @@
                             <div class="row">
                                 <div class="col text-center  d-flex   justify-content-center">
                                     <div class="container col-md-12 px-0 px-md-2">
-                                        <input type="number" name="dificultad" value="5.0" step="0.5" required=""
+                                        <input type="number" name="dificultad" value="{{form.dificultad.value|stringformat:".2f"}}" step="0.5" required=""
                                             id="id_dificultad" class="form-control">
     
                                     </div>
