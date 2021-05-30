@@ -6,6 +6,7 @@ from django.conf import settings
 from apps.evaluaciones.managers import OpcionManager
 from apps.evaluaciones.validators import validate_minmax,cantidad_preguntasminmax,intentos_minmax,tiempominmax,dificultadminmax
 from django.template.defaultfilters import slugify
+from django.urls import reverse_lazy
 
 
 class Categoria(models.Model):
@@ -78,6 +79,16 @@ class Evaluacion(models.Model):
     class Meta:
         verbose_name= "Evaluacion"
         verbose_name_plural = "Evaluaciones"
+    
+    def get_absolute_url(self):
+    
+        return reverse_lazy(
+            'exams_app:detalleeva',
+            kwargs = {
+                'slug': self.slug
+            }
+        
+    )
     
     def __str__(self):
         return self.nombre
