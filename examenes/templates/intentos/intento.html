@@ -54,7 +54,7 @@
                 <div class="row mb-3 mx-0">
                    Pregunta {{forloop.counter}}
                 </div>
-                <div class="row mx-0 mb-2 pb-1 border-bottom intocable" >
+                <div class="row mx-0 mb-3 pb-1 border-bottom intocable" >
                     <div style="white-space: pre;">{{p.descripcion}}</div>
                 </div>
                 <div class="row mx-0" >
@@ -97,13 +97,17 @@
                           <div class="row p-1 justify-content-center">
                             Estas seguro que deseas terminar?
                           </div>
-      
+                         <div class="row justify-content-center">
+                             <div id="cargando" class="my-3 spinner-border text-primary" style="display:none;width: 4rem; height: 4rem;"></div>
+
+                         </div>
+                        
                           
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
     
-                          <button type="submit" id="enviarform" class="btn btn-success"> Enviar</button>
+                          <button type="submit" id="enviarform" class="btn btn-success" onclick="cargando()"> Enviar</button>
                         </div>
                       </div>
                     </div>
@@ -123,13 +127,22 @@
 
 <script type="text/javascript" src="{% static 'js/jquery.simplePagination.js' %} "></script>
 <script>
+
+    function cargando() { 
+        var x = document.getElementById('cargando')
+        x.style.display = "block";
+     }
+
+
+</script>
+<script>
     
    
     $(function() {
     
-    var partes = $(".col-md-6.p-2")
+    var partes = $(".col-md-12.col-xl-6.p-2.mt-2")
     var numPages = partes.length;
-    var perPage = 8;
+    var perPage = 10;
     partes.slice(perPage).hide();
     $(".paginador").pagination({
         items:numPages,

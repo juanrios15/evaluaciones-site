@@ -120,8 +120,6 @@ class IntentoView(LoginRequiredMixin,TemplateView):
         IntentoPregunta.objects.bulk_create(all_intentos)
 
         dificultad = intento.evaluacion.dificultad_ponderada
-        
-        intento = Intento.objects.get(id=self.kwargs["intento"]) 
         intento.puntuacion = (acierto/intento.evaluacion.cant_preguntas)*100 
         puntos_obtenidos=0
         obj, created = PuntosObtenidos.objects.get_or_create(
