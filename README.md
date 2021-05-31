@@ -1,7 +1,10 @@
 # evaluaciones-site
 
 # Comunidad para compartir evaluaciones con otros usuarios y poder presentarlas sencillamente.
-### Proyecto más avanzado que estoy terminando...
+
+www.somabeta.com
+
+AWS Lightsail - Apache Linux
 
 El desarrollo backend del proyecto está hecho con Django y Django Rest Framework  
 Para frontend he usado basicamente Jquery y Javascript  
