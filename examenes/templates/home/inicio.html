@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% load static %}
-
 {% block title %}
-Pagina de inicio
+Pagina de inicio SOMA
 {% endblock title %}
 
 {% block content %}
+<img src="{% static 'img/somaicon.ico' %}" alt="" hidden>
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-info m-0 p-2 px-3 mt-3" role="alert">

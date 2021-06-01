@@ -2,7 +2,7 @@ from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
 import json
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -100,7 +100,7 @@ LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'America/Bogota'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
