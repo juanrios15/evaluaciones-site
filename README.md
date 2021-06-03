@@ -1,6 +1,6 @@
 # evaluaciones-site
 
-# Comunidad para compartir evaluaciones con otros usuarios y poder presentarlas sencillamente.
+# Easy way to share and take exams, quizzes or test.
 
 www.somabeta.com
 
