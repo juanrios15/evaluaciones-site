@@ -11,8 +11,9 @@ $(document).ready(function(){
             for (var i = 0; i < y.length; i++) {
                     $('#listacategoria').append('<option value="' + y[i].nombre+ '">' + y[i].nombre + '</option>');
                 }
+
             var subcategoria = []
-            $("#listacategoria").click( function () {
+            $("#listacategoria").change( function () {
                 $('#listasubcategoria')
                 .find('option')
                 .remove()
