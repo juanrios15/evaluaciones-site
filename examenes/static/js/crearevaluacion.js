@@ -18,7 +18,7 @@ $(document).ready(function(){
                 .find('option')
                 .remove()
                 .end()
-                cat = $("#listacategoria").val()
+                cat = $(this).find("option:selected").text()
                 
                 for (var i = 0; i < y.length; i++) {
                     if (cat === y[i].nombre ) {
