@@ -10,8 +10,11 @@ from django.db.models import Avg, Case, Count, F, FloatField, Max, Q, Sum, Value
 from django.contrib.messages.views import SuccessMessageMixin 
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from apps.users.serializers import LoginSocialSerializer
+
+
 from django.contrib.auth import authenticate, get_user_model, login, logout
 User = get_user_model()
+
 from django.contrib import messages
 
 #third party
@@ -155,9 +158,10 @@ class UserDetailView(DetailView):
                 ).aggregate(
                     total=Count('id'),
                     promedio=Avg('puntuacion'),
-                    aprobados=Count('aprobado',filter=Q(aprobado=True)),
+                    aprobados=Count('aprobado',filter=Q(aprobado=True),distinct=True),
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
+
 
         try:
             porcentaje_aprobados = total_intentos["aprobados"]/total_intentos["evaluaciones"]*100
