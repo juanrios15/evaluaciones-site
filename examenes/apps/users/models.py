@@ -52,3 +52,13 @@ class SeguirUsuario(models.Model):
 
     def __str__(self):
         return self.seguido.username
+    
+
+class Notificacion(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="usuario")
+    usuario_notificacion = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name="usuario_notificacion")
+    mensaje = models.CharField(max_length=150)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Creado el", blank=True)
+    
+    def __str__(self):
+        return self.mensaje

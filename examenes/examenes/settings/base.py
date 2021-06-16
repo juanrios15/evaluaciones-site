@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'apps.processors.usuarios_seguidos',
                 'apps.processors.path_actual',
+                'apps.processors.notificaciones',
                 
             ],
         },

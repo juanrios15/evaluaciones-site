@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
-from apps.users.models import SeguirUsuario
+from apps.users.models import SeguirUsuario, Notificacion
 User = get_user_model()
 
 # Register your models here.
@@ -19,3 +19,4 @@ class CustomUserAdmin(UserAdmin):
     
 admin.site.register(User,CustomUserAdmin)
 admin.site.register(SeguirUsuario)
+admin.site.register(Notificacion)

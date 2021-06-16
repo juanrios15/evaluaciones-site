@@ -58,6 +58,12 @@ LISTO --- Revisar que login social funcione en celular, sino toca cambiarlo por 
 LISTO --- Mejorar todas las vistas para movil, sm, md, lg
 
 
+Modelo de notificaciones
+Una pagina nueva para ver las notificaciones
+Utilizar django rest para eliminar las notificaciones usando ajax
+
+Poner el Top 3 en la pagina principal
+
 EVALUACIONES 
 
 Al eliminar una pregunta se debe validar que la cantidad de preguntas sea suficiente para el minimo por intento

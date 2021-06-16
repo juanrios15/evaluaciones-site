@@ -28,10 +28,51 @@
 {% include 'users/base_perfil.html' %}
 
 <div class="container ">
-
+    
+    {% if user == usuario %}
+    <div class="py-2">
+        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal2" onclick="notificaciones()">
+            
+            {% if cant_notificaciones == 1 %}
+            <i class="fas fa-bell"></i>  Tienes 1 notificación nueva. Ver Notificaciones.
+            {% else %}
+            <i class="fas fa-bell"></i>  Tienes {{cant_notificaciones}} notificaciones nuevas. Ver Notificaciones.
+            {% endif %}
+        </a>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">                            
+                  
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Notificaciones</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mx-2 text-center">
+                  <div class="row">
+                    Notificaciones
+                    <hr class="my-2">
+                  </div>
+                  <div class="row">
+                      <div id="lista-notificaciones" class="col-md-12">
+                        
+                      </div>
+                  </div>
+                  
+                </div>
+                <div class="modal-footer">
+                    {% csrf_token %}
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>  
+    </div>
+    {% else %}
     <br>
-    <br>
+    {% endif %}
+        
     <div class="row justify-content-center">
+        
         <div class="col-12 col-md-12 col-lg-6 col-xl-4 d-flex align-items-center border-end mb-3 justify-content-center letrapeque px-0">
             <div class="row border rounded mx-3 py-2 pb-3">
                 <div class="fs-3">Intentos</div>
@@ -222,7 +263,7 @@
 
 </div>
 
-
+<script src="{% static 'js/notificaciones.js' %}"></script>
 
 
 

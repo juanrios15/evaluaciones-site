@@ -10,6 +10,8 @@ urlpatterns = [
    path('registro/',views.RegistroView.as_view(),name="registro"),
    path('login/',views.LoginView.as_view(),name="login"),
    path('api/sociallogin/',views.SocialLoginView.as_view()),
+   path('api/notificaciones/usuario', views.NotificacionListView.as_view(),name='notificaciones'),
+   path('api/eliminarnoti/<pk>/', views.DeleteNotificacionAPIView.as_view(),name='eliminarnoti'),
    path('logout/',views.LogoutView.as_view(),name="logout"),
    path('detalleusuario/<slug>/',views.UserDetailView.as_view(),name="detalleusuario"),
    path('updateusuario/<slug>/',views.UserUpdateView.as_view(),name="updateusuario"),

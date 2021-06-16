@@ -6,9 +6,45 @@
     style="font-size: 0.75rem; background-color: #333; z-index: 1;">
     <div class="col-md-12 border-bottom py-2">
         <a class=" text-decoration-none text-white" href="{% url 'users_app:detalleusuario' user.slug %}">
-            <div class="fs-4">
-                <i class="fas fa-user"></i>
+
+            
+            {% if cant_notificaciones > 0 %}
+            
+            {% if user.foto %}
+            <div class="d-flex justify-content-center position-relative">
+                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">
+                <span style="font-size: 0.6rem; left: 73%!important; top: 12%!important;" 
+                class="badge bg-danger position-absolute top-0 start-50 translate-middle rounded-pill">
+                    {{cant_notificaciones}}
+                    </span>
             </div>
+            {% else %}
+            <div class="d-flex justify-content-center position-relative">
+                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">
+                <span style="font-size: 0.6rem; left: 73%!important; top: 12%!important;" 
+                class="badge bg-danger position-absolute top-0 start-50 translate-middle rounded-pill">
+                    {{cant_notificaciones}}
+                    </span>
+            </div>
+
+            {% endif %}
+                
+            {% else %}
+            
+            {% if user.foto %}
+            <div class="d-flex justify-content-center position-relative">
+                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+            </div>
+            
+            {% else %}
+            <div class="d-flex justify-content-center position-relative">
+                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+            </div>
+            
+            {% endif %}
+                
+            {% endif %}
+
             Mi Perfil
         </a>
 
@@ -39,15 +75,46 @@
     </div>
 </div>
 <div class="d-md-none fixed-bottom col-12" style="font-size: 0.75rem; background-color: #333;">
-    <div class="row justify-content-center px-0 mx-0">
+    <div class="row justify-content-center px-0 mx-0 align-items-end">
 
-        <div class="col-3 border-bottom py-2 justify-content-center d-flex px-0">
-                <a class=" text-decoration-none text-white text-center" href="{% url 'users_app:detalleusuario' user.slug %}">
-                    <div class="fs-4">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    Mi Perfil
-                </a>
+        
+        <div class="col-3 border-bottom pb-2 pt-1 justify-content-center d-flex px-0 ">
+            <a class=" text-decoration-none text-white " href="{% url 'users_app:detalleusuario' user.slug %}">
+                {% if cant_notificaciones > 0 %}
+                
+                {% if user.foto %}
+                <div class="d-flex justify-content-center position-relative">
+                    <img class="d-block rounded mb-1 " style="height: 30px; max-width: 35px;" src={{user.foto.url}} alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">
+                    <span style="font-size: 0.56rem; left: 90%!important; top: 15%!important;" 
+                    class="badge bg-danger position-absolute top-0 start-50 translate-middle rounded-pill">
+                        {{cant_notificaciones}}
+                        </span>
+                </div>
+                {% else %}
+                <div class="d-flex justify-content-center position-relative">
+                    <img class="d-block rounded mb-1 " style="height: 30px; max-width: 35px;" src="{% static 'img/no-image.png' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">
+                    <span style="font-size: 0.56rem; left: 90%!important; top: 15%!important;" 
+                    class="badge bg-danger position-absolute top-0 start-50 translate-middle rounded-pill">
+                        {{cant_notificaciones}}
+                        </span>
+                </div>
+                {% endif %}
+                    
+                {% else %}
+                {% if user.foto %}
+                <div class="d-flex justify-content-center position-relative">
+                    <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+                </div>
+                
+                {% else %}
+
+                <div class="d-flex justify-content-center position-relative">
+                    <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+                </div>
+                {% endif %}
+                {% endif %}
+                Mi Perfil
+            </a>
 
     
         </div>

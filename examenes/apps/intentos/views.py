@@ -2,15 +2,17 @@ import datetime
 from django.utils import timezone
 
 from django.shortcuts import render
-from apps.intentos.models import Intento, IntentoPregunta, PuntosObtenidos
 from django.views.generic import View, TemplateView,DetailView
-from apps.evaluaciones.models import Evaluacion, Opcion, Pregunta
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.db.models import Max, Sum
 from django.contrib.auth.mixins import LoginRequiredMixin 
+
+from apps.users.models import Notificacion 
+from apps.evaluaciones.models import Evaluacion, Opcion, Pregunta
+from apps.intentos.models import Intento, IntentoPregunta, PuntosObtenidos
 
 def ranquear_usuario(puntos):
 
@@ -156,6 +158,16 @@ class IntentoView(LoginRequiredMixin,TemplateView):
         intento.hora_fin = timezone.now()
         intento.save()
         intento.usuario.save()
+        t = timezone.now().strftime('%d de %B de %Y %H:%M')
+        
+        #Creando la notificación:
+        
+        noti = Notificacion.objects.create(
+            usuario = intento.evaluacion.user,
+            usuario_notificacion = intento.usuario,
+            mensaje = f"{intento.usuario.username} ha realizado un intento de la evaluacion {intento.evaluacion.nombre}, el {t}"
+        )
+        noti.save()
         
         return HttpResponseRedirect(
                 reverse(

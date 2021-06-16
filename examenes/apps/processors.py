@@ -1,5 +1,5 @@
 from apps.evaluaciones.models import SeguirEvaluacion
-from apps.users.models import SeguirUsuario
+from apps.users.models import Notificacion, SeguirUsuario
 
 
 def usuarios_seguidos(request):
@@ -11,3 +11,7 @@ def path_actual(request):
     path =  request.path.split("/")[1]
     
     return { 'path_actual':path}
+
+def notificaciones(request):
+    cant_notificaciones = Notificacion.objects.filter(usuario__id=request.user.id).count()
+    return { 'cant_notificaciones':cant_notificaciones}

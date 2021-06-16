@@ -23,10 +23,8 @@ Pagina de inicio SOMA
 {% endif %}
 
 <div class="container-fluid">
-    <br class="d-none d-md-block">
-    <br class="d-none d-md-block">
 
-    <br>
+    <br class="d-none d-md-block">
     <br>
     <div class="row">
         <div class="container col-md-9">
@@ -51,6 +49,96 @@ Pagina de inicio SOMA
     </div>
     <br>
     <br>
+    <div class="col-md-12 col-lg-10 col-xl-8 container mb-3">
+        <div class="col-md-12  text-center display-4 mb-2">
+            <i class="fas fa-trophy"></i>  Top 3 Global
+        </div>
+        <br>
+        <div class="row fs-3 justify-content-center">
+            <div class="col-7 col-md-4 mb-3 mb-md-0">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-3 display-2 border-end">
+                         1. 
+                    </div>
+                    
+                    <div class="col-9 text-center d-flex justify-content-center">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                {% if top.0.foto %}
+                                <img src="{{top.0.foto.url}}" alt="" class=" d-block rounded" style="height: 65px; width: 70px;">
+                                
+                                {% else %}
+                                <img src="{% static 'img/no-image.png' %}" alt="" class=" d-block rounded" style="height: 65px; width: 70px;">
+                
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                {{top.0}}
+                            </div>
+                        </div>
+                        <br>
+    
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-7 col-md-4  mb-3 mb-md-0" >
+                <div class="row justify-content-center  align-items-center">
+                    <div class="col-3 display-2 border-end">
+                         2. 
+                    </div>
+                    
+                    <div class="col-9 text-center d-flex justify-content-center">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                {% if top.1.foto %}
+                                <img src="{{top.1.foto.url}}" alt="" class=" d-block rounded" style="height: 65px; width: 70px;">
+                                
+                                {% else %}
+                                <img src="{% static 'img/no-image.png' %}" alt="" class=" d-block rounded" style="height: 65px; width: 70px;">
+                
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                {{top.1}}
+                            </div>
+                        </div>
+                        <br>
+    
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-7 col-md-4  mb-3 mb-md-0">
+                <div class="row justify-content-center  align-items-center">
+                    <div class="col-3 display-2 border-end">
+                         3. 
+                    </div>
+                    
+                    <div class="col-9 text-center d-flex justify-content-center">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                {% if top.2.foto %}
+                                <img src="{{top.2.foto.url}}" alt="" class=" d-block rounded" style="height: 65px; width: 70px;">
+                                
+                                {% else %}
+                                <img src="{% static 'img/no-image.png' %}" alt="" class=" d-block rounded" style="height: 65px; width: 70px;">
+                
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                {{top.2}}
+                            </div>
+                        </div>
+                        <br>
+    
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
     <br>
     <div class="row bg-light">
         <div class="container col-md-9 ">

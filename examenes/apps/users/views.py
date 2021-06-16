@@ -2,14 +2,14 @@ from django.shortcuts import render
 from django.views.generic import TemplateView,DetailView, CreateView, UpdateView, View, FormView, ListView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.urls import reverse_lazy
-from rest_framework.views import APIView
+
 
 #ORM
 from django.db.models import Avg, Case, Count, F, FloatField, Max, Q, Sum, Value, When, Window
 # User
 from django.contrib.messages.views import SuccessMessageMixin 
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from apps.users.serializers import LoginSocialSerializer
+from apps.users.serializers import LoginSocialSerializer, NotificacionSerializer
 
 
 from django.contrib.auth import authenticate, get_user_model, login, logout
@@ -20,11 +20,12 @@ from django.contrib import messages
 #third party
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, DestroyAPIView
 from firebase_admin import auth
-
 #propio
 from apps.intentos.models import Intento, PuntosObtenidos
-from apps.users.models import SeguirUsuario
+from apps.users.models import Notificacion, SeguirUsuario
 from apps.evaluaciones.models import Categoria, Evaluacion, SeguirEvaluacion, ValorarEvaluacion
 from apps.users.forms import AuthenticationEmailForm, CreatePasswordForm, UpdateUserForm, UserRegistroForm
 from django.http import HttpResponseRedirect
@@ -69,6 +70,11 @@ class Inicio(TemplateView):
         context =  super().get_context_data(**kwargs)
         
         context["categorias"] = Categoria.objects.all()
+        
+        top3 = User.objects.annotate(
+            puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
+            ).order_by("-puntos_total",'username')[:3]
+        context["top"] = top3
         
         return context
 
@@ -161,7 +167,6 @@ class UserDetailView(DetailView):
                     aprobados=Count('aprobado',filter=Q(aprobado=True),distinct=True),
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
-
 
         try:
             porcentaje_aprobados = total_intentos["aprobados"]/total_intentos["evaluaciones"]*100
@@ -644,4 +649,18 @@ class EvaluacionesUsuario(DetailView):
 class PoliticaPrivacidad(TemplateView):
     
     template_name = "home/politica.html"
+
+ListAPIView
+
+class NotificacionListView(ListAPIView):
+    
+    serializer_class = NotificacionSerializer
+
+    def get_queryset(self):
+        return Notificacion.objects.filter(usuario__id=self.request.user.id).order_by('created_at')
+
+class DeleteNotificacionAPIView(DestroyAPIView):
+
+    serializer_class = NotificacionSerializer
+    queryset = Notificacion.objects.all()
     
