@@ -594,7 +594,7 @@ class EvaluacionesUsuario(DetailView):
                         prom_intentos=Avg('intentos__puntuacion'),
                         total_preguntas=Count('preguntas', distinct=True),
                         total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True), distinct=True),
-                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__aprobado',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField())
+                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__aprobado',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField(),distinct=True)
                                                                                                      
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         else:
@@ -612,7 +612,8 @@ class EvaluacionesUsuario(DetailView):
                             then=0),
                             default=Count('intentos__aprobado',
                             filter=Q(intentos__aprobado=True))*100/Count('intentos'),
-                            output_field=FloatField())
+                            output_field=FloatField(), 
+                            distinct=True)
 
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         
