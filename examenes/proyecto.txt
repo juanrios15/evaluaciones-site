@@ -68,6 +68,9 @@ Generar notificaciones cuando:
     - cuando se valora una evaluacion
     - cuando se puntua la dificultad de una evaluacion
 
+
+Refresh la pagina web cuando se elimina una notificación
+
 Hacer una nueva publicidad para facebook
 Actualizar readme github con las mejoras implementadas
 

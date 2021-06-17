@@ -155,7 +155,6 @@ class UserDetailView(DetailView):
     model = User
     template_name = "users/perfilusuario.html"
     context_object_name = 'usuario'
-
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -163,8 +162,8 @@ class UserDetailView(DetailView):
         total_intentos = Intento.objects.filter(
                     usuario__slug=self.kwargs["slug"]
                 ).aggregate(
-                    total=Count('id'),
-                    promedio=Avg('puntuacion'),
+                    total=Count('id',distinct=True),
+                    promedio=Avg('puntuacion',distinct=True),
                     aprobados=Count('aprobado',filter=Q(aprobado=True),distinct=True),
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
