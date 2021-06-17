@@ -588,24 +588,33 @@ class EvaluacionesUsuario(DetailView):
             eva_propias = Evaluacion.objects.filter(
                 user__id=context["usuario"].id,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
                 ).annotate(tot_valoraciones=Count('valorar', distinct=True),
-                        prom_valoraciones=Avg('valorar__valor', distinct=True),
+                        prom_valoraciones=Avg('valorar__valor'),
                         tot_seguidores=Count('seguir', distinct=True),
                         tot_intentos=Count('intentos', distinct=True),
-                        prom_intentos=Avg('intentos__puntuacion',distinct=True),
+                        prom_intentos=Avg('intentos__puntuacion'),
                         total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('intentos__id',filter=Q(intentos__aprobado=True), distinct=True)
+                        total_aprobados=Count('intentos__id',filter=Q(intentos__aprobado=True), distinct=True),
+                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__id',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField(),distinct=True)
                                                                                                      
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         else:
             eva_propias = Evaluacion.objects.filter(
                 user__id=context["usuario"].id,publico=True,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
                 ).annotate(tot_valoraciones=Count('valorar', distinct=True),
-                        prom_valoraciones=Avg('valorar__valor', distinct=True),
+                        prom_valoraciones=Avg('valorar__valor'),
                         tot_seguidores=Count('seguir', distinct=True),
                         tot_intentos=Count('intentos', distinct=True),
-                        prom_intentos=Avg('intentos__puntuacion', distinct=True),
+                        prom_intentos=Avg('intentos__puntuacion'),
                         total_preguntas=Count('preguntas', distinct=True),
                         total_aprobados=Count('intentos__id',filter=Q(intentos__aprobado=True), distinct=True),
+                        aprobados= Case(When(
+                            tot_intentos=0,
+                            then=0),
+                            default=Count('intentos__id',
+                            filter=Q(intentos__aprobado=True))*100/Count('intentos'),
+                            output_field=FloatField(), 
+                            distinct=True)
+
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         
         p = Paginator(eva_propias,10) 
