@@ -33,12 +33,12 @@
             
             {% if user.foto %}
             <div class="d-flex justify-content-center position-relative">
-                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="">  
             </div>
             
             {% else %}
             <div class="d-flex justify-content-center position-relative">
-                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+                <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="">  
             </div>
             
             {% endif %}
@@ -103,13 +103,13 @@
                 {% else %}
                 {% if user.foto %}
                 <div class="d-flex justify-content-center position-relative">
-                    <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+                    <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src={{user.foto.url}} alt="" >  
                 </div>
                 
                 {% else %}
 
                 <div class="d-flex justify-content-center position-relative">
-                    <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tienes notificaciones nuevas">  
+                    <img class="d-block rounded mb-1 " style="height: 30px; width: 35px;" src="{% static 'img/no-image.png' %}" alt="" >  
                 </div>
                 {% endif %}
                 {% endif %}

@@ -62,7 +62,14 @@ Modelo de notificaciones
 Una pagina nueva para ver las notificaciones
 Utilizar django rest para eliminar las notificaciones usando ajax
 
-Poner el Top 3 en la pagina principal
+Generar notificaciones cuando:
+    - se recibe un follower
+    - se recibe un follow a una evaluacion
+    - cuando se valora una evaluacion
+    - cuando se puntua la dificultad de una evaluacion
+
+Hacer una nueva publicidad para facebook
+Actualizar readme github con las mejoras implementadas
 
 EVALUACIONES 
 

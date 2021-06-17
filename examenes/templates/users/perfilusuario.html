@@ -202,7 +202,7 @@
                 </div>
                 <hr>
                 <div class="row justify-content-center">
-                    <div class="col-6 col-sm-4 mb-1">
+                    <div class="col-6 col-sm-4 mb-1  px-0">
                         <a class="btn border text-dark" href="{% url 'users_app:seguidoresusuario' usuario.id %}">
         
                             <span class="fw-bold"> {{seguidores}} </span>
@@ -215,7 +215,7 @@
                         </a>
 
                     </div>
-                    <div class="col-6 col-sm-4">
+                    <div class="col-6 col-sm-4 px-0">
                         <a class="btn border text-dark" href="{% url 'users_app:seguidosusuario' usuario.id %}">
         
                             <span class="fw-bold"> {{seguidos}} </span>
@@ -228,7 +228,7 @@
                         </a>
 
                     </div>
-                    <div class="col-6 col-sm-4">
+                    <div class="col-6 col-sm-4 px-0">
                         <a class="btn border text-dark"
                             href="{% url 'users_app:evaluacionesfavoritasusuario' usuario.id %}">
                             <span class="fw-bold"> {{favoritos}} </span>

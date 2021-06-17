@@ -31,6 +31,7 @@ from apps.users.forms import AuthenticationEmailForm, CreatePasswordForm, Update
 from django.http import HttpResponseRedirect
 from django.db.models.functions import Coalesce, RowNumber
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 def establecer_orden(orden):
     if orden == "Intentos restantes":
@@ -305,6 +306,13 @@ class SeguirUsuarioView(LoginRequiredMixin,View):
                 seguidor = seguidor,
                 seguido = seguido,
             )
+            t = timezone.now().strftime('%d %B %Y %H:%M')
+            noti = Notificacion.objects.create(
+                usuario = seguido,
+                usuario_notificacion = seguidor,
+                mensaje = f"{seguidor} ha comenzado a seguirte. Fecha: {t}"
+                )
+            noti.save()
         except:
             SeguirUsuario.objects.get(
                 seguidor = seguidor,
@@ -657,7 +665,7 @@ class NotificacionListView(ListAPIView):
     serializer_class = NotificacionSerializer
 
     def get_queryset(self):
-        return Notificacion.objects.filter(usuario__id=self.request.user.id).order_by('created_at')
+        return Notificacion.objects.filter(usuario__id=self.request.user.id).order_by('-created_at')
 
 class DeleteNotificacionAPIView(DestroyAPIView):
 

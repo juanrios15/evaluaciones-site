@@ -18,6 +18,8 @@ import re
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models.functions import Coalesce
+from django.utils import timezone
+from apps.users.models import Notificacion
 User = get_user_model()
 
 
@@ -233,12 +235,18 @@ class EvaluacionDetailView(DetailView):
             aprobado =Intento.objects.get(evaluacion__id=context["evaluacion"].id,usuario__id=user_id,aprobado=True)
         except:
             aprobado = None
+        try:
+            valoracion =ValorarEvaluacion.objects.get(evaluacion__id=context["evaluacion"].id,usuario__id=user_id)
+            valoracion = str(valoracion.valor).replace(",",".")
+        except:
+            valoracion = None
         
         context["aprobados"] = aprobados
         context["porcentaje_aprobados"] = porcentaje_aprobados
         context["presentada"] = intento
         context["calificado"] = calificado
         context["aprobado"] = aprobado
+        context["valoracion"] = valoracion
         
         intentos_usuario = Intento.objects.filter(usuario__id=self.request.user.id,evaluacion__slug=self.kwargs["slug"]).aggregate(total=Count('id'),max=Max('puntuacion'))
         context["intentos_restantes"] = context["evaluacion"].intentos_permitidos - intentos_usuario["total"] 
@@ -268,6 +276,15 @@ class CalificarDificultadEva(LoginRequiredMixin,View):
         evaluacion.dificultad_ponderada = (evaluacion.dificultad*0.3)+(promedio_usuarios["promedio"]*0.7)
         evaluacion.save(update_fields=["dificultad_ponderada"])
         
+        t = timezone.now().strftime('%d %B %Y %H:%M')
+            
+        noti = Notificacion.objects.create(
+            usuario = evaluacion.user,
+            usuario_notificacion = usuario,
+            mensaje = f"{usuario} ha calificado la dificultad de tu evaluación: {evaluacion.nombre}. El {t}"
+            )
+        noti.save()
+        
         messages.success(self.request,"Calificación guardada con exito")
         return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
         
@@ -284,6 +301,14 @@ class SeguirEvaluacionView(LoginRequiredMixin,View):
                 usuario = usuario,
                 evaluacion = evaluacion,
             )
+            t = timezone.now().strftime('%d %B %Y %H:%M')
+            
+            noti = Notificacion.objects.create(
+                usuario = evaluacion.user,
+                usuario_notificacion = usuario,
+                mensaje = f"{usuario} ha comenzado a seguir tu evaluación: {evaluacion.nombre}. El {t}"
+                )
+            noti.save()
         except:
             SeguirEvaluacion.objects.get(
                 usuario = usuario,
@@ -304,9 +329,18 @@ class ValorarEvaView(LoginRequiredMixin,View):
             valoracion_eva =ValorarEvaluacion.objects.get(evaluacion=evaluacion,usuario=usuario)
             valoracion_eva.valor = valoracion
             valoracion_eva.save()
+            
         except:
                   
             valoracion_eva  = ValorarEvaluacion.objects.create(evaluacion=evaluacion,usuario=usuario,valor=valoracion)
+            t = timezone.now().strftime('%d %B %Y %H:%M')
+            
+            noti = Notificacion.objects.create(
+                usuario = evaluacion.user,
+                usuario_notificacion = usuario,
+                mensaje = f"{usuario} ha valorado tu evaluación: {evaluacion.nombre}. El {t}"
+                )
+            noti.save()
         
         messages.success(self.request,"Valoración guardada con exito")
         return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
