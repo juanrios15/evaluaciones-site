@@ -588,10 +588,10 @@ class EvaluacionesUsuario(DetailView):
             eva_propias = Evaluacion.objects.filter(
                 user__id=context["usuario"].id,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
                 ).annotate(tot_valoraciones=Count('valorar', distinct=True),
-                        prom_valoraciones=Avg('valorar__valor'),
+                        prom_valoraciones=Avg('valorar__valor', distinct=True),
                         tot_seguidores=Count('seguir', distinct=True),
                         tot_intentos=Count('intentos', distinct=True),
-                        prom_intentos=Avg('intentos__puntuacion'),
+                        prom_intentos=Avg('intentos__puntuacion',distinct=True),
                         total_preguntas=Count('preguntas', distinct=True),
                         total_aprobados=Count('id',filter=Q(intentos__aprobado=True), distinct=True)
                                                                                                      
@@ -600,10 +600,10 @@ class EvaluacionesUsuario(DetailView):
             eva_propias = Evaluacion.objects.filter(
                 user__id=context["usuario"].id,publico=True,subcategoria__categoria__nombre__contains=cat_sel,nombre__icontains = kword
                 ).annotate(tot_valoraciones=Count('valorar', distinct=True),
-                        prom_valoraciones=Avg('valorar__valor'),
+                        prom_valoraciones=Avg('valorar__valor', distinct=True),
                         tot_seguidores=Count('seguir', distinct=True),
                         tot_intentos=Count('intentos', distinct=True),
-                        prom_intentos=Avg('intentos__puntuacion'),
+                        prom_intentos=Avg('intentos__puntuacion', distinct=True),
                         total_preguntas=Count('preguntas', distinct=True),
                         total_aprobados=Count('id',filter=Q(intentos__aprobado=True), distinct=True),
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
