@@ -593,8 +593,8 @@ class EvaluacionesUsuario(DetailView):
                         tot_intentos=Count('intentos', distinct=True),
                         prom_intentos=Avg('intentos__puntuacion'),
                         total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True), distinct=True),
-                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('intentos__aprobado',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField(),distinct=True)
+                        total_aprobados=Count('id',filter=Q(intentos__aprobado=True), distinct=True),
+                        aprobados= Case(When(tot_intentos=0,then=0),default=Count('id',filter=Q(intentos__aprobado=True))*100/Count('intentos'),output_field=FloatField(),distinct=True)
                                                                                                      
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         else:
@@ -606,11 +606,11 @@ class EvaluacionesUsuario(DetailView):
                         tot_intentos=Count('intentos', distinct=True),
                         prom_intentos=Avg('intentos__puntuacion'),
                         total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('intentos__aprobado',filter=Q(intentos__aprobado=True), distinct=True),
+                        total_aprobados=Count('id',filter=Q(intentos__aprobado=True), distinct=True),
                         aprobados= Case(When(
                             tot_intentos=0,
                             then=0),
-                            default=Count('intentos__aprobado',
+                            default=Count('id',
                             filter=Q(intentos__aprobado=True))*100/Count('intentos'),
                             output_field=FloatField(), 
                             distinct=True)
