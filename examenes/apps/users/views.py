@@ -593,7 +593,7 @@ class EvaluacionesUsuario(DetailView):
                         tot_intentos=Count('intentos', distinct=True),
                         prom_intentos=Avg('intentos__puntuacion',distinct=True),
                         total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('id',filter=Q(intentos__aprobado=True), distinct=True)
+                        total_aprobados=Count('intentos__id',filter=Q(intentos__aprobado=True), distinct=True)
                                                                                                      
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         else:
@@ -605,7 +605,7 @@ class EvaluacionesUsuario(DetailView):
                         tot_intentos=Count('intentos', distinct=True),
                         prom_intentos=Avg('intentos__puntuacion', distinct=True),
                         total_preguntas=Count('preguntas', distinct=True),
-                        total_aprobados=Count('id',filter=Q(intentos__aprobado=True), distinct=True),
+                        total_aprobados=Count('intentos__id',filter=Q(intentos__aprobado=True), distinct=True),
                         ).order_by(orden).select_related("user","subcategoria","subcategoria__categoria").defer("descripcion","requisitos_minimos")
         
         p = Paginator(eva_propias,10) 
