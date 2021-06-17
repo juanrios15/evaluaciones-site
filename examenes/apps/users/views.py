@@ -164,7 +164,7 @@ class UserDetailView(DetailView):
                 ).aggregate(
                     total=Count('id',distinct=True),
                     promedio=Avg('puntuacion',distinct=True),
-                    aprobados=Count('aprobado',filter=Q(aprobado=True),distinct=True),
+                    aprobados=Count('id',filter=Q(aprobado=True),distinct=True),
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
 
