@@ -73,7 +73,11 @@ Pagina de inicio SOMA
                                 {% endif %}
                             </div>
                             <div class="col-12">
-                                {{top.0|truncatechars:15}}
+                                <div>
+
+                                    {{top.0|truncatechars:15}}
+                                </div>
+                                <div class="fw-light" style="font-size: 0.95rem;"> {{top.0.rango}} </div>
                             </div>
                         </div>
                         <br>
@@ -100,7 +104,10 @@ Pagina de inicio SOMA
                                 {% endif %}
                             </div>
                             <div class="col-12">
-                                {{top.1|truncatechars:15}}
+                                <div>
+                                    {{top.1|truncatechars:15}}
+                                </div>
+                                <div class="fw-light" style="font-size: 0.95rem;"> {{top.1.rango}} </div>
                             </div>
                         </div>
                         <br>
@@ -127,7 +134,8 @@ Pagina de inicio SOMA
                                 {% endif %}
                             </div>
                             <div class="col-12">
-                                {{top.2|truncatechars:15}}
+                                <div>{{top.2|truncatechars:15}} </div>
+                                <div class="fw-light" style="font-size: 0.95rem;"> {{top.2.rango}} </div>
                             </div>
                         </div>
                         <br>
