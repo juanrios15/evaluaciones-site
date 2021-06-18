@@ -17,25 +17,25 @@ from apps.intentos.models import Intento, IntentoPregunta, PuntosObtenidos
 def ranquear_usuario(puntos):
 
     rango = ""
-    if puntos < 100:
+    if puntos < 80:
         rango = "Practicante"
-    elif puntos < 200:
+    elif puntos < 150:
         rango = "Principiante I"
-    elif puntos < 350:
+    elif puntos < 200:
         rango = "Principiante II"
-    elif puntos < 450:
+    elif puntos < 300:
         rango = "Intermedio I"
-    elif puntos < 600:
+    elif puntos < 400:
         rango = "Intermedio II"
-    elif puntos < 700:
+    elif puntos < 500:
         rango = "Avanzado I"
-    elif puntos < 850:
+    elif puntos < 650:
         rango = "Avanzado II"
-    elif puntos < 950:
+    elif puntos < 850:
         rango = "Master I"
-    elif puntos < 1050:
+    elif puntos < 950:
         rango = "Master II"
-    elif puntos > 1050:
+    elif puntos > 950:
         rango = "Master III"
         
     return rango
@@ -140,9 +140,11 @@ class IntentoView(LoginRequiredMixin,TemplateView):
                 obj.puntos = puntos_obtenidos
                 obj.save()
                 puntaje = PuntosObtenidos.objects.filter(
-                    evaluacion__id=intento.evaluacion.id,usuario__id=intento.usuario.id
+                    usuario__id=intento.usuario.id
                     ).aggregate(total=Sum('puntos'))
+
                 rango = ranquear_usuario(puntaje["total"])
+
                 intento.usuario.rango = rango
             else:
                 puntos_obtenidos =dificultad*0.1*intento.puntuacion
@@ -150,8 +152,9 @@ class IntentoView(LoginRequiredMixin,TemplateView):
                     obj.puntos = puntos_obtenidos
                     obj.save()
                     puntaje = PuntosObtenidos.objects.filter(
-                        evaluacion__id=intento.evaluacion.id,usuario__id=intento.usuario.id
+                        usuario__id=intento.usuario.id
                         ).aggregate(total=Sum('puntos'))
+    
                     rango = ranquear_usuario(puntaje["total"])
                     intento.usuario.rango = rango
         intento.puntos = puntos_obtenidos

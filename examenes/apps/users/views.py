@@ -33,6 +33,8 @@ from django.db.models.functions import Coalesce, RowNumber
 from django.core.paginator import Paginator
 from django.utils import timezone
 
+from apps.intentos.views import ranquear_usuario
+
 def establecer_orden(orden):
     if orden == "Intentos restantes":
         order="-restantes"
@@ -671,4 +673,30 @@ class DeleteNotificacionAPIView(DestroyAPIView):
 
     serializer_class = NotificacionSerializer
     queryset = Notificacion.objects.all()
+
+
+class ActualizarRangos(TemplateView):
+    template_name = "home/act_rangos.html"
+    
+    def post(self, request, *args, **kwargs):
+
+        usuarios = User.objects.all()
+        lista_usuarios = []
+        for x in usuarios:
+            puntaje = PuntosObtenidos.objects.filter(
+                        usuario__id=x.id
+                        ).aggregate(total=Sum('puntos'))
+            if puntaje["total"] == None:
+                puntaje["total"] = 0
+            rango = ranquear_usuario(puntaje["total"])
+            x.rango = rango
+            lista_usuarios.append(x)
+        
+        User.objects.bulk_update(lista_usuarios,['rango'])
+            
+        return HttpResponseRedirect(
+            reverse(
+                'users_app:inicio'
+            )
+        ) 
     
