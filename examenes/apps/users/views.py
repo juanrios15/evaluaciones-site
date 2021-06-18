@@ -165,7 +165,7 @@ class UserDetailView(DetailView):
                     usuario__slug=self.kwargs["slug"]
                 ).aggregate(
                     total=Count('id',distinct=True),
-                    promedio=Avg('puntuacion',distinct=True),
+                    promedio=Avg('puntuacion'),
                     aprobados=Count('id',filter=Q(aprobado=True),distinct=True),
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
@@ -183,7 +183,6 @@ class UserDetailView(DetailView):
         context["total_intentos"] = total_intentos
         context["porcentaje_aprobados"] = porcentaje_aprobados
         context["porcentaje_perfectas"] = porcentaje_perfectas
-        
         
         #evaluaciones propias
         Valoraciones_eva_propias = ValorarEvaluacion.objects.filter(evaluacion__user__id=context["usuario"].id).aggregate(cant=Count('id'),prom=Avg('valor'))
@@ -675,28 +674,28 @@ class DeleteNotificacionAPIView(DestroyAPIView):
     queryset = Notificacion.objects.all()
 
 
-class ActualizarRangos(TemplateView):
-    template_name = "home/act_rangos.html"
+# class ActualizarRangos(TemplateView):
+#     template_name = "home/act_rangos.html"
     
-    def post(self, request, *args, **kwargs):
+#     def post(self, request, *args, **kwargs):
 
-        usuarios = User.objects.all()
-        lista_usuarios = []
-        for x in usuarios:
-            puntaje = PuntosObtenidos.objects.filter(
-                        usuario__id=x.id
-                        ).aggregate(total=Sum('puntos'))
-            if puntaje["total"] == None:
-                puntaje["total"] = 0
-            rango = ranquear_usuario(puntaje["total"])
-            x.rango = rango
-            lista_usuarios.append(x)
+#         usuarios = User.objects.all()
+#         lista_usuarios = []
+#         for x in usuarios:
+#             puntaje = PuntosObtenidos.objects.filter(
+#                         usuario__id=x.id
+#                         ).aggregate(total=Sum('puntos'))
+#             if puntaje["total"] == None:
+#                 puntaje["total"] = 0
+#             rango = ranquear_usuario(puntaje["total"])
+#             x.rango = rango
+#             lista_usuarios.append(x)
         
-        User.objects.bulk_update(lista_usuarios,['rango'])
+#         User.objects.bulk_update(lista_usuarios,['rango'])
             
-        return HttpResponseRedirect(
-            reverse(
-                'users_app:inicio'
-            )
-        ) 
+#         return HttpResponseRedirect(
+#             reverse(
+#                 'users_app:inicio'
+#             )
+#         ) 
     
