@@ -56,6 +56,7 @@ LISTO --- No permitir copiar el texto de las preguntas
 LISTO --- La barra del menu del perfil de usuario pasa un poco por encima del menu lateral
 LISTO --- Revisar que login social funcione en celular, sino toca cambiarlo por redirect()
 LISTO --- Mejorar todas las vistas para movil, sm, md, lg
+LISTO --- Hacer una nueva publicidad para facebook
 
 
 Modelo de notificaciones
@@ -71,8 +72,7 @@ Generar notificaciones cuando:
 
 Refresh la pagina web cuando se elimina una notificación
 
-Hacer una nueva publicidad para facebook
-Actualizar readme github con las mejoras implementadas
+Actualizar readme github con las mejoras implementadas y how to run:
 
 EVALUACIONES 
 

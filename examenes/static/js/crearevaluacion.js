@@ -125,10 +125,9 @@ $(document).ready(function(){
             jQuery(this).closest('.row').remove()
         });
         jQuery(document).on('click', ".btn-close.caja", function (event) {
-            jQuery(this).closest('.mb-3.col-md-6').remove()
+            jQuery(this).closest('.mb-3.col-md-12.col-lg-6').remove()
         });
         
-
         //Modificar la imagen automaticamente
         function readURL(input) {
             if (input.files && input.files[0]) {
