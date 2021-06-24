@@ -427,7 +427,6 @@ class RankingsListView(ListView):
             categoria = self.request.GET["categoria"]
             if categoria == "Global":
                 raise Exception
-            print("aqui en categoria")
             queryset = User.objects.filter(intentos__evaluacion__subcategoria__categoria__nombre__contains=categoria
                 ).annotate(
             total_evas=Count('intentos__evaluacion',distinct=True),
@@ -452,12 +451,11 @@ class RankingsListView(ListView):
                 contador += 1
 
         except:
-            print("aqui")
             queryset = User.objects.annotate(
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
             perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-            puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
+            puntos_total=Coalesce(Sum("usuario__puntos",distinct=True),Value(0))
             ).order_by("-puntos_total",'username')
             contador = 1
             for x in queryset:
