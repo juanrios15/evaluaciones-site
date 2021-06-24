@@ -47,8 +47,8 @@ class IntentoPregunta(models.Model):
 
 class PuntosObtenidos(models.Model):
     
-    evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE, related_name="evaluacion")
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True,related_name="usuario")
+    evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE, related_name="evaluacion_puntos")
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name="usuario_puntos")
     puntos = models.FloatField(default=0)
     
     class Meta:
