@@ -27,6 +27,7 @@ class User(AbstractUser):
     codigo_pais = models.CharField(max_length=2,default="",blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Creado el", blank=True)
     rango =models.CharField(max_length=50,default="Practicante",editable=False)
+    puntos_totales = models.FloatField(default=0,null=True,editable=False)
     
     def save(self,*args, **kwargs):
         

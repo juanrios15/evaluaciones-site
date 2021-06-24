@@ -74,9 +74,7 @@ class Inicio(TemplateView):
         
         context["categorias"] = Categoria.objects.all()
         
-        top3 = User.objects.annotate(
-            puntos_total=Coalesce(Sum("usuario_puntos__puntos",distinct=True),Value(0))
-            ).order_by("-puntos_total",'username')[:3]
+        top3 = User.objects.all().order_by("-puntos_totales",'username')[:3]
         context["top"] = top3
         
         return context
@@ -432,9 +430,7 @@ class RankingsListView(ListView):
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
             perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-            puntos_total=Coalesce(Sum("usuario_puntos__puntos"),
-                Value(0))
-            ).order_by("-puntos_total")
+            ).order_by("-puntos_totales")
 
             contador = 1
             for x in queryset:
@@ -453,8 +449,7 @@ class RankingsListView(ListView):
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
             perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-            puntos_total=Coalesce(Sum("usuario_puntos__puntos"),Value(0))
-            ).order_by("-puntos_total",'username')
+            ).order_by("-puntos_totales",'username')
             contador = 1
             for x in queryset:
                 if self.request.user.username == x.username:
@@ -479,8 +474,6 @@ class RankingsListView(ListView):
                     total_evas=Count('intentos__evaluacion',distinct=True),
                     aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
                     perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-                    puntos_total=Coalesce(
-                            Sum("usuario_puntos__puntos"), Value(0))
                 ).first()
 
         except:
@@ -491,7 +484,6 @@ class RankingsListView(ListView):
                     total_evas=Count('intentos__evaluacion',distinct=True),
                     aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
                     perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-                    puntos_total=Coalesce(Sum("usuario_puntos__puntos"),Value(0))
                 ).first()
         
                 
@@ -690,4 +682,28 @@ class DeleteNotificacionAPIView(DestroyAPIView):
 #                 'users_app:inicio'
 #             )
 #         ) 
+
+class ActualizarPuntos(TemplateView):
     
+    template_name = "home/act_puntos.html"
+    
+    def post(self, request, *args, **kwargs):
+        usuarios = User.objects.all()
+        lista_usuarios= []
+        for x in usuarios:
+            puntaje = PuntosObtenidos.objects.filter(
+                        usuario__id=x.id
+                        ).aggregate(total=Sum('puntos'))
+            if puntaje["total"] == None:
+                puntaje["total"] = 0
+            puntos = puntaje["total"]
+            x.puntos_totales = puntos
+            lista_usuarios.append(x)
+        
+        User.objects.bulk_update(lista_usuarios,['puntos_totales'])
+            
+        return HttpResponseRedirect(
+            reverse(
+                'users_app:inicio'
+            )
+        ) 

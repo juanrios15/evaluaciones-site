@@ -54,3 +54,6 @@ class PuntosObtenidos(models.Model):
     class Meta:
         verbose_name= "Puntos"
         verbose_name_plural = "Puntos Evaluaciones"
+    
+    def __str__(self):
+        return str(self.puntos)

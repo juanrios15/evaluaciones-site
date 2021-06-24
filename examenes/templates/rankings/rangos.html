@@ -178,7 +178,7 @@ Ranking, Top, Clasificaciones
                             <td class="px-0">{{x.aprobadas}}</td>
                             <td class="px-0">{{x.perfectas}}</td>
                             <td class="px-0">{{x.total_evas}}</td>
-                            <td class="fw-bold">{{x.puntos_total|floatformat:2}}</td>
+                            <td class="fw-bold">{{x.puntos_totales|floatformat:2}}</td>
 
                         </tr>
                         {% endfor %}
@@ -206,7 +206,7 @@ Ranking, Top, Clasificaciones
                             <td>{{usuario_actual.aprobadas}}</td>
                             <td>{{usuario_actual.perfectas}}</td>
                             <td>{{usuario_actual.total_evas}}</td>
-                            <td class="fw-bold">{{usuario_actual.puntos_total|floatformat:2}}</td>
+                            <td class="fw-bold">{{usuario_actual.puntos_totales|floatformat:2}}</td>
                         </tr>
                         {% endif %}
                     </tbody>

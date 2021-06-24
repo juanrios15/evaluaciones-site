@@ -144,7 +144,7 @@ class IntentoView(LoginRequiredMixin,TemplateView):
                     ).aggregate(total=Sum('puntos'))
 
                 rango = ranquear_usuario(puntaje["total"])
-
+                intento.usuario.puntos_totales = puntaje["total"]
                 intento.usuario.rango = rango
             else:
                 puntos_obtenidos =dificultad*0.1*intento.puntuacion
@@ -157,6 +157,7 @@ class IntentoView(LoginRequiredMixin,TemplateView):
     
                     rango = ranquear_usuario(puntaje["total"])
                     intento.usuario.rango = rango
+                    intento.usuario.puntos_totales = puntaje["total"]
         intento.puntos = puntos_obtenidos
         intento.hora_fin = timezone.now()
         intento.save()
