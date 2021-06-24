@@ -432,7 +432,7 @@ class RankingsListView(ListView):
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
             perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-            puntos_total=Coalesce(Sum("usuario_puntos__puntos", distinct=True),
+            puntos_total=Coalesce(Sum("usuario_puntos__puntos"),
                 Value(0))
             ).order_by("-puntos_total")
 
@@ -453,7 +453,7 @@ class RankingsListView(ListView):
             total_evas=Count('intentos__evaluacion',distinct=True),
             aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
             perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-            puntos_total=Coalesce(Sum("usuario_puntos__puntos", distinct=True),Value(0))
+            puntos_total=Coalesce(Sum("usuario_puntos__puntos"),Value(0))
             ).order_by("-puntos_total",'username')
             contador = 1
             for x in queryset:
@@ -480,7 +480,7 @@ class RankingsListView(ListView):
                     aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
                     perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
                     puntos_total=Coalesce(
-                            Sum("usuario_puntos__puntos", distinct=True), Value(0))
+                            Sum("usuario_puntos__puntos"), Value(0))
                 ).first()
 
         except:
@@ -491,7 +491,7 @@ class RankingsListView(ListView):
                     total_evas=Count('intentos__evaluacion',distinct=True),
                     aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
                     perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-                    puntos_total=Coalesce(Sum("usuario_puntos__puntos", distinct=True),Value(0))
+                    puntos_total=Coalesce(Sum("usuario_puntos__puntos"),Value(0))
                 ).first()
         
                 
