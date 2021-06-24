@@ -75,7 +75,7 @@ class Inicio(TemplateView):
         context["categorias"] = Categoria.objects.all()
         
         top3 = User.objects.annotate(
-            puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
+            puntos_total=Coalesce(Sum("usuario_puntos__puntos",distinct=True),Value(0))
             ).order_by("-puntos_total",'username')[:3]
         context["top"] = top3
         
