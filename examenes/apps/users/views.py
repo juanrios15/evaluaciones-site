@@ -435,8 +435,7 @@ class RankingsListView(ListView):
             perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
             puntos_total=Coalesce(
                 Sum("puntos__puntos",
-                    distinct=True,
-                    filter=Q(puntos__evaluacion__subcategoria__categoria__nombre=categoria)),
+                    distinct=True),
                 Value(0))
             ).order_by("-puntos_total")
 
