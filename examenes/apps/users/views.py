@@ -482,12 +482,11 @@ class RankingsListView(ListView):
                     aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
                     perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
                     puntos_total=Coalesce(
-                            Sum("puntos__puntos",
-                                distinct=True,
-                                filter=Q(puntos__evaluacion__subcategoria__categoria__nombre=categoria)),
+                            Sum("usuario_puntos__puntos",
+                                distinct=True),
                             Value(0))
                 ).first()
-            print("qs",qs)
+
         except:
             context["cat_actual"] = "Global"
             qs = User.objects.filter(
@@ -496,7 +495,7 @@ class RankingsListView(ListView):
                     total_evas=Count('intentos__evaluacion',distinct=True),
                     aprobadas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__aprobado=True)),
                     perfectas=Count('intentos__evaluacion',distinct=True,filter=Q(intentos__puntuacion=100)),
-                    puntos_total=Coalesce(Sum("puntos__puntos",distinct=True),Value(0))
+                    puntos_total=Coalesce(Sum("usuario_puntos__puntos", distinct=True),Value(0))
                 ).first()
         
                 
