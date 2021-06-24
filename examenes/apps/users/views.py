@@ -164,7 +164,7 @@ class UserDetailView(DetailView):
                 ).aggregate(
                     total=Count('id',distinct=True),
                     promedio=Avg('puntuacion'),
-                    aprobados=Count('id',filter=Q(aprobado=True),distinct=True),
+                    aprobados=Count('evaluacion',filter=Q(aprobado=True),distinct=True),
                     evaluaciones=Count('evaluacion',distinct=True),
                     perfectas=Count('aprobado',filter=Q(puntuacion=100)))
 
@@ -683,27 +683,27 @@ class DeleteNotificacionAPIView(DestroyAPIView):
 #             )
 #         ) 
 
-class ActualizarPuntos(TemplateView):
+# class ActualizarPuntos(TemplateView):
     
-    template_name = "home/act_puntos.html"
+#     template_name = "home/act_puntos.html"
     
-    def post(self, request, *args, **kwargs):
-        usuarios = User.objects.all()
-        lista_usuarios= []
-        for x in usuarios:
-            puntaje = PuntosObtenidos.objects.filter(
-                        usuario__id=x.id
-                        ).aggregate(total=Sum('puntos'))
-            if puntaje["total"] == None:
-                puntaje["total"] = 0
-            puntos = puntaje["total"]
-            x.puntos_totales = puntos
-            lista_usuarios.append(x)
+#     def post(self, request, *args, **kwargs):
+#         usuarios = User.objects.all()
+#         lista_usuarios= []
+#         for x in usuarios:
+#             puntaje = PuntosObtenidos.objects.filter(
+#                         usuario__id=x.id
+#                         ).aggregate(total=Sum('puntos'))
+#             if puntaje["total"] == None:
+#                 puntaje["total"] = 0
+#             puntos = puntaje["total"]
+#             x.puntos_totales = puntos
+#             lista_usuarios.append(x)
         
-        User.objects.bulk_update(lista_usuarios,['puntos_totales'])
+#         User.objects.bulk_update(lista_usuarios,['puntos_totales'])
             
-        return HttpResponseRedirect(
-            reverse(
-                'users_app:inicio'
-            )
-        ) 
+#         return HttpResponseRedirect(
+#             reverse(
+#                 'users_app:inicio'
+#             )
+#         ) 

@@ -35,6 +35,6 @@ urlpatterns = [
    path('rankings/',views.RankingsListView.as_view(),name="rankings"),
    path('politica-de-privacidad/',views.PoliticaPrivacidad.as_view(),name="politica"),
    # path('actualizar-rango-usuarios/',views.ActualizarRangos.as_view(),name="actualizar"),
-   path('actualizar-puntos-usuarios/',views.ActualizarPuntos.as_view(),name="actualizarpuntos"),
+   # path('actualizar-puntos-usuarios/',views.ActualizarPuntos.as_view(),name="actualizarpuntos"),
 
 ]
