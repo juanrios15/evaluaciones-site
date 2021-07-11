@@ -1,5 +1,10 @@
 # evaluaciones-site
 
+![](https://img.shields.io/badge/Code-Python-informational?style=flat&logo=python&logoColor=white&color=4B8BBE)
+![](https://img.shields.io/badge/Code-JS-informational?style=flat&logo=javascript&logoColor=white&color=F0DB4F)
+![](https://img.shields.io/badge/Code-Django-informational?style=flat&logo=django&logoColor=white&color=092e20)
+![](https://img.shields.io/badge/Code-djangoREST-informational?style=flat&logo=django&logoColor=white&color=A30000)
+
 # Easy way to share and take exams, quizzes or tests. Ranking system.
 ## New feature: 
 ### Notifications - New followers, new follower on test, new rating, new difficulty set, someone did one of your tests.
